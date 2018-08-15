@@ -7,8 +7,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install zlib1g-dev and build-essential
-          command: sudo apt install -y zlib1g-dev build-essential
+          name: Install zlib1g-dev and libpng-dev
+          command: sudo apt install -y zlib1g-dev libpng-dev
       - run:
           name: Install zip package for PHP
           command: sudo docker-php-ext-install zip
