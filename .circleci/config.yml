@@ -1,0 +1,53 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2-browsers
+    working_directory: ~/laravel
+    steps:
+      - checkout
+      - run:
+          name: Install zlib1g-dev
+          command: sudo apt install -y zlib1g-dev
+      - run:
+          name: Install zip package for PHP
+          command: sudo docker-php-ext-install zip
+      - run:
+          name: Update composer to the latest version
+          command: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+      - run:
+          name: Install PHP packages
+          command: composer install -n --prefer-dist
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+       - run:
+          name: Setup Laravel environment variables
+          command: cp .env.example .env
+      - run:
+          name: Generate the application key
+          command: php artisan key:generate
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package.json" }}
+            - node-v1-
+      - run:
+          name: Install node packages
+          command: yarn install
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run PHPUnit tests
+          command: vendor/bin/phpunit
+      - store_artifacts:
+          path: tests/_output
+          destination: movie
+      - store_test_results:
+          path: tests/_output
