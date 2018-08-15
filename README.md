@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/sachungo/movies/tree/master.svg?style=svg)](https://circleci.com/gh/sachungo/movies/tree/master)
+
 A short project using Laravel framework for the backend and ReactJS for the frontend
 
 # Getting Started
