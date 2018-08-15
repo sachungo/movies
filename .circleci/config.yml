@@ -2,8 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2-browsers
-      - image: circleci/node:8.4.0
+      - image: circleci/php:7.2-node-browsers
     working_directory: ~/laravel
     steps:
       - checkout
