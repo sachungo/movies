@@ -12,9 +12,9 @@ class MovieProxy
     public function __construct()
     {
         $this->apiClient = new Client([
-            'base_uri' => env(THEMOVIEDB_API_URL)
+            'base_uri' => env('THEMOVIEDB_API_URL')
         ]);
-        $this->apiKey = env(THEMOVIEDB_API_KEY);
+        $this->apiKey = env('THEMOVIEDB_API_KEY');
     }
 
     public function getMoviesList($pageNumber = 1)
@@ -27,10 +27,10 @@ class MovieProxy
         ]);
 
         // TODO: put request in a try catch handler for guzzle request errors
-        $response = $this->apiClient->get('discover/movie' . $query);
+        $response = $this->apiClient->get('discover/movie?' . $query);
 
         // TODO: use a resource that have only the data I need
-        return json_decode($response, true);
+        return json_decode($response->getBody(), true);
     }
 
     private function constructQueryString($queryArgs = [])
