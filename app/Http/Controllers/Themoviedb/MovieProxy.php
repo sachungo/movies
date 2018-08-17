@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Themoviedb;
 
+use \Exception;
 use GuzzleHttp\Client;
 
 class MovieProxy
@@ -26,11 +27,17 @@ class MovieProxy
             'page' => $pageNumber
         ]);
 
-        // TODO: put request in a try catch handler for guzzle request errors
-        $response = $this->apiClient->get('discover/movie?' . $query);
+        try {
+            $response = $this->apiClient->get('discover/movie?' . $query);
 
-        // TODO: use a resource that have only the data I need
-        return json_decode($response->getBody(), true);
+            // TODO: use a resource that have only the data I need
+            return json_decode($response->getBody(), true);
+
+        } catch (Exception $e) {
+            return response()->json([
+                "message" => $e->getMessage()
+            ]);
+        }
     }
 
     private function constructQueryString($queryArgs = [])
