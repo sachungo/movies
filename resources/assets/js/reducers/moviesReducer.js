@@ -2,7 +2,7 @@ import actionTypes from '../moviesConstants';
 
 const initialState = {
   movies: [],
-  page: 1,
+  nextPage: 1,
   loading: false,
   error: ''
 };
@@ -17,7 +17,8 @@ const movies = (state = initialState, action) => {
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
       return {
         ...state,
-        movies: [...state.movies, ...action.payload]
+        movies: [...state.movies, ...action.payload.movies],
+        nextPage: action.payload.page
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {

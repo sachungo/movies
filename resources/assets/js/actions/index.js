@@ -5,20 +5,34 @@ const loadingMovies = loading => ({
   loading
 });
 
+const fetchingMoviesSuccess = payload => ({
+  type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
+  payload
+});
+
 export const fetchMovies = (page = 1) => {
   return dispatch => {
     dispatch(loadingMovies(true));
 
-    return axios.get(`/api/movies?${page}`)
+    return axios.get(`/api/movies?page=${page}`)
       .then(response => {
-        console.log('response', response);
         dispatch(loadingMovies(false));
-        // dispatch response: FETCH_ALL_MOVIES_SUCCESS
+        dispatch(fetchingMoviesSuccess({
+          page: response.data.page + 1,
+          movies: response.data.results
+        }));
       })
       .catch(error => {
-        console.log('error: ', error);
+        /**
+         * {
+         *   status_code: 34,
+         *   status_message: '...',
+         *   success: false
+         * }
+         */
         dispatch(loadingMovies(false));
-        // dispatch error: FETCH_ALL_MOVIES_ERROR
+
+        // TODO: correctly get the error message from Axios
       })
   }
 };

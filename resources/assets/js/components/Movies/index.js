@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Presenter from './Presenter';
+import MoviesWrapper from './MoviesWrapper';
 
 import { fetchMovies } from '../../actions';
 
@@ -10,6 +10,7 @@ const mapDispatchToProps = dispatch => ({
   fetchAll: page => dispatch(fetchMovies(page))
 });
 
-const App = connect(mapStateToProps, mapDispatchToProps)(Presenter);
-
-export default App;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MoviesWrapper);
