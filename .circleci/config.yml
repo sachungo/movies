@@ -46,6 +46,9 @@ jobs:
       - run:
           name: Run PHPUnit tests
           command: vendor/bin/phpunit
+      - run:
+          name: Run Jest tests
+          command: yarn test
       - store_artifacts:
           path: tests/_output
           destination: movie
