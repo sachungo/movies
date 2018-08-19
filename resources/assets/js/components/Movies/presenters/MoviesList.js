@@ -93,7 +93,7 @@ const Image = styled.img`
 const MoviesList = ({ movies }) => (
   <MoviesContainer>
     {movies.map(movie => (
-      <Movie key={movie.id}>
+      <Movie key={movie.id} data-test="single-movie">
         <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={`${movie.title} poster`} />
         <Title>{movie.title}</Title>
       </Movie>
