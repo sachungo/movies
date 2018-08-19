@@ -3,7 +3,7 @@ import actionTypes from '../moviesConstants';
 const initialState = {
   movies: [],
   nextPage: 1,
-  loading: false,
+  loading: true,
   error: ''
 };
 

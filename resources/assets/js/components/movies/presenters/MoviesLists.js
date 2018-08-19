@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { rem, ellipsis } from 'polished';
-import media from '../../shared/mediaQueriesTemplate';
+import { media } from '../../shared';
 
 const MoviesContainer = styled.div`
   display: flex;

@@ -4,7 +4,10 @@ import MoviesWrapper from './MoviesWrapper';
 
 import { fetchMovies } from '../../actions';
 
-const mapStateToProps = state => state;
+const mapStateToProps = state => ({
+  loading: state.loading,
+  nextPage: state.nextPage
+});
 
 const mapDispatchToProps = dispatch => ({
   fetchAll: page => dispatch(fetchMovies(page))
