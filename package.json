@@ -35,7 +35,8 @@
         "lodash": "^4.17.4",
         "popper.js": "^1.12",
         "react": "^16.2.0",
-        "react-dom": "^16.2.0"
+        "react-dom": "^16.2.0",
+        "redux-mock-store": "^1.5.3"
     },
     "dependencies": {
         "polished": "^1.9.3",

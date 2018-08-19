@@ -1,3 +1,4 @@
+import axios from 'axios';
 import actionTypes from '../moviesConstants';
 
 const loadingMovies = loading => ({
