@@ -29,6 +29,7 @@ export default class MoviesWrapper extends Component {
             width={80}
             primaryColor="#00ced1"
             secondaryColor="rgba(0, 206, 209, 0.1)"
+            data-test="movies-loader"
           />
         </LoaderWrapper>
       );
@@ -36,7 +37,7 @@ export default class MoviesWrapper extends Component {
 
     return (
       <Container>
-        <MoviesLists />
+        <MoviesLists data-test="movies-list" />
       </Container>
     );
   }
