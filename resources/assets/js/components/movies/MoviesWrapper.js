@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import MoviesLists from './presenters';
+
+const Container = styled.div``;
 
 export default class MoviesWrapper extends Component {
   componentDidMount() {
@@ -10,7 +13,9 @@ export default class MoviesWrapper extends Component {
 
   render() {
     return (
-      <MoviesLists />
+      <Container>
+        <MoviesLists />
+      </Container>
     );
   }
 }
