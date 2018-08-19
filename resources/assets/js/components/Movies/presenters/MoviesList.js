@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { rem, ellipsis } from 'polished';
 import { media } from '../../shared';
 
@@ -99,5 +100,9 @@ const MoviesList = ({ movies }) => (
     ))}
   </MoviesContainer>
 );
+
+MoviesList.propTypes = {
+  movies: PropTypes.array
+}
 
 export default MoviesList;

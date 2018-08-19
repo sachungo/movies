@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
-import MoviesLists from './MoviesLists';
+import MoviesList from './MoviesList';
 
 const mapStateToProps = state => ({
   movies: state.movies
 });
 
-export default connect(mapStateToProps)(MoviesLists);
+export default connect(mapStateToProps)(MoviesList);
