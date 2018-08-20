@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { render } from 'react-dom';
 
 import store from '../reducers';
-import App from './movies';
+import App from './moviesComponents';
 
 if (document.getElementById('movies-app')) {
   render(
