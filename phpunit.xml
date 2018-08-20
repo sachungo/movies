@@ -29,5 +29,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
         <env name="MAIL_DRIVER" value="array"/>
+        <env name="THEMOVIEDB_API_URL" value="https://test.com/"/>
+        <env name="THEMOVIEDB_API_KEY" value="5634758697087687980"/>
     </php>
 </phpunit>
