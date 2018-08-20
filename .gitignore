@@ -1,7 +1,6 @@
 /node_modules
 /public/hot
 /public/storage
-/storage/*.key
 /vendor
 /.idea
 /.vscode
@@ -12,4 +11,5 @@ npm-debug.log
 yarn-error.log
 .env
 .phpunit.result.cache
+/storage/*
 /public/mix-manifest.json
