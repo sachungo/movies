@@ -21,5 +21,5 @@ Note that the commands run by `yarn` can also be executed using `npm`.
 8. If you are not using Valet nor Homestead, then execute `php artisan serve` and access your app at the given port number in the terminal
 
 ## Running tests
-1. Run PHP tests by running `./vendor/bin/phpunit`
+1. Run PHP tests by executing `./vendor/bin/phpunit`
 2. The JavaScript tests can be run by `yarn test`
