@@ -19,7 +19,7 @@ describe('The MoviesWrapper component', () => {
     expect(wrapper.find('[data-test="movies-loader"]')).toExist();
   });
 
-  it('renders the MoviesLists component when loading is false', () => {
+  it('renders the MoviesWrapper component when loading is false', () => {
     const wrapper = shallow(<MoviesWrapper {...props} loading={false} />);
     expect(wrapper.find('[data-test="movies-list"]')).toExist();
   });
