@@ -2,9 +2,6 @@
   "name": "movies",
   "scripts": {},
   "env": {
-    "APP_DEBUG": {
-      "required": true
-    },
     "APP_KEY": {
       "required": true
     },
