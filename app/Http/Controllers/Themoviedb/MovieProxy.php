@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Themoviedb;
 
-use \Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class MovieProxy
 {
@@ -33,10 +33,8 @@ class MovieProxy
             // TODO: use a resource that have only the data I need
             return json_decode($response->getBody(), true);
 
-        } catch (Exception $e) {
-            return response()->json([
-                "message" => $e->getMessage()
-            ]);
+        } catch (RequestException $e) {
+            // TODO: handle the exception properly
         }
     }
 

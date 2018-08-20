@@ -1,5 +1,31 @@
 import axios from 'axios';
+import _ from 'lodash';
 import actionTypes from '../moviesConstants';
+
+export const fetchMovies = (page = 1) => {
+  return dispatch => {
+    dispatch(loadingMovies(true));
+
+    return axios.get(`/api/movies?page=${page}`)
+      .then(response => {
+        dispatch(loadingMovies(false));
+
+        const { data } = response;
+        if (_.isObject(data)) {
+          dispatch(fetchingMoviesSuccess({
+            page: data.page + 1,
+            movies: data.results
+          }));
+        }
+      })
+      .catch(error => {
+        dispatch(loadingMovies(false));
+
+        const errorMessage = getErrorMessage(error);
+        dispatch(fetchingMoviesError(errorMessage));
+      })
+  }
+};
 
 const loadingMovies = loading => ({
   type: actionTypes.LOADING_ALL_MOVIES,
@@ -11,29 +37,22 @@ const fetchingMoviesSuccess = payload => ({
   payload
 });
 
-export const fetchMovies = (page = 1) => {
-  return dispatch => {
-    dispatch(loadingMovies(true));
+const fetchingMoviesError = errorMessage => ({
+  type: actionTypes.FETCH_ALL_MOVIES_ERROR,
+  payload: errorMessage
+});
 
-    return axios.get(`/api/movies?page=${page}`)
-      .then(response => {
-        dispatch(loadingMovies(false));
-        dispatch(fetchingMoviesSuccess({
-          page: response.data.page + 1,
-          movies: response.data.results
-        }));
-      })
-      .catch(error => {
-        /**
-         * {
-         *   status_code: 34,
-         *   status_message: '...',
-         *   success: false
-         * }
-         */
-        dispatch(loadingMovies(false));
-
-        // TODO: correctly get the error message from Axios
-      })
+const getErrorMessage = error => {
+  const defaultMessage = 'Unknown error occurred. Please try again after a few minutes';
+  if (error.response) {
+    return error.response.data;
   }
-};
+  if (error.request) {
+    return error.request;
+  }
+  if (error.message) {
+    return error.message;
+  }
+
+  return defaultMessage;
+}
