@@ -1,15 +1,29 @@
 {
   "name": "movies",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
+    "APP_DEBUG": {
+      "required": true
+    },
+    "APP_KEY": {
+      "required": true
+    },
+    "THEMOVIEDB_API_KEY": {
+      "required": true
+    },
+    "THEMOVIEDB_API_URL": {
+      "required": true
+    }
   },
   "formation": {
+    "web": {
+      "quantity": 1
+    }
   },
-  "addons": [
-
-  ],
+  "addons": [],
   "buildpacks": [
-
+    {
+      "url": "heroku/php"
+    }
   ]
 }
