@@ -43,7 +43,6 @@ const fetchingMoviesError = errorMessage => ({
 });
 
 const getErrorMessage = error => {
-  const defaultMessage = 'Unknown error occurred. Please try again after a few minutes';
   if (error.response) {
     return error.response.data;
   }
@@ -54,5 +53,5 @@ const getErrorMessage = error => {
     return error.message;
   }
 
-  return defaultMessage;
+  return 'Unknown error occurred. Please try again after a few minutes';
 }
