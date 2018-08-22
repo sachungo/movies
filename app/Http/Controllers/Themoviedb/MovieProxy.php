@@ -9,13 +9,13 @@ class MovieProxy
 {
     protected $apiClient;
     protected $apiKey;
+    protected $baseURI;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
-        $this->apiClient = new Client([
-            'base_uri' => env('THEMOVIEDB_API_URL')
-        ]);
+        $this->apiClient = $client;
         $this->apiKey = env('THEMOVIEDB_API_KEY');
+        $this->baseURI = env('THEMOVIEDB_API_URL');
     }
 
     public function getMoviesList($pageNumber = 1)
@@ -28,7 +28,7 @@ class MovieProxy
         ]);
 
         try {
-            $response = $this->apiClient->get('discover/movie?' . $query);
+            $response = $this->apiClient->request('GET', $this->baseURI . 'discover/movie?' . $query);
 
             // TODO: use a resource that have only the data I need
             return json_decode($response->getBody(), true);
