@@ -7,7 +7,7 @@ describe('SINGLE movie reducer', () => {
   beforeEach(() => {
     initialState = {
       data: {},
-      loading: false
+      genres: []
     };
   });
 
@@ -25,7 +25,7 @@ describe('SINGLE movie reducer', () => {
       payload
     })).toEqual({
       data: payload,
-      loading: false
+      genres: []
     })
   });
 });

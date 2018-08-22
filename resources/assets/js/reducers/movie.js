@@ -2,7 +2,7 @@ import actionTypes from '../moviesConstants';
 
 const initialState = {
   data: {},
-  loading: false
+  genres: []
 };
 
 const movie = (state = initialState, action) => {
