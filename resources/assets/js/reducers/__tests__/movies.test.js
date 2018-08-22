@@ -1,5 +1,5 @@
 import actionTypes from '../../moviesConstants';
-import reducer from '../moviesReducer';
+import reducer from '../movies';
 
 describe('ALL movies reducer', () => {
   let initialState;
