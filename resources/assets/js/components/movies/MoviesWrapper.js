@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import MoviesLists from './presenters';
+import { MoviesLists } from './presenters';
 import { Loader } from '../shared';
 
 const Container = styled.div``;

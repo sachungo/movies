@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem, ellipsis } from 'polished';
-import { media } from '../../shared';
+import { media } from '../../../shared';
 
 const MoviesContainer = styled.div`
   display: flex;
