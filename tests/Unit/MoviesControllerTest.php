@@ -3,8 +3,6 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\MoviesController;
@@ -14,7 +12,9 @@ class MoviesControllerTest extends TestCase
 {
     protected function setUp()
     {
-        $this->mock = $this->getMockBuilder(MovieProxy::class)->getMock();
+        $this->mock = $this->getMockBuilder(MovieProxy::class)
+                           ->disableOriginalConstructor()
+                           ->getMock();
         $this->request = $this->createMock(Request::class);
         parent::setUp();
     }
