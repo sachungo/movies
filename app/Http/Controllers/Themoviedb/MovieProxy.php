@@ -38,6 +38,17 @@ class MovieProxy
         }
     }
 
+    public function getGenres()
+    {
+        $query = $this->constructQueryString();
+        try{
+            $response = $this->apiClient->request('GET', $this->baseURI . 'genre/movie/list?' . $query);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            // TODO: handle the error
+        }
+    }
+
     private function constructQueryString($queryArgs = [])
     {
         $params = array_merge($queryArgs, [
