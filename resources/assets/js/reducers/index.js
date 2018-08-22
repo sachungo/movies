@@ -8,9 +8,11 @@ import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
 import movies from './movies';
+import movie from './movie';
 
 const reducers = combineReducers({
-  allMovies: movies
+  allMovies: movies,
+  movie
 });
 
 const loggerMiddleware = createLogger();
