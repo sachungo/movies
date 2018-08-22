@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem, ellipsis } from 'polished';
 import { Link } from 'react-router-dom';
-import { media } from '../../../shared';
+import { media, colors } from '../../../shared';
 
 const MoviesContainer = styled.div`
   display: flex;
@@ -56,13 +56,13 @@ const Title = styled.p`
   padding: 0 ${rem('10px')};
   ${ellipsis('154px')};
   transition: all 0.2s;
-  color: #636b6f;
+  color: ${colors.text};
   ${Movie}:hover & {
     color: darkturquoise;
     font-weight: 300;
   }
   ${Movie}:active & {
-    color: darkturquoise;
+    color: ${colors.primary};
     font-weight: 500;
   }
   ${media.medium`
