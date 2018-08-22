@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk'
 import axios from 'axios';
 import actionTypes from '../../moviesConstants';
-import { loadMovieSuccess } from '../movie';
+import { addMovieInfo } from '../movie';
 
 jest.mock('axios');
 
@@ -15,14 +15,14 @@ describe('Single movie action test', () => {
     store = mockStore({});
   });
 
-  it('dispatches LOAD_MOVIE_SUCCESS', () => {
+  it('dispatches ADD_MOVIE_INFO', () => {
     const payload = {
       id: 12546,
       title: 'Single movie example'
     };
-    store.dispatch(loadMovieSuccess(payload));
+    store.dispatch(addMovieInfo(payload));
     expect(store.getActions()).toContainEqual({
-      type: actionTypes.LOAD_MOVIE_SUCCESS,
+      type: actionTypes.ADD_MOVIE_INFO,
       payload
     });
   });
