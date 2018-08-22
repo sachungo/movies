@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockStore = configureStore([thunkMiddleware]);
 
 describe('movies actions tests', () => {
-  const moviesSuccess = (data = {page: 1, results: [] }) => (
+  const moviesSuccess = (data = { page: 1, results: [] }) => (
     axios.get.mockImplementation(() =>
       Promise.resolve({ data })
     )
