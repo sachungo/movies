@@ -13,7 +13,7 @@ describe('Genres actions test', () => {
     axios.get.mockImplementation(() =>
       Promise.resolve({ data })
     )
-  )
+  );
 
   let store;
   beforeEach(() => {

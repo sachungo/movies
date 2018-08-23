@@ -7,7 +7,8 @@ describe('SINGLE movie reducer', () => {
   beforeEach(() => {
     initialState = {
       data: {},
-      genres: []
+      loading: false,
+      hasInfo: false
     };
   });
 
@@ -25,7 +26,19 @@ describe('SINGLE movie reducer', () => {
       payload
     })).toEqual({
       data: payload,
-      genres: []
+      loading: false,
+      hasInfo: true
     })
+  });
+
+  it('should handle LOADING_MOVIE_INFO', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.LOADING_MOVIE_INFO,
+      loading: true
+    })).toEqual({
+      data: {},
+      loading: true,
+      hasInfo: false
+    });
   });
 });

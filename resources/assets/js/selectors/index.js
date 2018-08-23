@@ -31,7 +31,7 @@ const isObject = data => {
 export const getGenresSelector = createSelector(
   [movieGenresSelector, allGenresSelector],
   (genres, allGenres) => {
-    if (!genres || !allGenres) {
+    if (!genres || _.isEmpty(allGenres)) {
       return [];
     }
 

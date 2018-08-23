@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
+import PropTypes from 'prop-types';
 
-import { colors, media } from '../../../shared';
+import { colors, media, Loader, styles } from '../../../shared';
 
 const Movie = styled.div`
   padding: ${rem('20px')};
@@ -75,8 +76,41 @@ const Container = styled.div``;
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 export default class MovieInfo extends PureComponent {
+  componentDidMount() {
+    const {
+      shouldAddInfo,
+      addInfo,
+      data,
+      match,
+      fetchInfo,
+      shouldFetchInfo
+    } = this.props;
+    if (shouldAddInfo) {
+      addInfo(data);
+    }
+
+    if (shouldFetchInfo) {
+      const { id } = match.params;
+      fetchInfo(id);
+    }
+  }
+
   render() {
-    const { data, genres, hasGenres } = this.props;
+    const { data, genres, hasGenres, loading } = this.props;
+    if (loading) {
+      return (
+        <styles.LoaderWrapper>
+          <Loader
+            height={70}
+            width={70}
+            primaryColor="#00ced1"
+            secondaryColor="rgba(0, 206, 209, 0.1)"
+            data-test="movie-loader"
+          />
+        </styles.LoaderWrapper>
+      );
+    }
+
     return (
       <Movie>
         <Wrapper>
@@ -150,3 +184,14 @@ export default class MovieInfo extends PureComponent {
     );
   }
 }
+
+MovieInfo.propTypes = {
+  addInfo: PropTypes.func.isRequired,
+  data: PropTypes.object,
+  fetchInfo: PropTypes.func.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object),
+  hasGenres: PropTypes.bool,
+  loading: PropTypes.bool,
+  shouldAddInfo: PropTypes.bool,
+  shouldFetchInfo: PropTypes.bool
+};

@@ -8,7 +8,9 @@ describe('The MovieInfo component', () => {
     props = {
       data: {},
       genres: [],
-      hasGenres: false
+      hasGenres: false,
+      addInfo: jest.fn(),
+      fetchInfo: jest.fn(),
     }
   });
 
@@ -59,5 +61,30 @@ describe('The MovieInfo component', () => {
     };
     const wrapper = shallow(<MovieInfo {...props} />);
     expect(wrapper.find('[data-test="movie-genre"]').first()).toExist();
+  });
+
+  it('executes addInfo prop when shouldAddInfo is set to true', () => {
+    const wrapper = mount(
+      <MovieInfo
+        {...props}
+        data={{
+          id: 1234
+        }}
+        shouldAddInfo
+      />
+    );
+    expect(wrapper.props().addInfo).toHaveBeenCalledWith({ id: 1234 });
+  });
+
+  it('executes fetchInfo when shouldFetchInfo is truthy', () => {
+    const modifiedProps = {
+      ...props,
+      shouldFetchInfo: true,
+      match: {
+        params: { id: 12 }
+      }
+    }
+    const wrapper = mount(<MovieInfo {...modifiedProps} />);
+    expect(wrapper.props().fetchInfo).toHaveBeenCalledWith(12);
   });
 });

@@ -2,16 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MoviesLists } from './presenters';
-import { Loader } from '../shared';
+import { Loader, styles } from '../shared';
 
 const Container = styled.div``;
-
-const LoaderWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`;
 
 export default class MoviesWrapper extends Component {
   componentDidMount() {
@@ -36,7 +29,7 @@ export default class MoviesWrapper extends Component {
     const { loading } = this.props;
     if(loading) {
       return (
-        <LoaderWrapper>
+        <styles.LoaderWrapper>
           <Loader
             height={80}
             width={80}
@@ -44,7 +37,7 @@ export default class MoviesWrapper extends Component {
             secondaryColor="rgba(0, 206, 209, 0.1)"
             data-test="movies-loader"
           />
-        </LoaderWrapper>
+        </styles.LoaderWrapper>
       );
     }
 

@@ -2,7 +2,8 @@ import actionTypes from '../moviesConstants';
 
 const initialState = {
   data: {},
-  genres: []
+  loading: false,
+  hasInfo: false
 };
 
 const movie = (state = initialState, action) => {
@@ -10,7 +11,13 @@ const movie = (state = initialState, action) => {
     case actionTypes.ADD_MOVIE_INFO:
       return {
         ...state,
-        data: action.payload
+        data: action.payload,
+        hasInfo: true
+      }
+    case actionTypes.LOADING_MOVIE_INFO:
+      return {
+        ...state,
+        loading: action.loading
       }
     default:
       return state;

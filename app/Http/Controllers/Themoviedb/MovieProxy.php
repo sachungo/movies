@@ -49,6 +49,17 @@ class MovieProxy
         }
     }
 
+    public function getMovie($movie_id)
+    {
+        $query = $this->constructQueryString();
+        try{
+            $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '?' . $query);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            // TODO: handle the error
+        }
+    }
+
     private function constructQueryString($queryArgs = [])
     {
         $params = array_merge($queryArgs, [

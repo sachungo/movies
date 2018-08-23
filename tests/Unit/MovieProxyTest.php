@@ -55,4 +55,20 @@ class MovieProxyTest extends TestCase
         $response = $this->movieProxy->getGenres();
         $this->assertEquals($data, $response);
     }
+
+    public function testGetMovie()
+    {
+        $response = [
+            'genres' => [
+                [
+                    'id' => 12,
+                    'name' => 'Adventure'
+                ]
+            ],
+            'id' => 123,
+            'title' => 'Testing movie'
+        ];
+        $this->mockHandler->append(new Response(200, [], json_encode($response)));
+        $this->assertEquals($response, $this->movieProxy->getMovie(1));
+    }
 }
