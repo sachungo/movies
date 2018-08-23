@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rem } from 'polished';
 import { MoviesLists } from './presenters';
 import { Loader, styles } from '../shared';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: ${rem('50px')};
+`;
 
 export default class MoviesWrapper extends Component {
+  static propTypes = {
+    fetchAll: PropTypes.func.isRequired,
+    fetchGenres: PropTypes.func.isRequired,
+    hasGenres: PropTypes.bool,
+    hasMovies: PropTypes.bool,
+    nextPage: PropTypes.number,
+    loading: PropTypes.bool
+  };
+
   componentDidMount() {
     const {
       fetchAll,
@@ -48,12 +60,3 @@ export default class MoviesWrapper extends Component {
     );
   }
 }
-
-MoviesWrapper.propTypes = {
-  fetchAll: PropTypes.func.isRequired,
-  fetchGenres: PropTypes.func.isRequired,
-  hasGenres: PropTypes.bool,
-  hasMovies: PropTypes.bool,
-  nextPage: PropTypes.number,
-  loading: PropTypes.bool
-};

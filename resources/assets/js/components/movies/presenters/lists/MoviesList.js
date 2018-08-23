@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import Paginator from 'react-js-pagination';
 import { rem, ellipsis } from 'polished';
 import { Link } from 'react-router-dom';
 import { media, colors } from '../../../shared';
@@ -87,26 +88,56 @@ const Image = styled.img`
   `}
 `;
 
-const MoviesList = ({ movies }) => (
-  <MoviesContainer>
-    {movies.map(movie => (
-      <Movie
-        key={movie.id}
-        data-test="single-movie"
-        to={{
-          pathname: `/movies/${movie.id}`,
-          state: { data: movie }
-        }}
-      >
-        <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={`${movie.title} poster`} />
-        <Title>{movie.title}</Title>
-      </Movie>
-    ))}
-  </MoviesContainer>
-);
+const TOTAL_COUNT = 100;
+const PER_PAGE = 10;
 
-MoviesList.propTypes = {
-  movies: PropTypes.array
+export default class MoviesList extends PureComponent {
+  static propTypes = {
+    movies: PropTypes.array
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePage: 1
+    };
+  }
+
+  handlePagination = pageNumber => {
+    console.log(`active page is ${pageNumber}`);
+  };
+
+  render() {
+    const { movies } = this.props;
+    return (
+      <Fragment>
+        <MoviesContainer>
+          {movies.map(movie => (
+            <Movie
+              key={movie.id}
+              data-test="single-movie"
+              to={{
+                pathname: `/movies/${movie.id}`,
+                state: { data: movie }
+              }}
+            >
+              <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={`${movie.title} poster`} />
+              <Title>{movie.title}</Title>
+            </Movie>
+          ))}
+        </MoviesContainer>
+        <Paginator
+          hideDisabled
+          activePage={this.state.activePage}
+          totalItemsCount={TOTAL_COUNT}
+          onChange={this.handlePagination}
+          itemsCountPerPage={PER_PAGE}
+          itemClass="movies-list__item"
+          activeLinkClass="movies-list__link--active"
+          activeClass="movies-list__item--active"
+          linkClass="movies-list__link"
+        />
+      </Fragment>
+    );
+  }
 }
-
-export default MoviesList;
