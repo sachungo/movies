@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import MovieInfo from './MovieInfo';
+import { getMovieInfo } from '../../../../helpers';
 import { addMovieInfo } from '../../../../actions/movie';
-import { genresSelector } from '../../../../selectors';
+import { getGenresSelector } from '../../../../selectors';
 
-const mapStateToProps = ({ movie }, ownProps) => {
-  const info = _.get(ownProps.location, 'state.data', {});
-  const data = _.isEmpty(movie.data) ? info : movie.data;
+const mapStateToProps = (state, ownProps) => {
+  const data = getMovieInfo(state, ownProps);
+  const movieGenres = getGenresSelector(state, ownProps);
 
   return {
     data,
-    genres: movie.genres,
-    hasGenres: genresSelector(movie)
+    genres: movieGenres,
+    hasGenres: !_.isEmpty(movieGenres)
   }
 };
 

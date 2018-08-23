@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect'
 import _ from 'lodash';
 
+import { getMovieInfo } from '../helpers';
+
 export const genresSelector = createSelector(
   state => state.genres,
   genres => !_.isEmpty(genres)
@@ -11,16 +13,38 @@ export const moviesSelector = createSelector(
   movies => !_.isEmpty(movies)
 );
 
-const movieGenres = data =>
-  _.isEmpty(data.genre_ids) ? data.genres : data.genres_ids;
+const movieGenresSelector = (state, props) => {
+  const data = getMovieInfo(state, props);
+  if (_.isEmpty(data)) {
+    return [];
+  }
+  return data.genre_ids || data.genres;
+}
 
-const genres = state => state.genres;
+const allGenresSelector = state => state.genres.genres;
+
+const isObject = data => {
+  const values = data.values();
+  return _.isObject(values.next().value);
+}
 
 export const getGenresSelector = createSelector(
-  [movieGenres, genres],
+  [movieGenresSelector, allGenresSelector],
   (genres, allGenres) => {
-    // check if array of ids or objects
-    // if objects, return early
-    // otherwise: get the genres from allGenres that corresponse to the ids
+    if (!genres || !allGenres) {
+      return [];
+    }
+
+    if (isObject(genres)) {
+      return genres;
+    }
+
+    const FIRST_ARRAY_INDEX = 0;
+    const derivedGenres = genres.map(genre_id => {
+      const completeGenre = allGenres.filter(genre => genre.id === genre_id);
+      return completeGenre[FIRST_ARRAY_INDEX];
+    });
+
+    return derivedGenres;
   }
 );
