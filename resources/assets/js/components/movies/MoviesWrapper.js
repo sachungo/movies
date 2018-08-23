@@ -15,8 +15,21 @@ const LoaderWrapper = styled.div`
 
 export default class MoviesWrapper extends Component {
   componentDidMount() {
-    const { fetchAll, nextPage } = this.props;
-    this.props.fetchAll(nextPage);
+    const {
+      fetchAll,
+      fetchGenres,
+      hasGenres,
+      hasMovies,
+      nextPage
+    } = this.props;
+
+    if (!hasMovies) {
+      fetchAll(nextPage);
+    }
+
+    if (!hasGenres) {
+      fetchGenres();
+    }
   }
 
   render() {
@@ -44,7 +57,10 @@ export default class MoviesWrapper extends Component {
 }
 
 MoviesWrapper.propTypes = {
-  nextPage: PropTypes.number,
   fetchAll: PropTypes.func.isRequired,
+  fetchGenres: PropTypes.func.isRequired,
+  hasGenres: PropTypes.bool,
+  hasMovies: PropTypes.bool,
+  nextPage: PropTypes.number,
   loading: PropTypes.bool
 };
