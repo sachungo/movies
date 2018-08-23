@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['title' => 'Movies List']);
+});
+
+Route::get('/movies/{id}', function () {
+    return view('welcome', ['title' => 'Movie Information']);
 });

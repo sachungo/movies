@@ -16,4 +16,15 @@ class MoviesController extends Controller
     {
         return $this->movieProxy->getMoviesList($request->page ?? 1);
     }
+
+    public function getAllGenres()
+    {
+        return $this->movieProxy->getGenres();
+    }
+
+    public function getMovieInfo(Request $request)
+    {
+        $movie_id = $request->route('movie_id');
+        return $this->movieProxy->getMovie($movie_id);
+    }
 }

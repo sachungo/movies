@@ -30,4 +30,37 @@ class MoviesControllerTest extends TestCase
         $instance = new MoviesController($this->mock);
         $this->assertEquals($results, $instance->getAll($this->request));
     }
+
+    public function testGetAllGenres()
+    {
+        $results = [
+            'genres' => [
+                [
+                    'id' => 1,
+                    'name' => 'Testing'
+                ]
+            ]
+        ];
+
+        $this->mock->method('getGenres')->willReturn($results);
+        $instance = new MoviesController($this->mock);
+        $this->assertEquals($results, $instance->getAllGenres());
+    }
+
+    public function testGetMovieInfo()
+    {
+        $results = [
+            'genres' => [
+                [
+                    'id' => 12,
+                    'name' => 'Adventure'
+                ]
+            ],
+            'id' => 123,
+            'title' => 'Testing movie'
+        ];
+        $this->mock->method('getMovie')->willReturn($results);
+        $instance = new MoviesController($this->mock);
+        $this->assertEquals($results, $instance->getMovieInfo($this->request));
+    }
 }

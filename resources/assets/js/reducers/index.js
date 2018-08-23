@@ -1,14 +1,27 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  compose,
+  combineReducers
+} from 'redux';
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import movies from './moviesReducer';
+import movies from './movies';
+import movie from './movie';
+import genres from './genres';
+
+const reducers = combineReducers({
+  allMovies: movies,
+  movie,
+  genres
+});
 
 const loggerMiddleware = createLogger();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
-  movies,
+  reducers,
   composeEnhancers(
     applyMiddleware(
       thunkMiddleware,

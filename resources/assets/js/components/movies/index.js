@@ -1,19 +1,7 @@
-import { connect } from 'react-redux';
+import Movies from './MoviesContainer';
+import { MovieInfo } from './presenters';
 
-import MoviesWrapper from './MoviesWrapper';
-
-import { fetchMovies } from '../../actions';
-
-const mapStateToProps = state => ({
-  loading: state.loading,
-  nextPage: state.nextPage
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchAll: page => dispatch(fetchMovies(page))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MoviesWrapper);
+export {
+  Movies as Home,
+  MovieInfo
+}
