@@ -6,7 +6,6 @@ export const addMovieInfo = payload => ({
   payload
 });
 
-
 export const fetchMovie = movieId => {
   return dispatch => {
     dispatch(loadingMovie(true));
