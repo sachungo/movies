@@ -7,7 +7,7 @@ import { MoviesLists } from './presenters';
 import { Loader, styles } from '../shared';
 
 const Container = styled.div`
-  margin-bottom: ${rem('50px')};
+  margin-bottom: ${rem('100px')};
 `;
 
 const TOTAL_COUNT = 100;

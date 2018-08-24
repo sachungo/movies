@@ -46,7 +46,8 @@ describe('movies actions tests', () => {
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
         page: 1,
-        movies: []
+        movies: [],
+        paginatorPage: 1
       }
     });
   });

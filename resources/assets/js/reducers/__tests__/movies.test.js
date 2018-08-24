@@ -35,14 +35,16 @@ describe('ALL movies reducer', () => {
         movies: [{
           id: 176565,
           title: 'Testing movies'
-        }]
+        }],
+        paginatorPage: 3
       }
     })).toEqual({
       movies: {
-        'page-2': [{
+        'page-3': [{
           id: 176565,
           title: 'Testing movies'
-        }]
+        }],
+        'page-4': []
       },
       loading: false,
       error: ''
