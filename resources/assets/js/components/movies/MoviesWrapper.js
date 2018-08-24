@@ -51,7 +51,7 @@ export default class MoviesWrapper extends Component {
   handlePagination = pageNumber => {
     this.setState({ activePage: pageNumber });
 
-    const { paginator, fetchAll, nextPage } = this.props;
+    const { paginator, fetchAll } = this.props;
     const pageKey = `page-${pageNumber}`;
     if (paginator.includes(pageKey)) {
       return;
