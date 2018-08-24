@@ -2,7 +2,7 @@ $text-color: #636b6f;
 $primary-color: #00ced1;
 $border-color: #e5e5e5;
 $white-color: #ffffff;
-$hover-color: rgba(0, 206, 209, 0.1);
+$hover-primary-color: rgba(0, 206, 209, 0.1);
 
 .pagination {
 	justify-content: center;
@@ -49,7 +49,7 @@ $hover-color: rgba(0, 206, 209, 0.1);
 	}
 
 	&:hover {
-		background-color: $hover-color;
+		background-color: $hover-primary-color;
 	}
 }
 
