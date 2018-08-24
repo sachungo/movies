@@ -11,14 +11,15 @@ Note that the commands run by `yarn` can also be executed using `npm`.
 ## Installation Steps
 1. Clone the repository
 2. Install packages using `composer install` command
-3. Copy the content of `.env.example` into a `.env` file
+3. Copy the content of `.env.example` into a `.env` file. I.e.
+   - `cp .env.example .env`
 4. Generate an *Application Key* using `php artisan key:generate` command
 5. Follow the installation instructions of [Valet](https://laravel.com/docs/5.6/valet#installation).
    - Window machine users should install [Homestead](https://laravel.com/docs/5.6/homestead) instead of Valet
    - You can now test locally by accessing your app on the browser as `<app-name>.test`
+   - _NOTE_: you can still test without setting up your local environment by executing `php artisan serve`
 6. Install node packages by running `yarn install`
 7. Compile the assets by running either `yarn dev`, `yarn watch` or `yarn watch-poll`
-8. If you are not using Valet nor Homestead, then execute `php artisan serve` and access your app at the given port number in the terminal
 
 ## Running tests
 1. Run PHP tests by executing `./vendor/bin/phpunit`
