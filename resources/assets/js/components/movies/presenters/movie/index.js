@@ -10,8 +10,9 @@ const mapStateToProps = (state, ownProps) => {
   const movieGenres = getGenresSelector(state, ownProps);
 
   const { movie } = state;
+  const isSameId = data.id === +ownProps.match.params.id;
   const shouldFetchInfo = _.isEmpty(data);
-  const shouldAddInfo = !movie.hasInfo && !shouldFetchInfo;
+  const shouldAddInfo = !movie.hasInfo && !shouldFetchInfo && !isSameId;
 
   return {
     data,
