@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -11,6 +11,10 @@ const MoviesContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   padding: ${rem('15px')};
+
+  ${media.medium`
+    justify-content: center;
+  `}
 `;
 
 const Movie = styled(Link)`
@@ -104,9 +108,5 @@ const MoviesList = ({ movies }) => (
     ))}
   </MoviesContainer>
 );
-
-MoviesList.propTypes = {
-  movies: PropTypes.array
-}
 
 export default MoviesList;

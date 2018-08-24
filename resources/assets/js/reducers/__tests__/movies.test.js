@@ -5,8 +5,7 @@ describe('ALL movies reducer', () => {
   let initialState;
   beforeEach(() => {
     initialState = {
-      movies: [],
-      nextPage: 1,
+      movies: {},
       loading: true,
       error: ''
     };
@@ -21,8 +20,7 @@ describe('ALL movies reducer', () => {
       type: actionTypes.LOADING_ALL_MOVIES,
       loading: false
     })).toEqual({
-      movies: [],
-      nextPage: 1,
+      movies: {},
       loading: false,
       error: ''
     });
@@ -37,14 +35,17 @@ describe('ALL movies reducer', () => {
         movies: [{
           id: 176565,
           title: 'Testing movies'
-        }]
+        }],
+        paginatorPage: 3
       }
     })).toEqual({
-      movies: [{
-        id: 176565,
-        title: 'Testing movies'
-      }],
-      nextPage: 2,
+      movies: {
+        'page-3': [{
+          id: 176565,
+          title: 'Testing movies'
+        }],
+        'page-4': []
+      },
       loading: false,
       error: ''
     });
@@ -56,8 +57,7 @@ describe('ALL movies reducer', () => {
       type: actionTypes.FETCH_ALL_MOVIES_ERROR,
       payload: 'An error occurred'
     })).toEqual({
-      movies: [],
-      nextPage: 1,
+      movies: {},
       loading: false,
       error: 'An error occurred'
     });

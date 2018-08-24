@@ -1,8 +1,10 @@
 import axios from 'axios';
 import _ from 'lodash';
 import actionTypes from '../moviesConstants';
+import { deriveApiPage } from '../helpers';
 
-export const fetchMovies = (page = 1) => {
+export const fetchMovies = (paginatorPage = 1) => {
+  const page = deriveApiPage(paginatorPage);
   return dispatch => {
     dispatch(loadingMovies(true));
 
@@ -10,11 +12,12 @@ export const fetchMovies = (page = 1) => {
       .then(response => {
         dispatch(loadingMovies(false));
 
-        const { data } = response;
-        if (_.isObject(data)) {
+        const { data = {} } = response;
+        if (!_.isEmpty(data)) {
           dispatch(fetchingMoviesSuccess({
-            page: data.page + 1,
-            movies: data.results
+            page: data.page,
+            movies: data.results,
+            paginatorPage
           }));
         }
       })

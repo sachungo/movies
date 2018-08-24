@@ -9,7 +9,8 @@ const mapStateToProps = ({ allMovies, genres }) => ({
   loading: allMovies.loading,
   nextPage: allMovies.nextPage,
   hasGenres: genresSelector(genres),
-  hasMovies: moviesSelector(allMovies)
+  hasMovies: moviesSelector(allMovies),
+  paginator: Object.keys(allMovies.movies)
 });
 
 const mapDispatchToProps = dispatch => ({

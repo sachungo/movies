@@ -1,4 +1,7 @@
 {
-    "presets": ["env", "react"],
-    "plugins": ["styled-components"]
+  "presets": ["env", "react"],
+  "plugins": [
+    "styled-components",
+    "transform-class-properties"
+  ]
 }

@@ -1,8 +1,8 @@
 import actionTypes from '../moviesConstants';
+import { paginateData } from '../helpers';
 
 const initialState = {
-  movies: [],
-  nextPage: 1,
+  movies: {},
   loading: true,
   error: ''
 };
@@ -15,10 +15,13 @@ const movies = (state = initialState, action) => {
         loading: action.loading
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
+      const { page, paginatorPage } = action.payload;
       return {
         ...state,
-        movies: [...state.movies, ...action.payload.movies],
-        nextPage: action.payload.page
+        movies: {
+          ...state.movies,
+          ...paginateData(paginatorPage, action.payload.movies)
+        }
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {
