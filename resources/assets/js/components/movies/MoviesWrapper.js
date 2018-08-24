@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const TOTAL_COUNT = 100;
-const PER_PAGE = 20;
+const PER_PAGE = 10;
 
 export default class MoviesWrapper extends Component {
   static propTypes = {
