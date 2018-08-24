@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import { MoviesLists } from './presenters';
 import { Loader, styles } from '../shared';
@@ -9,6 +10,9 @@ const Container = styled.div`
   margin-bottom: ${rem('50px')};
 `;
 
+const TOTAL_COUNT = 100;
+const PER_PAGE = 20;
+
 export default class MoviesWrapper extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
@@ -16,8 +20,16 @@ export default class MoviesWrapper extends Component {
     hasGenres: PropTypes.bool,
     hasMovies: PropTypes.bool,
     nextPage: PropTypes.number,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    paginator: PropTypes.arrayOf(PropTypes.string)
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activePage: 1
+    };
+  }
 
   componentDidMount() {
     const {
@@ -25,11 +37,10 @@ export default class MoviesWrapper extends Component {
       fetchGenres,
       hasGenres,
       hasMovies,
-      nextPage
     } = this.props;
 
     if (!hasMovies) {
-      fetchAll(nextPage);
+      fetchAll(this.state.activePage);
     }
 
     if (!hasGenres) {
@@ -37,10 +48,24 @@ export default class MoviesWrapper extends Component {
     }
   }
 
+  handlePagination = pageNumber => {
+    this.setState({ activePage: pageNumber });
+
+    const { paginator, fetchAll, nextPage } = this.props;
+    const pageKey = `page-${pageNumber}`;
+    if (paginator.includes(pageKey)) {
+      return;
+    }
+
+    fetchAll(pageNumber);
+  };
+
   render() {
     const { loading } = this.props;
+    const { activePage } = this.state;
+    let content;
     if(loading) {
-      return (
+      content = (
         <styles.LoaderWrapper>
           <Loader
             height={80}
@@ -51,11 +76,27 @@ export default class MoviesWrapper extends Component {
           />
         </styles.LoaderWrapper>
       );
+    } else {
+      content = (
+        <MoviesLists data-test="movies-list" page={activePage} />
+      );
     }
 
     return (
       <Container>
-        <MoviesLists data-test="movies-list" />
+        {content}
+        <Paginator
+          hideDisabled
+          activePage={activePage}
+          totalItemsCount={TOTAL_COUNT}
+          onChange={this.handlePagination}
+          itemsCountPerPage={PER_PAGE}
+          itemClass="movies-list__item"
+          activeLinkClass="movies-list__link--active"
+          activeClass="movies-list__item--active"
+          linkClass="movies-list__link"
+          data-test="movies-paginator"
+        />
       </Container>
     );
   }

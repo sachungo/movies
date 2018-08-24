@@ -10,10 +10,10 @@ export const fetchMovies = (page = 1) => {
       .then(response => {
         dispatch(loadingMovies(false));
 
-        const { data } = response;
-        if (_.isObject(data)) {
+        const { data = {} } = response;
+        if (!_.isEmpty(data)) {
           dispatch(fetchingMoviesSuccess({
-            page: data.page + 1,
+            page: data.page,
             movies: data.results
           }));
         }

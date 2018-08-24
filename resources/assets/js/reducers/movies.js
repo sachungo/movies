@@ -1,8 +1,7 @@
 import actionTypes from '../moviesConstants';
 
 const initialState = {
-  movies: [],
-  nextPage: 1,
+  movies: {},
   loading: true,
   error: ''
 };
@@ -15,10 +14,13 @@ const movies = (state = initialState, action) => {
         loading: action.loading
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
+      const { page } = action.payload;
       return {
         ...state,
-        movies: [...state.movies, ...action.payload.movies],
-        nextPage: action.payload.page
+        movies: {
+          ...state.movies,
+          [`page-${page}`]: action.payload.movies
+        }
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {

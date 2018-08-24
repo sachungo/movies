@@ -45,7 +45,7 @@ describe('movies actions tests', () => {
     expect(store.getActions()).toContainEqual({
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
-        page: 2,
+        page: 1,
         movies: []
       }
     });
