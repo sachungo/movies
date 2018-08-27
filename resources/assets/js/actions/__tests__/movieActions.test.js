@@ -59,4 +59,30 @@ describe('Single movie action test', () => {
       payload: data
     });
   });
+
+  it('dispatches ADD_MOVIE_CAST when movie info is successfully fetched', async () => {
+    const data = {
+      id: 34,
+      title: 'Movie cast information',
+      credits: {
+        cast: [{
+          character: 'Ethan Hunt',
+          id: 500,
+          name: 'Tom Cruise',
+          profile_path: '/3oWEuo0e8Nx8JvkqYCDec2iMY6K.jpg'
+        }]
+      }
+    };
+    movieSuccess(data);
+    await store.dispatch(fetchMovie(34));
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.ADD_MOVIE_CAST,
+      cast: [{
+        character: 'Ethan Hunt',
+        id: 500,
+        name: 'Tom Cruise',
+        profile_path: '/3oWEuo0e8Nx8JvkqYCDec2iMY6K.jpg'
+      }]
+    });
+  });
 });

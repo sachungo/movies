@@ -6,8 +6,10 @@ describe('The MovieInfo component', () => {
 
   beforeEach(() => {
     props = {
+      cast: [],
       data: {},
       genres: [],
+      hasCast: false,
       hasGenres: false,
       addInfo: jest.fn(),
       fetchInfo: jest.fn(),
@@ -86,5 +88,20 @@ describe('The MovieInfo component', () => {
     }
     const wrapper = mount(<MovieInfo {...modifiedProps} />);
     expect(wrapper.props().fetchInfo).toHaveBeenCalledWith(12);
+  });
+
+  it('renders the cast', () => {
+    props = {
+      ...props,
+      hasCast: true,
+      cast: [{
+        character: 'Ethan Hunt',
+        id: 500,
+        name: 'Tom Cruise',
+        profile_pat: '/3oWEuo0e8Nx8JvkqYCDec2iMY6K.jpg'
+      }]
+    };
+    const wrapper = shallow(<MovieInfo {...props} />);
+    expect(wrapper.find('[data-test="movie-cast"]').first()).toExist();
   });
 });

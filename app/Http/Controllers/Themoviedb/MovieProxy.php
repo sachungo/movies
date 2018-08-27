@@ -51,7 +51,9 @@ class MovieProxy
 
     public function getMovie($movie_id)
     {
-        $query = $this->constructQueryString();
+        $query = $this->constructQueryString([
+            'append_to_response' => 'credits'
+        ]);
         try{
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '?' . $query);
             return json_decode($response->getBody(), true);

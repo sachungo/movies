@@ -8,7 +8,8 @@ describe('SINGLE movie reducer', () => {
     initialState = {
       data: {},
       loading: false,
-      hasInfo: false
+      hasInfo: false,
+      cast: []
     };
   });
 
@@ -27,7 +28,8 @@ describe('SINGLE movie reducer', () => {
     })).toEqual({
       data: payload,
       loading: false,
-      hasInfo: true
+      hasInfo: true,
+      cast: []
     })
   });
 
@@ -38,7 +40,28 @@ describe('SINGLE movie reducer', () => {
     })).toEqual({
       data: {},
       loading: true,
-      hasInfo: false
+      hasInfo: false,
+      cast: []
+    });
+  });
+
+  it('should handle ADD_MOVIE_CAST', () => {
+    const state = {...initialState, loading: false};
+    const cast = [{
+      character: 'Ethan Hunt',
+      id: 500,
+      name: 'Tom Cruise',
+      profile_path: '/3oWEuo0e8Nx8JvkqYCDec2iMY6K.jpg'
+    }];
+
+    expect(reducer(state, {
+      type: actionTypes.ADD_MOVIE_CAST,
+      cast
+    })).toEqual({
+      data: {},
+      loading: false,
+      hasInfo: false,
+      cast
     });
   });
 });

@@ -14,6 +14,9 @@ export const fetchMovie = movieId => {
       .then(response => {
         dispatch(loadingMovie(false));
         dispatch(addMovieInfo(response.data));
+
+        const { cast = [] } = response.data.credits;
+        dispatch(addMovieCastInfo(cast));
       })
       .catch(error => {
         dispatch(loadingMovie(false));
@@ -26,4 +29,9 @@ export const fetchMovie = movieId => {
 const loadingMovie = loading => ({
   type: actionTypes.LOADING_MOVIE_INFO,
   loading
+});
+
+const addMovieCastInfo = cast => ({
+  type: actionTypes.ADD_MOVIE_CAST,
+  cast
 });

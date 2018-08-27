@@ -20,7 +20,9 @@ const mapStateToProps = (state, ownProps) => {
     hasGenres: !_.isEmpty(movieGenres),
     shouldAddInfo,
     shouldFetchInfo,
-    loading: movie.loading
+    loading: movie.loading,
+    cast: movie.cast,
+    hasCast: !_.isEmpty(movie.cast)
   }
 };
 
