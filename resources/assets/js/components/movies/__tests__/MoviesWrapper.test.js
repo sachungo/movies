@@ -5,9 +5,7 @@ describe('The MoviesWrapper component', () => {
   beforeEach(() => {
     props = {
       fetchAll: jest.fn(),
-      fetchGenres: jest.fn(),
       loading: true,
-      hasGenres: false,
       hasMovies: false
     }
   });
@@ -29,11 +27,6 @@ describe('The MoviesWrapper component', () => {
   it('executes the fetchAll call when there are no movies on component mount', () => {
     const wrapper = mount(<MoviesWrapper {...props} />);
     expect(wrapper.props().fetchAll).toHaveBeenCalledWith(1);
-  });
-
-  it('executes the fetchGenres call when there are no genres on component mount', () => {
-    const wrapper = mount(<MoviesWrapper {...props} />);
-    expect(wrapper.props().fetchGenres).toHaveBeenCalled();
   });
 
   it('renders the paginator', () => {

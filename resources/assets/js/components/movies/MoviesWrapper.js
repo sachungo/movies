@@ -16,8 +16,6 @@ const PER_PAGE = 10;
 export default class MoviesWrapper extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
-    fetchGenres: PropTypes.func.isRequired,
-    hasGenres: PropTypes.bool,
     hasMovies: PropTypes.bool,
     nextPage: PropTypes.number,
     loading: PropTypes.bool,
@@ -32,19 +30,10 @@ export default class MoviesWrapper extends Component {
   }
 
   componentDidMount() {
-    const {
-      fetchAll,
-      fetchGenres,
-      hasGenres,
-      hasMovies,
-    } = this.props;
+    const { fetchAll, hasMovies } = this.props;
 
     if (!hasMovies) {
       fetchAll(this.state.activePage);
-    }
-
-    if (!hasGenres) {
-      fetchGenres();
     }
   }
 
