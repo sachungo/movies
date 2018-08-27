@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/movies/{id}', function () {
     return view('welcome', ['title' => 'Movie Information']);
 });
+
+Route::fallback(function () {
+    return redirect('/');
+});
