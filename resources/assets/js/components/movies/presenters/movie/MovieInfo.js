@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
-import MovieCast from './MovieCast';
+import MovieCast from './cast';
 import { colors, media, Loader, styles } from '../../../shared';
 
 const Movie = styled.div`
@@ -55,13 +55,6 @@ const TitleWithBorder = Title.extend`
   font-size: ${rem('24px')};
 `;
 
-const MovieCastContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: ${rem('20px')};
-  justify-content: flex-start;
-`;
-
 const GenreText = styles.Text.withComponent('span');
 
 const GenresWrapper = styled.div`
@@ -87,7 +80,6 @@ export default class MovieInfo extends PureComponent {
     shouldAddInfo: PropTypes.bool,
     shouldFetchInfo: PropTypes.bool,
     cast: PropTypes.arrayOf(PropTypes.object),
-    hasCast: PropTypes.bool
   };
 
   componentDidMount() {
@@ -124,8 +116,8 @@ export default class MovieInfo extends PureComponent {
           <Loader
             height={70}
             width={70}
-            primaryColor="#00ced1"
-            secondaryColor="rgba(0, 206, 209, 0.1)"
+            primaryColor={colors.primary}
+            secondaryColor={colors.loadingTransparent}
             data-test="movie-loader"
           />
         </styles.LoaderWrapper>
@@ -203,21 +195,7 @@ export default class MovieInfo extends PureComponent {
           )}
         </ExtraInfo>
 
-          {hasCast && (
-            <ExtraInfo>
-              <TitleWithBorder>Cast</TitleWithBorder>
-              <MovieCastContainer data-test="movie-cast-container">
-                {cast.map(person => (
-                  <MovieCast
-                    key={person.id}
-                    cast={person}
-                    data-test="movie-cast"
-                  />
-                ))}
-              </MovieCastContainer>
-            </ExtraInfo>
-          )}
-
+        <MovieCast data-test="movie-cast" />
       </Movie>
     );
   }

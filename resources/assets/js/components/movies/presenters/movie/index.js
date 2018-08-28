@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   const { movie } = state;
   const isSameId = data.id === +ownProps.match.params.id;
   const shouldFetchInfo = _.isEmpty(data);
-  const shouldAddInfo = !movie.hasInfo && !shouldFetchInfo && !isSameId;
+  const shouldAddInfo = !movie.hasInfo && !shouldFetchInfo && isSameId;
 
   return {
     data,
@@ -21,8 +21,6 @@ const mapStateToProps = (state, ownProps) => {
     shouldAddInfo,
     shouldFetchInfo,
     loading: movie.loading,
-    cast: movie.cast,
-    hasCast: !_.isEmpty(movie.cast)
   }
 };
 
