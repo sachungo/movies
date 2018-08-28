@@ -1,5 +1,4 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import MovieInfo from '../MovieInfo';
 
 jest.mock('../cast', () => () => <div />);
