@@ -3,7 +3,7 @@ import _ from 'lodash';
 import MovieCast from './MovieCast';
 import { fetchMovieCast } from '../../../../../actions/movie';
 
-const mapStateToProps = ({ movie }, ownProps) => ({
+const mapStateToProps = ({ movie }) => ({
   loading: movie.loadingCast,
   cast: movie.cast,
   hasCast: !_.isEmpty(movie.cast)

@@ -30,26 +30,43 @@ export default class MovieCast extends PureComponent {
     loading: PropTypes.bool,
     cast: PropTypes.arrayOf(PropTypes.object),
     hasCast: PropTypes.bool,
-    fetchCast: PropTypes.func
+    fetchCast: PropTypes.func,
+    id: PropTypes.string,
+    shouldFetchCast: PropTypes.bool
   };
+
+  componentDidMount() {
+    const {
+      hasCast,
+      fetchCast,
+      id,
+      shouldFetchCast
+    } = this.props;
+
+    if(!hasCast && shouldFetchCast) {
+      fetchCast(id);
+    }
+  }
 
   render() {
     const { loading, cast, hasCast } = this.props;
 
     if (loading) {
       return (
-        <Loader
-          primaryColor={colors.primary}
-          secondaryColor={colors.loadingTransparent}
-          data-test="movie-cast-loader"
-        />
+        <Wrapper>
+          <Loader
+            primaryColor={colors.primary}
+            secondaryColor={colors.loadingTransparent}
+            data-test="movie-cast-loader"
+          />
+        </Wrapper>
       );
     }
 
     return (
       <Wrapper>
         {hasCast && (
-          <div>
+          <Fragment>
             <TitleWithBorder>Cast</TitleWithBorder>
             <MovieCastContainer>
               {cast.map(actor => (
@@ -60,7 +77,7 @@ export default class MovieCast extends PureComponent {
                 />
               ))}
             </MovieCastContainer>
-          </div>
+          </Fragment>
         )}
       </Wrapper>
     );

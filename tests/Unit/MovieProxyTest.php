@@ -71,4 +71,21 @@ class MovieProxyTest extends TestCase
         $this->mockHandler->append(new Response(200, [], json_encode($response)));
         $this->assertEquals($response, $this->movieProxy->getMovie(1));
     }
+
+    public function testGetMovieCast()
+    {
+        $response = [
+            'id' => 299536,
+            'cast' => [
+                [
+                    'id' => 123,
+                    'character' => 'Thanos',
+                    'name' => 'Josh Brolin',
+                    'profile_path' => '/testing.jpg'
+                ]
+            ]
+        ];
+        $this->mockHandler->append(new Response(200, [], json_encode($response)));
+        $this->assertEquals($response, $this->movieProxy->getMovieCast(299536));
+    }
 }

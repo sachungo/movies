@@ -6,5 +6,6 @@ export default {
   LOADING_ALL_GENRES: 'movies/loading/genres',
   FETCH_GENRES_SUCCESS: 'movies/fetch/genres/success',
   LOADING_MOVIE_INFO: 'movies/loading/movie',
-  ADD_MOVIE_CAST: 'movies/movie/cast/info'
+  ADD_MOVIE_CAST: 'movies/movie/cast/info',
+  LOADING_MOVIE_CAST: 'movies/loading/movie/cast'
 }

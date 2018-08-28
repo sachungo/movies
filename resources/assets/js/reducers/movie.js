@@ -4,7 +4,8 @@ const initialState = {
   data: {},
   loading: false,
   hasInfo: false,
-  cast: []
+  cast: [],
+  loadingCast: false
 };
 
 const movie = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         cast: action.cast
+      }
+    case actionTypes.LOADING_MOVIE_CAST:
+      return {
+        ...state,
+        loadingCast: action.loading
       }
     default:
       return state;

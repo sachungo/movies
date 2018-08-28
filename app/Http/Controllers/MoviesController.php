@@ -27,4 +27,10 @@ class MoviesController extends Controller
         $movie_id = $request->route('movie_id');
         return $this->movieProxy->getMovie($movie_id);
     }
+
+    public function getMovieCast(Request $request)
+    {
+        $movie_id = $request->route('movie_id');
+        return $this->movieProxy->getMovieCast($movie_id);
+    }
 }

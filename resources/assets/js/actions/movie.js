@@ -35,3 +35,27 @@ const addMovieCastInfo = cast => ({
   type: actionTypes.ADD_MOVIE_CAST,
   cast
 });
+
+const loadingCast = loading => ({
+  type: actionTypes.LOADING_MOVIE_CAST,
+  loading
+});
+
+export const fetchMovieCast = movieId => {
+  return dispatch => {
+    dispatch(loadingCast(true));
+
+    return axios.get(`/api/movie/${movieId}/cast`)
+      .then(response => {
+        dispatch(loadingCast(false));
+
+        const { cast = [] } = response.data;
+        dispatch(addMovieCastInfo(cast));
+      })
+      .catch(error => {
+        dispatch(loadingCast(false));
+
+        // TODO: handle error
+      });
+  }
+};
