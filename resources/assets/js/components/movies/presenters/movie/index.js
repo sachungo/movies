@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import MovieInfo from './MovieInfo';
-import { getMovieInfo } from '../../../../helpers';
+import { getMovieInfo, isSameId as movieIdSame } from '../../../../helpers';
 import { getGenresSelector } from '../../../../selectors';
 import { addMovieInfo, fetchMovie } from '../../../../actions/movie';
 
 const mapStateToProps = (state, ownProps) => {
+  const isSameId = movieIdSame(state, ownProps);
   const data = getMovieInfo(state, ownProps);
   const movieGenres = getGenresSelector(state, ownProps);
 
-  const { movie } = state;
-  const isSameId = data.id === +ownProps.match.params.id;
   const shouldFetchInfo = _.isEmpty(data);
-  const shouldAddInfo = !movie.hasInfo && !shouldFetchInfo && isSameId;
+  const shouldAddInfo = !isSameId && !shouldFetchInfo;
 
   return {
     data,
@@ -20,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
     hasGenres: !_.isEmpty(movieGenres),
     shouldAddInfo,
     shouldFetchInfo,
-    loading: movie.loading,
+    loading: state.movie.loading
   }
 };
 
