@@ -1,5 +1,8 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import MovieInfo from '../MovieInfo';
+
+jest.mock('../cast', () => () => <div />);
 
 describe('The MovieInfo component', () => {
   let props;
@@ -13,7 +16,7 @@ describe('The MovieInfo component', () => {
       addInfo: jest.fn(),
       fetchInfo: jest.fn(),
       match: { params: {} }
-    }
+    };
   });
 
   it('renders without throwing an error', () => {
@@ -93,18 +96,5 @@ describe('The MovieInfo component', () => {
   it('renders the cast', () => {
     const wrapper = shallow(<MovieInfo {...props} />);
     expect(wrapper.find('[data-test="movie-cast"]')).toExist();
-  });
-
-  it('executes fetchCast when shouldAddInfo is true', () => {
-    const wrapper = mount(
-      <MovieInfo
-        {...props}
-        match={{
-          params: { id: 12 }
-        }}
-        shouldAddInfo
-      />
-    );
-    expect(wrapper.props().fetchCast).toHaveBeenCalledWith(12);
   });
 });
