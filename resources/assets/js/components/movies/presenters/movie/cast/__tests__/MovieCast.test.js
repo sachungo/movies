@@ -10,7 +10,8 @@ describe('MovieCast component test', () => {
       hasCast: false,
       fetchCast: jest.fn(),
       shouldFetchCast: false,
-      id: '12'
+      id: '12',
+      resetCast: jest.fn()
     };
   });
 
@@ -32,6 +33,17 @@ describe('MovieCast component test', () => {
     );
 
     expect(wrapper.props().fetchCast).toHaveBeenCalledWith('12');
+  });
+
+  it('resets the cast information when shouldFetchCast is true', () => {
+    const wrapper = mount(
+      <MovieCast
+        {...props}
+        shouldFetchCast
+      />
+    );
+
+    expect(wrapper.props().resetCast).toHaveBeenCalled();
   });
 
   it('renders the cast information', () => {

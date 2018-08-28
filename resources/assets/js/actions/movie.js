@@ -31,7 +31,7 @@ const loadingMovie = loading => ({
   loading
 });
 
-const addMovieCastInfo = cast => ({
+export const addMovieCastInfo = cast => ({
   type: actionTypes.ADD_MOVIE_CAST,
   cast
 });
