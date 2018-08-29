@@ -4,7 +4,7 @@ import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
 import MovieCast from './cast';
-import { colors, media, Loader, styles } from '../../../shared';
+import { colors, media, Loader, styles } from '../../shared';
 
 const Movie = styled.div`
   padding: ${rem('20px')};

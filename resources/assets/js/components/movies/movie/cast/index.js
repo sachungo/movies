@@ -4,7 +4,7 @@ import MovieCast from './MovieCast';
 import {
   fetchMovieCast,
   addMovieCastInfo
-} from '../../../../../actions/movie';
+} from '../../../../actions/movie';
 
 const mapStateToProps = ({ movie }) => ({
   loading: movie.loadingCast,
