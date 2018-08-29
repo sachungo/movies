@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { colors, Loader, styles } from '../../../../shared';
+import { colors, Loader, styles } from '../../../shared';
 
 const Image  = styled.img`
   flex: 0 0 ${rem('50px')};

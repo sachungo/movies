@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem, ellipsis } from 'polished';
 import { Link } from 'react-router-dom';
-import { media, colors } from '../../../shared';
+import { media, colors } from '../../shared';
 
 const MoviesContainer = styled.div`
   display: flex;

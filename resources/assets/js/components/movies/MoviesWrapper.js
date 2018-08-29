@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
-import { MoviesLists } from './presenters';
+import MoviesLists from './lists';
 import { Loader, styles } from '../shared';
 
 const Container = styled.div`

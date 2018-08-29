@@ -1,5 +1,5 @@
 import Movies from './MoviesContainer';
-import { MovieInfo } from './presenters';
+import MovieInfo from './movie';
 
 export {
   Movies as Home,

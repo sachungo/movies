@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
 
-import { colors, styles } from '../../../../shared';
+import { colors, styles } from '../../../shared';
 import ProfileImage from './ProfileImage';
 
 const ActorContainer = styled.div`

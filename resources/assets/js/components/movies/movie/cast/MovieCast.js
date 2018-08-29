@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem } from 'polished';
-import { colors, styles, Loader } from '../../../../shared';
+import { colors, styles, Loader } from '../../../shared';
 import Actor from './Actor';
 
 const Wrapper = styled.div`
