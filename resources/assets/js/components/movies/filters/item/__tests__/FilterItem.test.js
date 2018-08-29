@@ -17,4 +17,9 @@ describe('FilterItem component', () => {
     const wrapper = shallow(<FilterItem {...props} />);
     expect(wrapper.find('[data-test="filter-criterion"]')).toExist();
   });
+
+  it('renders the filter items', () => {
+    const wrapper = shallow(<FilterItem {...props} />);
+    expect(wrapper.find('[data-test="filter-list"]')).toExist();
+  });
 });

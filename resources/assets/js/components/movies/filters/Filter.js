@@ -9,6 +9,8 @@ const FilterBar = styled.div`
   width: 100%;
   padding: ${rem('16px')};
   border-bottom: ${rem('1px')} solid ${colors.border};
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export default class Filter extends PureComponent {
