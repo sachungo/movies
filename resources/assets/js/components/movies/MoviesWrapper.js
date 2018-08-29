@@ -5,9 +5,11 @@ import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import MoviesLists from './lists';
 import { Loader, styles } from '../shared';
+import Filter from './filters';
 
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
+  margin-top: ${rem('100px')};
 `;
 
 const TOTAL_COUNT = 100;
@@ -73,6 +75,7 @@ export default class MoviesWrapper extends Component {
 
     return (
       <Container>
+        <Filter />
         {content}
         <Paginator
           hideDisabled
