@@ -24,7 +24,7 @@ const movie = (state = initialState, action) => {
     case actionTypes.ADD_MOVIE_CAST:
       return {
         ...state,
-        cast: action.cast
+        cast: action.cast.slice(0, 10)
       }
     case actionTypes.LOADING_MOVIE_CAST:
       return {
