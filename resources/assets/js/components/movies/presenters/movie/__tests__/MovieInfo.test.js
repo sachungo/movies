@@ -1,17 +1,21 @@
 import React from 'react';
 import MovieInfo from '../MovieInfo';
 
+jest.mock('../cast', () => () => <div />);
+
 describe('The MovieInfo component', () => {
   let props;
 
   beforeEach(() => {
     props = {
+      cast: [],
       data: {},
       genres: [],
       hasGenres: false,
       addInfo: jest.fn(),
       fetchInfo: jest.fn(),
-    }
+      match: { params: {} }
+    };
   });
 
   it('renders without throwing an error', () => {
@@ -86,5 +90,10 @@ describe('The MovieInfo component', () => {
     }
     const wrapper = mount(<MovieInfo {...modifiedProps} />);
     expect(wrapper.props().fetchInfo).toHaveBeenCalledWith(12);
+  });
+
+  it('renders the cast', () => {
+    const wrapper = shallow(<MovieInfo {...props} />);
+    expect(wrapper.find('[data-test="movie-cast"]')).toExist();
   });
 });

@@ -3,7 +3,9 @@ import actionTypes from '../moviesConstants';
 const initialState = {
   data: {},
   loading: false,
-  hasInfo: false
+  hasInfo: false,
+  cast: [],
+  loadingCast: false
 };
 
 const movie = (state = initialState, action) => {
@@ -18,6 +20,16 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading
+      }
+    case actionTypes.ADD_MOVIE_CAST:
+      return {
+        ...state,
+        cast: action.cast.slice(0, 10)
+      }
+    case actionTypes.LOADING_MOVIE_CAST:
+      return {
+        ...state,
+        loadingCast: action.loading
       }
     default:
       return state;

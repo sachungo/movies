@@ -1,8 +1,18 @@
 import _ from 'lodash';
 
+export const isSameId = (state, props) => {
+  const { movie } = state;
+  const movieId = movie.hasInfo && movie.data.id
+  return movieId === +props.match.params.id;
+}
+
 export const getMovieInfo = (state, props) => {
-  const propsData = _.get(props.location, 'state.data', {});
-  return  _.isEmpty(state.movie.data) ? propsData : state.movie.data;
+  const isIdSame = isSameId(state, props);
+  if (isIdSame) {
+    return state.movie.data;
+  }
+
+  return _.get(props.location, 'state.data', {});
 }
 
 /**

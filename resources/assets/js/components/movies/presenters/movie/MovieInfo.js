@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
+import MovieCast from './cast';
 import { colors, media, Loader, styles } from '../../../shared';
 
 const Movie = styled.div`
   padding: ${rem('20px')};
+  margin: ${rem('50px')} auto ${rem('100px')};
 `;
 
 const Image = styled.img`
@@ -40,42 +42,46 @@ const BasicInfo = styled.div`
   `}
 `;
 
-const Paragraph = styled.p`
-  color: ${colors.primary};
-  font-weight: 400;
-  font-size: ${rem('17px')};
-  margin-bottom: ${rem('5px')};
-`;
-
-const Span = styled.span`
-  color: ${colors.text};
-  font-weight: 200;
-  font-size: ${rem('15px')};
-  margin-left: ${rem('10px')};
-`;
-
 const ExtraInfo = styled.div`
-  margin-top: ${rem('20px')};
+  &:not(:empty) {
+    margin-top: ${rem('20px')};
+  }
 `;
 
-const Title = Paragraph.withComponent('h2');
+const Title = styles.Label.withComponent('h2');
 
 const TitleWithBorder = Title.extend`
   border-bottom: ${rem('1px')} solid ${colors.border};
   font-size: ${rem('24px')};
 `;
 
-const Text = Span.withComponent('p');
+const GenreText = styles.Text.withComponent('span');
 
-const StyledText = Text.extend`
-  margin-left: 0;
+const GenresWrapper = styled.div`
+  margin-left: ${rem('10px')};
+  display: flex;
+  flex-wrap: wrap;
 `;
 
-const Container = styled.div``;
+const Text = styled.span`
+  margin-right: ${rem('10px')};
+`;
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 export default class MovieInfo extends PureComponent {
+  static propTypes = {
+    addInfo: PropTypes.func.isRequired,
+    data: PropTypes.object,
+    fetchInfo: PropTypes.func.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.object),
+    hasGenres: PropTypes.bool,
+    loading: PropTypes.bool,
+    shouldAddInfo: PropTypes.bool,
+    shouldFetchInfo: PropTypes.bool,
+    cast: PropTypes.arrayOf(PropTypes.object),
+  };
+
   componentDidMount() {
     const {
       shouldAddInfo,
@@ -96,15 +102,24 @@ export default class MovieInfo extends PureComponent {
   }
 
   render() {
-    const { data, genres, hasGenres, loading } = this.props;
+    const {
+      data,
+      genres,
+      hasGenres,
+      loading,
+      hasCast,
+      cast,
+      match,
+      shouldAddInfo
+    } = this.props;
     if (loading) {
       return (
         <styles.LoaderWrapper>
           <Loader
             height={70}
             width={70}
-            primaryColor="#00ced1"
-            secondaryColor="rgba(0, 206, 209, 0.1)"
+            primaryColor={colors.primary}
+            secondaryColor={colors.loadingTransparent}
             data-test="movie-loader"
           />
         </styles.LoaderWrapper>
@@ -135,63 +150,59 @@ export default class MovieInfo extends PureComponent {
 
           <BasicInfo data-test="movie-basics">
             {data.title && (
-              <Paragraph>
-                Title:
-                <Span>{data.title}</Span>
-              </Paragraph>
+              <styles.Label>
+                <Text>Title:</Text>
+                <styles.Text>{data.title}</styles.Text>
+              </styles.Label>
             )}
 
             {data.popularity && (
-              <Paragraph>
-                Popularity:
-                <Span>{data.popularity}</Span>
-              </Paragraph>
+              <styles.Label>
+                <Text>Popularity:</Text>
+                <styles.Text>{data.popularity}</styles.Text>
+              </styles.Label>
             )}
 
             {data.release_date && (
-              <Paragraph>
-                Date of release:
-                <Span>{data.release_date}</Span>
-              </Paragraph>
+              <styles.Label>
+                <Text>Date of release:</Text>
+                <styles.Text>{data.release_date}</styles.Text>
+              </styles.Label>
             )}
 
             {hasGenres && (
-              <Paragraph>
+              <styles.Label>
                 Genres:
-                {genres.map(genre => (
-                  <Span
-                    key={genre.id}
-                    data-test="movie-genre"
-                  >
-                    {genre.name}
-                  </Span>
-              ))}
-              </Paragraph>
+                <GenresWrapper>
+                  {genres.map(genre => (
+                    <GenreText
+                      key={genre.id}
+                      data-test="movie-genre"
+                    >
+                      {genre.name}
+                    </GenreText>
+                ))}
+                </GenresWrapper>
+              </styles.Label>
             )}
           </BasicInfo>
         </Wrapper>
 
         <ExtraInfo>
           {data.overview  && (
-            <Container data-test="movie-overview">
+            <div data-test="movie-overview">
               <TitleWithBorder>Overview</TitleWithBorder>
-              <StyledText>{data.overview}</StyledText>
-            </Container>
+              <styles.Text>{data.overview}</styles.Text>
+            </div>
           )}
         </ExtraInfo>
 
+        <MovieCast
+          data-test="movie-cast"
+          id={match.params.id}
+          shouldFetchCast={shouldAddInfo}
+        />
       </Movie>
     );
   }
 }
-
-MovieInfo.propTypes = {
-  addInfo: PropTypes.func.isRequired,
-  data: PropTypes.object,
-  fetchInfo: PropTypes.func.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.object),
-  hasGenres: PropTypes.bool,
-  loading: PropTypes.bool,
-  shouldAddInfo: PropTypes.bool,
-  shouldFetchInfo: PropTypes.bool
-};
