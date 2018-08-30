@@ -32,24 +32,21 @@ const ButtonWrapper = styled.div`
 
 export default class Dropdown extends Component {
   static propTypes = {
-    listItems: PropTypes.array.isRequired
-  };
-
-  state = {
-    selectedItems: new Map()
+    listItems: PropTypes.array.isRequired,
+    selectedItems: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
   };
 
   handleChange = event => {
     const { checked, value } = event.target;
-
-    this.setState((prevState) => ({
-      selectedItems: prevState.selectedItems.set(value, checked)
-    }));
+    this.props.onChange({
+      id: +value,
+      isChecked: checked
+    })
   };
 
   render() {
-    const { listItems } = this.props;
-    const { selectedItems } = this.state;
+    const { listItems, selectedItems } = this.props;
 
     return (
       <Wrapper>
@@ -59,7 +56,7 @@ export default class Dropdown extends Component {
               <Checkbox
                 item={item}
                 onChange={this.handleChange}
-                checked={selectedItems.get(item.id.toString())}
+                checked={selectedItems[item.id]}
                 data-test="dropdown-list-item"
               />
             </Item>

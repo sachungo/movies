@@ -10,7 +10,9 @@ const Wrapper = styled.div`
 `;
 
 // TODO: button is active when dropdown is visible
-const Item = styled(styles.Button)``;
+const Item = styled(styles.Button)`
+  text-transform: capitalize;
+`;
 
 const dummyData = [
   {
@@ -33,16 +35,20 @@ const dummyData = [
 
 export default class FilterItem extends PureComponent {
   static propTypes = {
-    criterion: PropTypes.string.isRequired
+    criterion: PropTypes.string.isRequired,
+    selectedItems: PropTypes.object.isRequired,
+    onChange: PropTypes.func.isRequired
   }
 
   render() {
-    const { criterion } = this.props;
+    const { criterion, selectedItems, onChange } = this.props;
     return (
       <Wrapper>
         <Item data-test="filter-criterion">{criterion}</Item>
         <Dropdown
           listItems={dummyData}
+          selectedItems={selectedItems}
+          onChange={onChange}
           data-test="filter-list"
         />
       </Wrapper>

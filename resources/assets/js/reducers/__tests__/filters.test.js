@@ -6,7 +6,7 @@ describe('Filters reducer', () => {
 
   beforeEach(() => {
     initialState = {
-      actors: []
+      actors: {}
     };
   });
 
@@ -16,7 +16,7 @@ describe('Filters reducer', () => {
 
   it('should handle FILTER_CRITERIA_OPTION_CHANGED', () => {
     const payload = {
-      id: 12,
+      id: 'actor-12',
       isChecked: true
     };
     expect(reducer(initialState, {
@@ -24,7 +24,7 @@ describe('Filters reducer', () => {
       payload,
       criterion: 'actors'
     })).toEqual({
-      actors: new Map([[payload.id, payload.isChecked]])
+      actors: { 'actor-12': true }
     });
   });
 });

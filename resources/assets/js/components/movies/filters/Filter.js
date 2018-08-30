@@ -18,7 +18,7 @@ export default class Filter extends PureComponent {
     return(
       <FilterBar data-test="filter-bar">
         <FilterItem
-          criterion="Actors"
+          criterion="actors"
           data-test="filter-item"
         />
       </FilterBar>
