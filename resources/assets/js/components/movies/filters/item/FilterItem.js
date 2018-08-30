@@ -26,6 +26,27 @@ export default class FilterItem extends PureComponent {
     options: PropTypes.array
   }
 
+  state = {
+    isFiltered: false
+  };
+
+  handleSubmit = () => {
+    this.props.onFilter(
+      this.props.query
+    );
+    this.setState({ isFiltered: true });
+  };
+
+  handleCancel = () => {
+    this.props.onClear();
+
+    if (this.state.isFiltered) {
+      this.props.onFilter();
+    }
+
+    this.setState({ isFiltered: false });
+  };
+
   render() {
     const {
       criterion,
@@ -45,9 +66,9 @@ export default class FilterItem extends PureComponent {
           selectedItems={selectedItems}
           onChange={onChange}
           hasSelected={hasSelected}
-          onClear={onClear}
+          onClear={this.handleCancel}
           query={query}
-          onFilter={onFilter}
+          onSubmit={this.handleSubmit}
           data-test="filter-list"
         />
       </Wrapper>

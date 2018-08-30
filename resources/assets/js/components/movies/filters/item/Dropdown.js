@@ -85,7 +85,7 @@ export default class Dropdown extends Component {
     hasSelected: PropTypes.bool,
     onClear: PropTypes.func,
     query: PropTypes.string,
-    onFilter: PropTypes.func
+    onSubmit: PropTypes.func
   };
 
   handleChange = event => {
@@ -96,23 +96,13 @@ export default class Dropdown extends Component {
     })
   };
 
-  handleSubmit = () => {
-    this.props.onFilter(
-      this.props.query
-    );
-  };
-
-  handleClear = () => {
-    this.props.onClear();
-    this.props.onFilter();
-  }
-
   render() {
     const {
       listItems,
       selectedItems,
       hasSelected,
-      onClear
+      onClear,
+      onSubmit
     } = this.props;
 
     return (
@@ -134,7 +124,7 @@ export default class Dropdown extends Component {
           <ApplyButton
             data-test="apply-button"
             disabled={!hasSelected}
-            onClick={this.handleSubmit}
+            onClick={onSubmit}
           >
             Apply
           </ApplyButton>
@@ -142,7 +132,7 @@ export default class Dropdown extends Component {
           {hasSelected && (
             <ClearButton
               data-test="clear-button"
-              onClick={this.handleClear}
+              onClick={onClear}
             >
               Clear
             </ClearButton>

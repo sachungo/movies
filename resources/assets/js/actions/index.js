@@ -20,7 +20,7 @@ export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
           dispatch(fetchingMoviesSuccess({
             movies: data.results,
             paginatorPage,
-            totalPages: data.total_pages
+            totalResults: data.total_results
           }));
         }
       })

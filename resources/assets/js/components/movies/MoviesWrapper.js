@@ -20,7 +20,7 @@ export default class MoviesWrapper extends Component {
     hasMovies: PropTypes.bool,
     loading: PropTypes.bool,
     paginator: PropTypes.arrayOf(PropTypes.string),
-    totalPaginatorPages: PropTypes.number,
+    totalResults: PropTypes.number,
     query: PropTypes.string
   };
 
@@ -52,7 +52,7 @@ export default class MoviesWrapper extends Component {
   };
 
   render() {
-    const { loading, totalPaginatorPages } = this.props;
+    const { loading, totalResults } = this.props;
     const { activePage } = this.state;
     let content;
     if(loading) {
@@ -80,7 +80,7 @@ export default class MoviesWrapper extends Component {
         <Paginator
           hideDisabled
           activePage={activePage}
-          totalItemsCount={totalPaginatorPages * PER_PAGE}
+          totalItemsCount={totalResults}
           onChange={this.handlePagination}
           itemsCountPerPage={PER_PAGE}
           itemClass="movies-list__item"

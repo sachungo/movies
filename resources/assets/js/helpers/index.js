@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+const LIMIT = 10;
+
 export const isSameId = (state, props) => {
   const { movie } = state;
   const movieId = movie.hasInfo && movie.data.id
@@ -29,20 +31,23 @@ export const getMovieInfo = (state, props) => {
  * @param {number} paginatorPage
  */
 export const deriveApiPage = paginatorPage => {
-  const offset = 1;
-  const pageMultiplier = 2;
-
-  if (isEven(paginatorPage)) {
-    return paginatorPage / pageMultiplier;
-  }
-  return (paginatorPage + offset) / pageMultiplier;
+  const API_LIMIT = 20;
+  return Math.ceil((paginatorPage * LIMIT) / API_LIMIT);
 }
 
 const isEven = number => (number % 2 === 0);
 
 const getPaginatorKey = page => `page-${page}`;
 
-export const paginateData = (paginatorPage, data, chunk = 10) => {
+const totalPages = total => {
+  const count = getPaginatorTotalCount(total);
+  return Math.ceil(count / LIMIT );
+};
+
+const isOutOfBounds = (page, lastPage) => (page > lastPage);
+
+export const paginateData = (paginatorPage, data, total) => {
+  const paginatorPages = totalPages(total);
   const offset = 1;
   let firstPage = paginatorPage;
   let secondPage = paginatorPage + offset;
@@ -51,10 +56,26 @@ export const paginateData = (paginatorPage, data, chunk = 10) => {
     secondPage = paginatorPage;
   }
 
-  return {
-    [getPaginatorKey(firstPage)]: data.slice(0, chunk),
-    [getPaginatorKey(secondPage)]: data.slice(chunk)
+  let paginated = {
+    [getPaginatorKey(firstPage)]: data.slice(0, LIMIT)
   };
+
+  if (isOutOfBounds(secondPage)) {
+    return paginated;
+  }
+
+  return {
+    ...paginated,
+    [getPaginatorKey(secondPage)]: data.slice(LIMIT)
+  };
+};
+
+export const getPaginatorTotalCount = count => {
+  const MAX_COUNT = 100;
+  if (count > MAX_COUNT) {
+    return MAX_COUNT;
+  }
+  return count;
 };
 
 const FILTER_TYPES = {

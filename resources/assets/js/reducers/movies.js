@@ -1,11 +1,11 @@
 import actionTypes from '../moviesConstants';
-import { paginateData } from '../helpers';
+import { paginateData, getPaginatorTotalCount } from '../helpers';
 
 const initialState = {
   movies: {},
   loading: true,
   error: '',
-  totalPages: 1
+  totalResults: 1
 };
 
 const TOTAL_PAGES = 5;
@@ -18,14 +18,14 @@ const movies = (state = initialState, action) => {
         loading: action.loading
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
-      const { paginatorPage, totalPages } = action.payload;
+      const { paginatorPage, totalResults, movies } = action.payload;
       return {
         ...state,
         movies: {
           ...state.movies,
-          ...paginateData(paginatorPage, action.payload.movies)
+          ...paginateData(paginatorPage, movies, totalResults)
         },
-        totalPages: totalPages > TOTAL_PAGES ? TOTAL_PAGES : totalPages
+        totalResults: getPaginatorTotalCount(totalResults)
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {

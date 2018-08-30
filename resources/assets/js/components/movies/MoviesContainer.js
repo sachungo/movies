@@ -6,21 +6,16 @@ import { fetchGenres } from '../../actions/genres'
 import { moviesSelector } from '../../selectors';
 import { getQuery } from '../../helpers';
 
-// The API gives 20 results, whereas the paginator works with 10
-// per page. Therefore, the totalPages are multiplied by 2,
-// thereby, resulting to MULTIPLIER declaration
-const MULTIPLIER = 2;
-
 const mapStateToProps = ({ allMovies, genres, filters }) => ({
   loading: allMovies.loading,
   hasMovies: moviesSelector(allMovies),
   paginator: Object.keys(allMovies.movies),
-  totalPaginatorPages: allMovies.totalPages * MULTIPLIER,
+  totalResults: allMovies.totalResults,
   query: getQuery(filters)
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAll: page => dispatch(fetchMovies(page))
+  fetchAll: (page, query = '') => dispatch(fetchMovies(page, query))
 });
 
 export default connect(

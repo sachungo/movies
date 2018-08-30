@@ -8,7 +8,7 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: true,
       error: '',
-      totalPages: 1
+      totalResults: 1
     };
   });
 
@@ -24,7 +24,7 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: '',
-      totalPages: 1
+      totalResults: 1
     });
   });
 
@@ -33,7 +33,7 @@ describe('ALL movies reducer', () => {
     expect(reducer(state, {
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
-        totalPages: 6,
+        totalResults: 6,
         movies: [{
           id: 176565,
           title: 'Testing movies'
@@ -50,7 +50,7 @@ describe('ALL movies reducer', () => {
       },
       loading: false,
       error: '',
-      totalPages: 5
+      totalResults: 5
     });
   });
 
@@ -63,7 +63,7 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: 'An error occurred',
-      totalPages: 1
+      totalResults: 1
     });
   });
 });

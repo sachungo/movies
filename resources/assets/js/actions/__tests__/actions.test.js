@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockStore = configureStore([thunkMiddleware]);
 
 describe('movies actions tests', () => {
-  const moviesSuccess = (data = { total_pages: 1, results: [] }) => (
+  const moviesSuccess = (data = { total_results: 1, results: [] }) => (
     axios.get.mockImplementation(() =>
       Promise.resolve({ data })
     )
@@ -45,7 +45,7 @@ describe('movies actions tests', () => {
     expect(store.getActions()).toContainEqual({
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
-        totalPages: 1,
+        totalResults: 1,
         movies: [],
         paginatorPage: 1
       }
