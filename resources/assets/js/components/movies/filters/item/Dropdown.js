@@ -97,7 +97,8 @@ export default class Dropdown extends Component {
     onClear: PropTypes.func,
     query: PropTypes.string,
     onSubmit: PropTypes.func,
-    show: PropTypes.bool
+    show: PropTypes.bool,
+    onMouseLeave: PropTypes.func
   };
 
   handleChange = event => {
@@ -115,11 +116,15 @@ export default class Dropdown extends Component {
       hasSelected,
       onClear,
       onSubmit,
-      show
+      show,
+      onMouseLeave
     } = this.props;
 
     return (
-      <Wrapper show={show}>
+      <Wrapper
+        show={show}
+        onMouseLeave={onMouseLeave}
+      >
         <List data-test="dropdown-list">
           {listItems.map(item => (
             <Item key={item.id}>
