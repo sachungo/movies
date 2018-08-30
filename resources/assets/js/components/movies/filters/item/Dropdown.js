@@ -49,6 +49,14 @@ const ApplyButton = styles.Button.extend`
     border-color: ${colors.primaryActive};
     color: ${colors.white};
   }
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    background-color: ${colors.disabled};
+    border-color: ${colors.disabled};
+    color: ${colors.text};
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -66,7 +74,9 @@ export default class Dropdown extends Component {
     selectedItems: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     hasSelected: PropTypes.bool,
-    onClear: PropTypes.func
+    onClear: PropTypes.func,
+    query: PropTypes.string,
+    onFilter: PropTypes.func
   };
 
   handleChange = event => {
@@ -77,9 +87,11 @@ export default class Dropdown extends Component {
     })
   };
 
-  // handleClearSelection = () => {
-  //   this.props.onClear();
-  // };
+  handleSubmit = () => {
+    this.props.onFilter(
+      this.props.query
+    );
+  };
 
   render() {
     const {
@@ -107,6 +119,8 @@ export default class Dropdown extends Component {
         <ButtonWrapper>
           <ApplyButton
             data-test="apply-button"
+            disabled={!hasSelected}
+            onClick={this.handleSubmit}
           >
             Apply
           </ApplyButton>

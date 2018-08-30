@@ -20,7 +20,8 @@ export default class MoviesWrapper extends Component {
     hasMovies: PropTypes.bool,
     loading: PropTypes.bool,
     paginator: PropTypes.arrayOf(PropTypes.string),
-    totalPaginatorPages: PropTypes.number
+    totalPaginatorPages: PropTypes.number,
+    query: PropTypes.string
   };
 
   constructor(props) {
@@ -41,13 +42,13 @@ export default class MoviesWrapper extends Component {
   handlePagination = pageNumber => {
     this.setState({ activePage: pageNumber });
 
-    const { paginator, fetchAll } = this.props;
+    const { paginator, fetchAll, query } = this.props;
     const pageKey = `page-${pageNumber}`;
     if (paginator.includes(pageKey)) {
       return;
     }
 
-    fetchAll(pageNumber);
+    fetchAll(pageNumber, query);
   };
 
   render() {

@@ -9,7 +9,9 @@ describe('FilterItem component', () => {
       selectedItems: {},
       onChange: jest.fn(),
       hasSelected: false,
-      onClear: jest.fn()
+      onClear: jest.fn(),
+      query: '',
+      onFilter: jest.fn()
     }
   });
 

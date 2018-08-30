@@ -3,21 +3,24 @@ import _ from 'lodash';
 import actionTypes from '../moviesConstants';
 import { deriveApiPage } from '../helpers';
 
-export const fetchMovies = (paginatorPage = 1) => {
-  const page = deriveApiPage(paginatorPage);
+export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
   return dispatch => {
     dispatch(loadingMovies(true));
 
-    return axios.get(`/api/movies?page=${page}`)
+    const page = deriveApiPage(paginatorPage);
+    const query = filterQuery
+      ? `page=${page}&${filterQuery}`
+      : `page=${page}`;
+    return axios.get(`/api/movies?${query}`)
       .then(response => {
         dispatch(loadingMovies(false));
 
         const { data = {} } = response;
         if (!_.isEmpty(data)) {
           dispatch(fetchingMoviesSuccess({
-            page: data.page,
             movies: data.results,
-            paginatorPage
+            paginatorPage,
+            totalPages: data.total_pages
           }));
         }
       })

@@ -18,14 +18,14 @@ class MovieProxy
         $this->baseURI = env('THEMOVIEDB_API_URL');
     }
 
-    public function getMoviesList($pageNumber = 1)
+    public function getMoviesList($queryParameters = [])
     {
-        $query = $this->constructQueryString([
+        $parameters = array_merge($queryParameters, [
             'sort_by' => 'popularity.desc',
             'include_adult' => false,
-            'include_video' => false,
-            'page' => $pageNumber
+            'include_video' => false
         ]);
+        $query = $this->constructQueryString($parameters);
 
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'discover/movie?' . $query);

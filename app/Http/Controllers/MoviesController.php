@@ -14,7 +14,7 @@ class MoviesController extends Controller
 
     public function getAll(Request $request)
     {
-        return $this->movieProxy->getMoviesList($request->page ?? 1);
+        return $this->movieProxy->getMoviesList($request->query());
     }
 
     public function getAllGenres()

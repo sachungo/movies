@@ -56,3 +56,36 @@ export const paginateData = (paginatorPage, data, chunk = 10) => {
     [getPaginatorKey(secondPage)]: data.slice(chunk)
   };
 };
+
+const FILTER_TYPES = {
+  actors: 'with_cast',
+  genres: 'with_genres'
+};
+
+export const getQuery = selections => {
+  const filterTypes = Object.keys(selections);
+  let query = '';
+  filterTypes.forEach((filterType, index) => {
+    if (filterTypes[0] === filterType) {
+      query += `${getFilterQuery(selections[filterType], filterType)}`;
+    } else {
+      query += `&${getFilterQuery(selections[filterType], filterType)}`;
+    }
+  });
+  return query;
+};
+
+const getFilterQuery = (selection, filterType) => {
+  const query = Object.keys(selection)
+    .reduce((query, value, index) => {
+      if(!value) {
+        return query;
+      }
+
+      if (index === 0) {
+        return query += `${value}`;
+      }
+      return query += `|${value}`;
+    }, '');
+  return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
+};
