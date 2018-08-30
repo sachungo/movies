@@ -33,6 +33,7 @@ const Button = styled.button`
   font-family: 'Nunito', sans-serif;
   font-weight: 200;
   border-color: ${colors.border};
+  cursor: pointer;
 
   &:hover {
     border-color: ${colors.primary};

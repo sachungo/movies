@@ -37,11 +37,19 @@ export default class FilterItem extends PureComponent {
   static propTypes = {
     criterion: PropTypes.string.isRequired,
     selectedItems: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    hasSelected: PropTypes.bool,
+    onClear: PropTypes.func
   }
 
   render() {
-    const { criterion, selectedItems, onChange } = this.props;
+    const {
+      criterion,
+      selectedItems,
+      onChange,
+      hasSelected,
+      onClear
+    } = this.props;
     return (
       <Wrapper>
         <Item data-test="filter-criterion">{criterion}</Item>
@@ -49,6 +57,8 @@ export default class FilterItem extends PureComponent {
           listItems={dummyData}
           selectedItems={selectedItems}
           onChange={onChange}
+          hasSelected={hasSelected}
+          onClear={onClear}
           data-test="filter-list"
         />
       </Wrapper>

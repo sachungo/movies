@@ -6,6 +6,7 @@ import { colors } from '../../../shared';
 
 const Label = styled.label`
   margin-bottom: 0;
+  width: 100%;
 `;
 
 const Input = styled.input`

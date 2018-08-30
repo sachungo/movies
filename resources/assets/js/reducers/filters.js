@@ -15,6 +15,11 @@ const filters = (state = initialState, action) => {
           [payload.id]: payload.isChecked
         }
       };
+    case actionTypes.RESET_FILTER:
+      return {
+        ...state,
+        [action.criterion]: {}
+      }
     default:
       return state;
   }

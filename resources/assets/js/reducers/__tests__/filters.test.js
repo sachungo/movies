@@ -27,4 +27,13 @@ describe('Filters reducer', () => {
       actors: { 'actor-12': true }
     });
   });
+
+  it('should handle RESET_FILTER', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.RESET_FILTER,
+      criterion: 'actors'
+    })).toEqual({
+      actors: {}
+    });
+  });
 });

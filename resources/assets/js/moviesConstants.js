@@ -8,5 +8,6 @@ export default {
   LOADING_MOVIE_INFO: 'movies/loading/movie',
   ADD_MOVIE_CAST: 'movies/movie/cast/info',
   LOADING_MOVIE_CAST: 'movies/loading/movie/cast',
-  FILTER_CRITERIA_OPTION_CHANGED: 'filter/selected/option'
+  FILTER_CRITERIA_OPTION_CHANGED: 'filter/selected/option',
+  RESET_FILTER: 'filter/reset/all'
 }

@@ -8,11 +8,12 @@ import { colors, styles } from '../../../shared';
 const Wrapper = styled.div`
   border: ${rem('1px')} solid ${colors.border};
   border-radius: ${rem('5px')};
+  padding: ${rem('20px')};
 `;
 
 const List = styled.ul`
-  padding: ${rem('20px')};
   width: ${rem('300px')};
+  padding-left: 0;
 `;
 
 const Item = styled.li`
@@ -20,13 +21,42 @@ const Item = styled.li`
   margin-bottom: ${rem('8px')};
 `;
 
-const ClearButton = styles.Button.extend``;
+const ClearButton = styles.Button.extend`
+  &:hover {
+    background-color: ${colors.white};
+  }
 
-const ApplyButton = styles.Button.extend``;
+  &:active {
+    background-color: ${colors.white};
+    border-color: ${colors.primaryHover};
+    color: ${colors.primary};
+  }
+`;
+
+const ApplyButton = styles.Button.extend`
+  background-color: ${colors.primary};
+  border-color: ${colors.primary};
+  color: ${colors.white};
+
+  &:hover {
+    background-color: ${colors.primaryHover};
+    border-color: ${colors.primaryHover};
+    color: ${colors.white};
+  }
+
+  &:active {
+    background-color: ${colors.primaryActive};
+    border-color: ${colors.primaryActive};
+    color: ${colors.white};
+  }
+`;
 
 const ButtonWrapper = styled.div`
   &:not(:empty) {
     border-top: ${rem('1px')} solid ${colors.border};
+    padding-top: ${rem('20px')};
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -34,7 +64,9 @@ export default class Dropdown extends Component {
   static propTypes = {
     listItems: PropTypes.array.isRequired,
     selectedItems: PropTypes.object.isRequired,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    hasSelected: PropTypes.bool,
+    onClear: PropTypes.func
   };
 
   handleChange = event => {
@@ -45,8 +77,17 @@ export default class Dropdown extends Component {
     })
   };
 
+  // handleClearSelection = () => {
+  //   this.props.onClear();
+  // };
+
   render() {
-    const { listItems, selectedItems } = this.props;
+    const {
+      listItems,
+      selectedItems,
+      hasSelected,
+      onClear
+    } = this.props;
 
     return (
       <Wrapper>
@@ -63,7 +104,22 @@ export default class Dropdown extends Component {
           ))}
         </List>
 
-        <ButtonWrapper></ButtonWrapper>
+        <ButtonWrapper>
+          <ApplyButton
+            data-test="apply-button"
+          >
+            Apply
+          </ApplyButton>
+
+          {hasSelected && (
+            <ClearButton
+              data-test="clear-button"
+              onClick={onClear}
+            >
+              Clear
+            </ClearButton>
+          )}
+        </ButtonWrapper>
       </Wrapper>
     );
   }

@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import actionTypes from '../../moviesConstants';
-import { setSelectedOption } from '../filters';
+import { setSelectedOption, reset } from '../filters';
 
 const mockStore = configureStore();
 
@@ -22,4 +22,12 @@ describe('Filters action test', () => {
       criterion: 'actors'
     });
   });
+
+  it('dispatches RESET_FILTER', () => {
+    store.dispatch(reset());
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.RESET_FILTER,
+      criterion: 'actors'
+    });
+  })
 });

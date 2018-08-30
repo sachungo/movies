@@ -5,7 +5,11 @@ describe('FilterItem component', () => {
   let props;
   beforeEach(() => {
     props = {
-      criterion: 'Testing'
+      criterion: 'Testing',
+      selectedItems: {},
+      onChange: jest.fn(),
+      hasSelected: false,
+      onClear: jest.fn()
     }
   });
 
