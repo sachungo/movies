@@ -23,7 +23,8 @@ export default class FilterItem extends PureComponent {
     onClear: PropTypes.func,
     query: PropTypes.string,
     onFilter: PropTypes.func,
-    options: PropTypes.array
+    options: PropTypes.array,
+    resetPagination: PropTypes.func
   }
 
   state = {
@@ -34,6 +35,7 @@ export default class FilterItem extends PureComponent {
     this.props.onFilter(
       this.props.query
     );
+    this.props.resetPagination();
     this.setState({ isFiltered: true });
   };
 
@@ -42,6 +44,7 @@ export default class FilterItem extends PureComponent {
 
     if (this.state.isFiltered) {
       this.props.onFilter();
+      this.props.resetPagination();
     }
 
     this.setState({ isFiltered: false });

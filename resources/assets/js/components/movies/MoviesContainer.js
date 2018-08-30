@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import MoviesWrapper from './MoviesWrapper';
-import { fetchMovies } from '../../actions';
+import { fetchMovies, setPaginatorPage } from '../../actions';
 import { fetchGenres } from '../../actions/genres'
 import { moviesSelector } from '../../selectors';
 import { getQuery } from '../../helpers';
@@ -11,11 +11,13 @@ const mapStateToProps = ({ allMovies, genres, filters }) => ({
   hasMovies: moviesSelector(allMovies),
   paginator: Object.keys(allMovies.movies),
   totalResults: allMovies.totalResults,
-  query: getQuery(filters)
+  query: getQuery(filters),
+  activePage: allMovies.activePage
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAll: (page, query = '') => dispatch(fetchMovies(page, query))
+  fetchAll: (page, query = '') => dispatch(fetchMovies(page, query)),
+  onPaginatorChange: page => dispatch(setPaginatorPage(page))
 });
 
 export default connect(

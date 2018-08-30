@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import FilterItem from './FilterItem';
 
 import { setSelectedOption, reset } from '../../../../actions/filters';
-import { fetchMovies } from '../../../../actions';
+import { fetchMovies,  setPaginatorPage } from '../../../../actions';
 import { getQuery } from '../../../../helpers';
 
 const checkIfOptionSelected = options => (
@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch, props) => ({
   onChange: payload =>
     dispatch(setSelectedOption(payload, props.criterion)),
   onClear: () => dispatch(reset(props.criterion)),
-  onFilter: query => dispatch(fetchMovies(1, query))
+  onFilter: query => dispatch(fetchMovies(1, query)),
+  resetPagination: () => dispatch(setPaginatorPage(1))
 });
 
 export default connect(

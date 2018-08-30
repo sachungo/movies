@@ -5,10 +5,9 @@ const initialState = {
   movies: {},
   loading: true,
   error: '',
-  totalResults: 1
+  totalResults: 1,
+  activePage: 1
 };
-
-const TOTAL_PAGES = 5;
 
 const movies = (state = initialState, action) => {
   switch(action.type) {
@@ -32,6 +31,11 @@ const movies = (state = initialState, action) => {
         ...state,
         error: action.payload
       }
+    case actionTypes.SET_ACTIVE_PAGE:
+        return {
+          ...state,
+          activePage: action.page
+        }
     default:
       return state;
   }

@@ -11,5 +11,6 @@ export default {
   FILTER_CRITERIA_OPTION_CHANGED: 'filter/selected/option',
   RESET_FILTER: 'filter/reset/all',
   LOADING_ACTORS: 'actors/loading/all',
-  FETCH_ACTORS_SUCCESS: 'actors/fetch/success'
+  FETCH_ACTORS_SUCCESS: 'actors/fetch/success',
+  SET_ACTIVE_PAGE: 'movies/pagination/page'
 }

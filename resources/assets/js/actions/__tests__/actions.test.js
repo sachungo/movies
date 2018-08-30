@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk'
 import axios from 'axios';
 import actionTypes from '../../moviesConstants';
-import { fetchMovies } from '../';
+import { fetchMovies, setPaginatorPage } from '../';
 
 jest.mock('axios');
 
@@ -49,6 +49,14 @@ describe('movies actions tests', () => {
         movies: [],
         paginatorPage: 1
       }
+    });
+  });
+
+  it('dispatches SET_ACTIVE_PAGE', () => {
+    store.dispatch(setPaginatorPage(2));
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.SET_ACTIVE_PAGE,
+      page: 2
     });
   });
 });

@@ -8,7 +8,8 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: true,
       error: '',
-      totalResults: 1
+      totalResults: 1,
+      activePage: 1
     };
   });
 
@@ -24,7 +25,8 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: '',
-      totalResults: 1
+      totalResults: 1,
+      activePage: 1
     });
   });
 
@@ -50,7 +52,8 @@ describe('ALL movies reducer', () => {
       },
       loading: false,
       error: '',
-      totalResults: 5
+      totalResults: 6,
+      activePage: 1
     });
   });
 
@@ -63,7 +66,21 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: 'An error occurred',
-      totalResults: 1
+      totalResults: 1,
+      activePage: 1
+    });
+  });
+
+  it('should handle SET_ACTIVE_PAGE', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.SET_ACTIVE_PAGE,
+      page: 3
+    })).toEqual({
+      movies: {},
+      loading: true,
+      error: '',
+      totalResults: 1,
+      activePage: 3
     });
   });
 });

@@ -61,3 +61,8 @@ const getErrorMessage = error => {
 
   return 'Unknown error occurred. Please try again after a few minutes';
 }
+
+export const setPaginatorPage = page => ({
+  type: actionTypes.SET_ACTIVE_PAGE,
+  page
+});
