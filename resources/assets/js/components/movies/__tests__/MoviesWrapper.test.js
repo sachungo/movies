@@ -8,7 +8,8 @@ describe('The MoviesWrapper component', () => {
     props = {
       fetchAll: jest.fn(),
       loading: true,
-      hasMovies: false
+      hasMovies: false,
+      totalPaginatorPages: 1
     }
   });
 

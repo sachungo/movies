@@ -12,16 +12,15 @@ const Container = styled.div`
   margin-top: ${rem('100px')};
 `;
 
-const TOTAL_COUNT = 100;
 const PER_PAGE = 10;
 
 export default class MoviesWrapper extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
     hasMovies: PropTypes.bool,
-    nextPage: PropTypes.number,
     loading: PropTypes.bool,
-    paginator: PropTypes.arrayOf(PropTypes.string)
+    paginator: PropTypes.arrayOf(PropTypes.string),
+    totalPaginatorPages: PropTypes.number
   };
 
   constructor(props) {
@@ -52,7 +51,7 @@ export default class MoviesWrapper extends Component {
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, totalPaginatorPages } = this.props;
     const { activePage } = this.state;
     let content;
     if(loading) {
@@ -80,7 +79,7 @@ export default class MoviesWrapper extends Component {
         <Paginator
           hideDisabled
           activePage={activePage}
-          totalItemsCount={TOTAL_COUNT}
+          totalItemsCount={totalPaginatorPages * PER_PAGE}
           onChange={this.handlePagination}
           itemsCountPerPage={PER_PAGE}
           itemClass="movies-list__item"

@@ -4,8 +4,11 @@ import { paginateData } from '../helpers';
 const initialState = {
   movies: {},
   loading: true,
-  error: ''
+  error: '',
+  totalPages: 1
 };
+
+const TOTAL_PAGES = 5;
 
 const movies = (state = initialState, action) => {
   switch(action.type) {
@@ -15,13 +18,14 @@ const movies = (state = initialState, action) => {
         loading: action.loading
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
-      const { page, paginatorPage } = action.payload;
+      const { paginatorPage, totalPages } = action.payload;
       return {
         ...state,
         movies: {
           ...state.movies,
           ...paginateData(paginatorPage, action.payload.movies)
-        }
+        },
+        totalPages: totalPages > TOTAL_PAGES ? TOTAL_PAGES : totalPages
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {
