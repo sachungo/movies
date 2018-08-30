@@ -9,5 +9,7 @@ export default {
   ADD_MOVIE_CAST: 'movies/movie/cast/info',
   LOADING_MOVIE_CAST: 'movies/loading/movie/cast',
   FILTER_CRITERIA_OPTION_CHANGED: 'filter/selected/option',
-  RESET_FILTER: 'filter/reset/all'
+  RESET_FILTER: 'filter/reset/all',
+  LOADING_ACTORS: 'actors/loading/all',
+  FETCH_ACTORS_SUCCESS: 'actors/fetch/success'
 }

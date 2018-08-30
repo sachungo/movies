@@ -8,6 +8,11 @@ export const genresSelector = createSelector(
   genres => !_.isEmpty(genres)
 );
 
+export const actorsSelector = createSelector(
+  state => state.actors,
+  actors => !_.isEmpty(actors)
+);
+
 export const moviesSelector = createSelector(
   state => state.movies,
   movies => !_.isEmpty(movies)

@@ -17,13 +17,12 @@ const Checkbox = ({ item, onChange, checked = false }) => (
   <Label>
     <Input
       type="checkbox"
-      name={item.label}
       checked={checked}
       onChange={onChange}
       value={item.id}
       data-test="checkbox-input"
     />
-    {item.label}
+    {item.name}
   </Label>
 );
 

@@ -12,13 +12,22 @@ const Wrapper = styled.div`
 `;
 
 const List = styled.ul`
-  width: ${rem('300px')};
+  width: ${rem('230px')};
   padding-left: 0;
 `;
 
 const Item = styled.li`
   list-style: none;
   margin-bottom: ${rem('8px')};
+  cursor: pointer;
+
+  &:hover {
+    color: ${colors.primary};
+  }
+
+  &:active {
+    color: ${colors.primaryActive};
+  }
 `;
 
 const ClearButton = styles.Button.extend`
@@ -93,6 +102,11 @@ export default class Dropdown extends Component {
     );
   };
 
+  handleClear = () => {
+    this.props.onClear();
+    this.props.onFilter();
+  }
+
   render() {
     const {
       listItems,
@@ -128,7 +142,7 @@ export default class Dropdown extends Component {
           {hasSelected && (
             <ClearButton
               data-test="clear-button"
-              onClick={onClear}
+              onClick={this.handleClear}
             >
               Clear
             </ClearButton>

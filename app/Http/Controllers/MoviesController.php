@@ -33,4 +33,9 @@ class MoviesController extends Controller
         $movie_id = $request->route('movie_id');
         return $this->movieProxy->getMovieCast($movie_id);
     }
+
+    public function getActors()
+    {
+        return $this->movieProxy->getPopularActors();
+    }
 }

@@ -14,25 +14,6 @@ const Item = styled(styles.Button)`
   text-transform: capitalize;
 `;
 
-const dummyData = [
-  {
-    id: 1,
-    label: 'Actor 1'
-  },
-  {
-    id: 2,
-    label: 'Actor 2'
-  },
-  {
-    id: 3,
-    label: 'Actor 3'
-  },
-  {
-    id: 4,
-    label: 'Actor 4'
-  },
-];
-
 export default class FilterItem extends PureComponent {
   static propTypes = {
     criterion: PropTypes.string.isRequired,
@@ -41,7 +22,8 @@ export default class FilterItem extends PureComponent {
     hasSelected: PropTypes.bool,
     onClear: PropTypes.func,
     query: PropTypes.string,
-    onFilter: PropTypes.func
+    onFilter: PropTypes.func,
+    options: PropTypes.array
   }
 
   render() {
@@ -52,13 +34,14 @@ export default class FilterItem extends PureComponent {
       hasSelected,
       onClear,
       query,
-      onFilter
+      onFilter,
+      options
     } = this.props;
     return (
       <Wrapper>
         <Item data-test="filter-criterion">{criterion}</Item>
         <Dropdown
-          listItems={dummyData}
+          listItems={options}
           selectedItems={selectedItems}
           onChange={onChange}
           hasSelected={hasSelected}

@@ -73,6 +73,17 @@ class MovieProxy
         }
     }
 
+    public function getPopularActors()
+    {
+        $query = $this->constructQueryString();
+        try {
+            $response = $this->apiClient->request('GET', $this->baseURI . 'person/popular?' . $query);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            // TODO: handle request exceptions
+        }
+    }
+
     private function constructQueryString($queryArgs = [])
     {
         $params = array_merge($queryArgs, [

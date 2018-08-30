@@ -9,12 +9,19 @@ const checkIfOptionSelected = options => (
   Object.values(options).includes(true)
 );
 
-const mapStateToProps = ({ filters }, props) => {
+const getOptions = (state, props) => {
+  const options = state[props.criterion];
+  return options[props.criterion];
+};
+
+const mapStateToProps = (state, props) => {
+  const { filters } = state;
   const selectedItems = filters[props.criterion] || {};
   return {
     selectedItems,
     hasSelected: checkIfOptionSelected(selectedItems),
-    query: getQuery(filters)
+    query: getQuery(filters),
+    options: getOptions(state, props) || []
   }
 };
 

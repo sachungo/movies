@@ -81,4 +81,17 @@ class MoviesControllerTest extends TestCase
         $instance = new MoviesController($this->mock);
         $this->assertEquals($results, $instance->getMovieCast($this->request));
     }
+
+    public function testGetActors()
+    {
+        $results = [
+            'results' => [
+                'id' => 12,
+                'name' => 'Actor 1'
+            ]
+        ];
+        $this->mock->method('getPopularActors')->willReturn($results);
+        $instance = new MoviesController($this->mock);
+        $this->assertEquals($results, $instance->getActors());
+    }
 }
