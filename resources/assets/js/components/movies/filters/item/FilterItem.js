@@ -67,7 +67,7 @@ export default class FilterItem extends PureComponent {
     }));
   };
 
-  handleMouseLeave = () => {
+  handleClose = () => {
     this.setState({ show: false });
   };
 
@@ -100,7 +100,7 @@ export default class FilterItem extends PureComponent {
           query={query}
           onSubmit={this.handleSubmit}
           show={this.state.show}
-          onMouseLeave={this.handleMouseLeave}
+          onClose={this.handleClose}
           data-test="filter-list"
         />
       </Wrapper>

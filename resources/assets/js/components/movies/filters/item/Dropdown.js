@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import Checkbox from './Checkbox';
-import { colors, styles } from '../../../shared';
+import { colors, styles, media } from '../../../shared';
 
 const Wrapper = styled.div`
   border: ${rem('1px')} solid ${colors.border};
@@ -20,6 +20,19 @@ const Wrapper = styled.div`
   z-index: 100;
   margin-top: ${rem('7px')};
   background-color: ${colors.white};
+
+  ${media.big`
+    height: 100%;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    margin: 0;
+    border: none;
+  `}
 `;
 
 const List = styled.ul`
@@ -51,7 +64,17 @@ const ClearButton = styles.Button.extend`
     border-color: ${colors.primaryHover};
     color: ${colors.primary};
   }
+
+  ${media.big`
+    display: none;
+
+    ${({ show }) => show && css`
+      display: block;
+    `}
+  `}
 `;
+
+const CloseButton = ClearButton.extend``;
 
 const ApplyButton = styles.Button.extend`
   background-color: ${colors.primary};
@@ -77,6 +100,11 @@ const ApplyButton = styles.Button.extend`
     border-color: ${colors.disabled};
     color: ${colors.text};
   }
+
+  ${media.big`
+      width: 100%;
+      padding: ${rem('16px')};
+  `}
 `;
 
 const ButtonWrapper = styled.div`
@@ -86,6 +114,23 @@ const ButtonWrapper = styled.div`
     display: flex;
     justify-content: space-between;
   }
+
+  ${media.big`
+      width: 100%;
+  `}
+`;
+
+const Header = styled.div`
+  display: none;
+  height: ${rem('60px')};
+  border-bottom: ${rem('1px')} solid ${colors.border};
+
+  ${media.big`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: ${rem('16px')};
+  `}
 `;
 
 export default class Dropdown extends Component {
@@ -98,7 +143,7 @@ export default class Dropdown extends Component {
     query: PropTypes.string,
     onSubmit: PropTypes.func,
     show: PropTypes.bool,
-    onMouseLeave: PropTypes.func
+    onClose: PropTypes.func
   };
 
   handleChange = event => {
@@ -117,14 +162,29 @@ export default class Dropdown extends Component {
       onClear,
       onSubmit,
       show,
-      onMouseLeave
+      onClose
     } = this.props;
 
     return (
       <Wrapper
         show={show}
-        onMouseLeave={onMouseLeave}
+        onMouseLeave={onClose}
       >
+        <Header>
+          <CloseButton onClick={onClose} show>
+            Close
+          </CloseButton>
+          {hasSelected && (
+            <ClearButton
+              data-test="clear-button-mobile"
+              onClick={onClear}
+              show
+            >
+              Clear
+            </ClearButton>
+          )}
+        </Header>
+
         <List data-test="dropdown-list">
           {listItems.map(item => (
             <Item key={item.id}>
