@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rem } from 'polished';
 import Checkbox from './Checkbox';
-import { colors } from '../../../shared';
+import { colors, styles } from '../../../shared';
 
 const Wrapper = styled.div`
   border: ${rem('1px')} solid ${colors.border};
@@ -20,32 +20,53 @@ const Item = styled.li`
   margin-bottom: ${rem('8px')};
 `;
 
-export default class Dropdown extends PureComponent {
+const ClearButton = styles.Button.extend``;
+
+const ApplyButton = styles.Button.extend``;
+
+const ButtonWrapper = styled.div`
+  &:not(:empty) {
+    border-top: ${rem('1px')} solid ${colors.border};
+  }
+`;
+
+export default class Dropdown extends Component {
   static propTypes = {
     listItems: PropTypes.array.isRequired
   };
 
-  handleChange = (event, item) => {
-    // 
+  state = {
+    selectedItems: new Map()
+  };
+
+  handleChange = event => {
+    const { checked, value } = event.target;
+
+    this.setState((prevState) => ({
+      selectedItems: prevState.selectedItems.set(value, checked)
+    }));
   };
 
   render() {
     const { listItems } = this.props;
+    const { selectedItems } = this.state;
+
     return (
       <Wrapper>
         <List data-test="dropdown-list">
           {listItems.map(item => (
-            <Item>
+            <Item key={item.id}>
               <Checkbox
-                key={item.id}
                 item={item}
                 onChange={this.handleChange}
-                checked={false}
+                checked={selectedItems.get(item.id.toString())}
                 data-test="dropdown-list-item"
               />
             </Item>
           ))}
         </List>
+
+        <ButtonWrapper></ButtonWrapper>
       </Wrapper>
     );
   }

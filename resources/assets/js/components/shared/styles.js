@@ -25,8 +25,33 @@ const Text = styled.div`
   margin-right: ${rem('10px')};
 `;
 
+const Button = styled.button`
+  background: none;
+  padding: ${rem('4px')} ${rem('16px')};
+  border-radius: ${rem('4px')};
+  color: ${colors.text};
+  font-family: 'Nunito', sans-serif;
+  font-weight: 200;
+  border-color: ${colors.border};
+
+  &:hover {
+    border-color: ${colors.primary};
+    background-color: ${colors.translucent};
+    color: ${colors.primary};
+    font-weight: 300;
+  }
+
+  &:active {
+    font-weight: 500;
+    background-color: ${colors.primary};
+    border-color: ${colors.primary};
+    color: ${colors.white};
+  }
+`;
+
 export default {
   LoaderWrapper,
   Label,
-  Text
+  Text,
+  Button
 };
