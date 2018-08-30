@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import Checkbox from './Checkbox';
 import { colors, styles } from '../../../shared';
@@ -9,6 +9,17 @@ const Wrapper = styled.div`
   border: ${rem('1px')} solid ${colors.border};
   border-radius: ${rem('5px')};
   padding: ${rem('20px')};
+
+  display: none;
+
+  ${({ show }) => show && css`
+    display: block;
+  `}
+
+  position: absolute;
+  z-index: 100;
+  margin-top: ${rem('7px')};
+  background-color: ${colors.white};
 `;
 
 const List = styled.ul`
@@ -85,7 +96,8 @@ export default class Dropdown extends Component {
     hasSelected: PropTypes.bool,
     onClear: PropTypes.func,
     query: PropTypes.string,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    show: PropTypes.bool
   };
 
   handleChange = event => {
@@ -102,11 +114,12 @@ export default class Dropdown extends Component {
       selectedItems,
       hasSelected,
       onClear,
-      onSubmit
+      onSubmit,
+      show
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper show={show}>
         <List data-test="dropdown-list">
           {listItems.map(item => (
             <Item key={item.id}>

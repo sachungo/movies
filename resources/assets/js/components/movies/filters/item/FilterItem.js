@@ -1,17 +1,24 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import { colors, styles } from '../../../shared';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
-  flex: 0 0 75px;
+  flex: 0 0 ${rem('75px')};
+  position: relative;
 `;
 
-// TODO: button is active when dropdown is visible
 const Item = styled(styles.Button)`
   text-transform: capitalize;
+
+  ${({ active }) => active && css`
+    font-weight: 500;
+    background-color: ${colors.primary};
+    border-color: ${colors.primary};
+    color: ${colors.white};
+  `}
 `;
 
 export default class FilterItem extends PureComponent {
@@ -28,7 +35,8 @@ export default class FilterItem extends PureComponent {
   }
 
   state = {
-    isFiltered: false
+    isFiltered: false,
+    show: false
   };
 
   handleSubmit = () => {
@@ -36,7 +44,10 @@ export default class FilterItem extends PureComponent {
       this.props.query
     );
     this.props.resetPagination();
-    this.setState({ isFiltered: true });
+    this.setState({
+      isFiltered: true,
+      show: false
+    });
   };
 
   handleCancel = () => {
@@ -48,6 +59,12 @@ export default class FilterItem extends PureComponent {
     }
 
     this.setState({ isFiltered: false });
+  };
+
+  toggleVisibility = () => {
+    this.setState(prevState => ({
+      show: !prevState.show
+    }));
   };
 
   render() {
@@ -63,7 +80,13 @@ export default class FilterItem extends PureComponent {
     } = this.props;
     return (
       <Wrapper>
-        <Item data-test="filter-criterion">{criterion}</Item>
+        <Item
+          data-test="filter-criterion"
+          onClick={this.toggleVisibility}
+          active={hasSelected || this.state.show}
+        >
+          {criterion}
+        </Item>
         <Dropdown
           listItems={options}
           selectedItems={selectedItems}
@@ -72,6 +95,7 @@ export default class FilterItem extends PureComponent {
           onClear={this.handleCancel}
           query={query}
           onSubmit={this.handleSubmit}
+          show={this.state.show}
           data-test="filter-list"
         />
       </Wrapper>

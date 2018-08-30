@@ -50,9 +50,20 @@ const Button = styled.button`
   }
 `;
 
+const Container = styled.div`
+  &:not(:empty) {
+    width: 100%;
+    padding: ${rem('16px')};
+    border-bottom: ${rem('1px')} solid ${colors.border};
+    display: flex;
+    flex-wrap: wrap;
+  }
+`
+
 export default {
   LoaderWrapper,
   Label,
   Text,
-  Button
+  Button,
+  Container
 };
