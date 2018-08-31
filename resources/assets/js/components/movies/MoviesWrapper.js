@@ -6,6 +6,7 @@ import { rem } from 'polished';
 import MoviesLists from './lists';
 import { Loader, styles } from '../shared';
 import Filter from './filters';
+import Tags from './tags';
 
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
@@ -69,6 +70,7 @@ export default class MoviesWrapper extends Component {
 
     return (
       <Container>
+        <Tags />
         <Filter />
         {content}
         <Paginator

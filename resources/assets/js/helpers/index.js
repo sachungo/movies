@@ -105,3 +105,5 @@ const getFilterQuery = (selection, filterType) => {
   }, '');
   return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
 };
+
+export const getTags = () => '';

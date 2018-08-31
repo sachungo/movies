@@ -1,6 +1,7 @@
 import MoviesWrapper from '../MoviesWrapper';
 
 jest.mock('../filters', () => () => <div />);
+jest.mock('../tags', () => () => <div />);
 
 describe('The MoviesWrapper component', () => {
   let props;
