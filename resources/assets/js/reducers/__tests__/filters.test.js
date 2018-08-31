@@ -5,9 +5,7 @@ describe('Filters reducer', () => {
   let initialState;
 
   beforeEach(() => {
-    initialState = {
-      actors: {}
-    };
+    initialState = {};
   });
 
   it('should return the inital state', () => {
@@ -16,7 +14,7 @@ describe('Filters reducer', () => {
 
   it('should handle FILTER_CRITERIA_OPTION_CHANGED', () => {
     const payload = {
-      id: 'actor-12',
+      id: 12,
       isChecked: true
     };
     expect(reducer(initialState, {
@@ -24,7 +22,7 @@ describe('Filters reducer', () => {
       payload,
       criterion: 'actors'
     })).toEqual({
-      actors: { 'actor-12': true }
+      actors: [12]
     });
   });
 
@@ -33,7 +31,7 @@ describe('Filters reducer', () => {
       type: actionTypes.RESET_FILTER,
       criterion: 'actors'
     })).toEqual({
-      actors: {}
+      actors: []
     });
   });
 });

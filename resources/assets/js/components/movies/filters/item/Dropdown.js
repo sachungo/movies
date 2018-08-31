@@ -159,7 +159,11 @@ export default class Dropdown extends Component {
     return (
       <Wrapper>
         <Header>
-          <CloseButton onClick={onClose} show>
+          <CloseButton
+            show
+            onClick={onClose}
+            data-test="close-button"
+          >
             Close
           </CloseButton>
           {hasSelected && (

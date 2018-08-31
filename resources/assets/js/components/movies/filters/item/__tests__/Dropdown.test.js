@@ -6,17 +6,32 @@ describe('Dropdown component', () => {
   beforeEach(() => {
     props = {
       listItems: [],
-      selectedItems: {},
+      selectedItems: [],
       onChange: jest.fn(),
       hasSelected: false,
       onClear: jest.fn(),
       query: '',
-      onFilter: jest.fn()
+      onSubmit: jest.fn(),
+      onClose: jest.fn()
     }
   });
 
   it('renders without throwing an error', () => {
     expect(() => shallow(<Dropdown {...props} />)).not.toThrow();
+  });
+
+  it('renders the close button', () => {
+    const wrapper = shallow(<Dropdown {...props} />);
+    expect(wrapper.find('[data-test="close-button"]')).toExist();
+  });
+
+  it('renders the clear button of the header element', () => {
+    props = {
+      ...props,
+      hasSelected: true
+    };
+    const wrapper = shallow(<Dropdown {...props} />);
+    expect(wrapper.find('[data-test="clear-button-mobile"]')).toExist();
   });
 
   it('renders the unordered list', () => {
@@ -27,7 +42,7 @@ describe('Dropdown component', () => {
   it('renders the list item', () => {
     props.listItems = [{
       id: 1,
-      label: 'Actor 1'
+      name: 'Actor 1'
     }];
     const wrapper = shallow(<Dropdown {...props} />);
     expect(wrapper.find('[data-test="dropdown-list-item"]').first()).toExist();
@@ -37,7 +52,7 @@ describe('Dropdown component', () => {
     props = {
       ...props,
       hasSelected: true,
-      selectedItems: { 2: true }
+      selectedItems: [2]
     };
     const wrapper = shallow(<Dropdown {...props} />);
     expect(wrapper.find('[data-test="clear-button"]')).toExist();
@@ -52,13 +67,23 @@ describe('Dropdown component', () => {
     props = {
       ...props,
       hasSelected: true,
-      selectedItems: { 2: true }
+      selectedItems: [2]
     };
     const wrapper = mount(<Dropdown {...props} />);
 
-    // use last() as the elements with the same data-test will be 2,
-    // i.e. <styles_Button /> and <button />
     wrapper.find('[data-test="clear-button"]').last().simulate('click');
     expect(wrapper.props().onClear).toHaveBeenCalled();
+  });
+
+  it('applies the filter when the apply button is clicked', () => {
+    props = {
+      ...props,
+      hasSelected: true,
+      selectedItems: [2]
+    };
+    const wrapper = mount(<Dropdown {...props} />);
+
+    wrapper.find('[data-test="apply-button"]').last().simulate('click');
+    expect(wrapper.props().onSubmit).toHaveBeenCalled();
   });
 });

@@ -10,7 +10,10 @@ describe('The MoviesWrapper component', () => {
       loading: true,
       hasMovies: false,
       totalPaginatorPages: 1,
-      query: ''
+      query: '',
+      totalResults: 5,
+      onPaginatorChange: jest.fn(),
+      activePage: 1
     }
   });
 

@@ -6,12 +6,15 @@ describe('FilterItem component', () => {
   beforeEach(() => {
     props = {
       criterion: 'Testing',
-      selectedItems: {},
+      selectedItems: [],
       onChange: jest.fn(),
       hasSelected: false,
       onClear: jest.fn(),
       query: '',
-      onFilter: jest.fn()
+      onFilter: jest.fn(),
+      options: [],
+      resetPagination: jest.fn(),
+      disableFilter: false
     }
   });
 
@@ -26,6 +29,7 @@ describe('FilterItem component', () => {
 
   it('renders the filter items', () => {
     const wrapper = shallow(<FilterItem {...props} />);
+    wrapper.setState({ show: true });
     expect(wrapper.find('[data-test="filter-list"]')).toExist();
   });
 });
