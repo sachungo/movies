@@ -13,14 +13,14 @@ const MoviesContainer = styled.div`
   padding: ${rem('15px')};
 
   ${media.medium`
-    justify-content: center;
+    justify-content: flex-start;
   `}
 `;
 
 const Movie = styled(Link)`
   text-decoration: none;
   flex: 0 0 ${rem('190px')};
-  height: ${rem('275px')};
+  height: ${rem('285px')};
   margin: ${rem('10px')} ${rem('20px')} ${rem('10px')} 0;
   text-align: center;
   border-radius: ${rem('8px')};
@@ -31,6 +31,7 @@ const Movie = styled(Link)`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  padding-top: ${rem('10px')};
 
   &:hover {
     box-shadow: 0 ${rem('4px')} ${rem('10px')} 0 rgba(99, 107, 111, 0.5);
@@ -44,12 +45,12 @@ const Movie = styled(Link)`
 
   ${media.medium`
     flex: 0 0 ${rem('140px')};
-    height: ${rem('225px')};
+    height: ${rem('235px')};
     margin-right: ${rem('10px')};
   `}
   ${media.small`
     flex: 0 0 ${rem('130px')};
-    height: ${rem('200px')};
+    height: ${rem('210px')};
     margin-right: ${rem('10px')};
   `}
 `;
@@ -91,21 +92,39 @@ const Image = styled.img`
   `}
 `;
 
+const ImageHolder = Image.withComponent('div');
+const NoImage = ImageHolder.extend`
+  background-color: ${colors.translucent};
+  color: ${colors.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: ${rem('10px')};
+  padding-right: ${rem('10px')};
+  font-weight: 400;
+`;
+
 const MoviesList = ({ movies }) => (
   <MoviesContainer>
-    {movies.map(movie => (
-      <Movie
-        key={movie.id}
-        data-test="single-movie"
-        to={{
-          pathname: `/movies/${movie.id}`,
-          state: { data: movie }
-        }}
-      >
-        <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={`${movie.title} poster`} />
-        <Title>{movie.title}</Title>
-      </Movie>
-    ))}
+    {movies.map(movie => {
+      const placeholder = `${movie.title} poster`;
+      return (
+        <Movie
+          key={movie.id}
+          data-test="single-movie"
+          to={{
+            pathname: `/movies/${movie.id}`,
+            state: { data: movie }
+          }}
+        >
+          {movie.poster_path
+            ? <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={placeholder} />
+            : <NoImage aria-label={placeholder}>{placeholder}</NoImage>
+          }
+          <Title>{movie.title}</Title>
+        </Movie>
+      )
+    })}
   </MoviesContainer>
 );
 
