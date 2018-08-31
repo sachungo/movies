@@ -10,7 +10,6 @@ import Tags from './tags';
 
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
-  margin-top: ${rem('100px')};
   padding: ${rem('20px')};
 `;
 
