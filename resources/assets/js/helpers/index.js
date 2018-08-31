@@ -106,4 +106,19 @@ const getFilterQuery = (selection, filterType) => {
   return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
 };
 
-export const getTags = () => '';
+export const getTags = state => {
+  const { filters } = state;
+  const filterTypes = Object.keys(filters);
+
+  let tags = [];
+  filterTypes.forEach(type => {
+    const availableOptions = state[type][type];
+    const selectedOptions = availableOptions.filter(option => filters[type].includes(option.id));
+    tags = [
+      ...tags,
+      ...selectedOptions
+    ];
+  });
+
+  return tags;
+};
