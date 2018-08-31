@@ -53,7 +53,7 @@ const Button = styled.button`
 const Container = styled.div`
   &:not(:empty) {
     width: 100%;
-    padding: ${rem('16px')};
+    padding: ${rem('16px')} 0;
     border-bottom: ${rem('1px')} solid ${colors.border};
     display: flex;
     flex-wrap: wrap;

@@ -7,7 +7,7 @@ describe('Tags component', () => {
     props = {
       tags: [],
       buttonText: '',
-      hasTags: false,
+      hasTags: true,
       onClear: jest.fn()
     };
   });
@@ -31,8 +31,7 @@ describe('Tags component', () => {
   it('renders the clear button', () => {
     props = {
       ...props,
-      buttonText: 'Clear',
-      hasTags: true
+      buttonText: 'Clear'
     }
     const wrapper = shallow(<Tags {...props} />);
     expect(wrapper.find('[data-test="clear-tag"]')).toExist();
@@ -41,8 +40,7 @@ describe('Tags component', () => {
   it('executes the onClear prop of click of the clear button', () => {
     props = {
       ...props,
-      buttonText: 'Clear',
-      hasTags: true
+      buttonText: 'Clear'
     }
     const wrapper = mount(<Tags {...props} />);
     wrapper.find('[data-test="clear-tag"]').last().simulate('click');

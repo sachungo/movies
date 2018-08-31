@@ -10,7 +10,7 @@ const MoviesContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  padding: ${rem('15px')};
+  padding: ${rem('15px')} 0;
 
   ${media.medium`
     justify-content: flex-start;
