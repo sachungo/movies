@@ -9,13 +9,6 @@ const Wrapper = styled.div`
   border: ${rem('1px')} solid ${colors.border};
   border-radius: ${rem('5px')};
   padding: ${rem('20px')};
-
-  display: none;
-
-  ${({ show }) => show && css`
-    display: block;
-  `}
-
   position: absolute;
   z-index: 100;
   margin-top: ${rem('7px')};
@@ -142,7 +135,6 @@ export default class Dropdown extends Component {
     onClear: PropTypes.func,
     query: PropTypes.string,
     onSubmit: PropTypes.func,
-    show: PropTypes.bool,
     onClose: PropTypes.func
   };
 
@@ -161,15 +153,11 @@ export default class Dropdown extends Component {
       hasSelected,
       onClear,
       onSubmit,
-      show,
       onClose
     } = this.props;
 
     return (
-      <Wrapper
-        show={show}
-        onMouseLeave={onClose}
-      >
+      <Wrapper onMouseLeave={onClose} >
         <Header>
           <CloseButton onClick={onClose} show>
             Close

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
@@ -21,7 +21,7 @@ const Item = styled(styles.Button)`
   `}
 `;
 
-export default class FilterItem extends PureComponent {
+export default class FilterItem extends Component {
   static propTypes = {
     criterion: PropTypes.string.isRequired,
     selectedItems: PropTypes.object.isRequired,
@@ -34,9 +34,28 @@ export default class FilterItem extends PureComponent {
     resetPagination: PropTypes.func
   }
 
-  state = {
-    isFiltered: false,
-    show: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFiltered: false,
+      show: false
+    };
+    this.filter = createRef();
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutOfBounds);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutOfBounds);
+  }
+
+  handleClickOutOfBounds = event => {
+    if (this.filter.current.contains(event.target)) {
+      return;
+    }
+    this.setState({ show: false });
   };
 
   handleSubmit = () => {
@@ -50,7 +69,9 @@ export default class FilterItem extends PureComponent {
     });
   };
 
-  handleCancel = () => {
+  handleCancel = event => {
+    event.nativeEvent.stopImmediatePropagation();
+
     this.props.onClear();
 
     if (this.state.isFiltered) {
@@ -67,10 +88,6 @@ export default class FilterItem extends PureComponent {
     }));
   };
 
-  handleClose = () => {
-    this.setState({ show: false });
-  };
-
   render() {
     const {
       criterion,
@@ -83,7 +100,7 @@ export default class FilterItem extends PureComponent {
       options
     } = this.props;
     return (
-      <Wrapper>
+      <Wrapper innerRef={this.filter}>
         <Item
           data-test="filter-criterion"
           onClick={this.toggleVisibility}
@@ -91,18 +108,19 @@ export default class FilterItem extends PureComponent {
         >
           {criterion}
         </Item>
-        <Dropdown
-          listItems={options}
-          selectedItems={selectedItems}
-          onChange={onChange}
-          hasSelected={hasSelected}
-          onClear={this.handleCancel}
-          query={query}
-          onSubmit={this.handleSubmit}
-          show={this.state.show}
-          onClose={this.handleClose}
-          data-test="filter-list"
-        />
+        {this.state.show && (
+          <Dropdown
+            listItems={options}
+            selectedItems={selectedItems}
+            onChange={onChange}
+            hasSelected={hasSelected}
+            onClear={this.handleCancel}
+            query={query}
+            onSubmit={this.handleSubmit}
+            onClose={this.toggleVisibility}
+            data-test="filter-list"
+          />
+        )}
       </Wrapper>
     );
   }
