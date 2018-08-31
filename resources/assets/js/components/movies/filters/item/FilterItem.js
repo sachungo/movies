@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
 const Item = styled(styles.Button)`
   text-transform: capitalize;
+  margin-right: ${rem('10px')};
 
   ${({ active }) => active && css`
     font-weight: 500;
