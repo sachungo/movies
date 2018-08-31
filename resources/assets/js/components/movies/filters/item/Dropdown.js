@@ -157,7 +157,7 @@ export default class Dropdown extends Component {
     } = this.props;
 
     return (
-      <Wrapper onMouseLeave={onClose} >
+      <Wrapper>
         <Header>
           <CloseButton onClick={onClose} show>
             Close
