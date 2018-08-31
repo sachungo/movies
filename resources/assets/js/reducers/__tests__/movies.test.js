@@ -8,8 +8,9 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: true,
       error: '',
-      totalResults: 1,
-      activePage: 1
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
     };
   });
 
@@ -25,8 +26,9 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: '',
-      totalResults: 1,
-      activePage: 1
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
     });
   });
 
@@ -40,7 +42,8 @@ describe('ALL movies reducer', () => {
           id: 176565,
           title: 'Testing movies'
         }],
-        paginatorPage: 3
+        paginatorPage: 3,
+        isFiltered: true
       }
     })).toEqual({
       movies: {
@@ -53,7 +56,8 @@ describe('ALL movies reducer', () => {
       loading: false,
       error: '',
       totalResults: 6,
-      activePage: 1
+      activePage: 1,
+      isFiltered: true
     });
   });
 
@@ -66,8 +70,9 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: false,
       error: 'An error occurred',
-      totalResults: 1,
-      activePage: 1
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
     });
   });
 
@@ -79,8 +84,9 @@ describe('ALL movies reducer', () => {
       movies: {},
       loading: true,
       error: '',
-      totalResults: 1,
-      activePage: 3
+      totalResults: 0,
+      activePage: 3,
+      isFiltered: false
     });
   });
 });

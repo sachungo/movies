@@ -24,7 +24,7 @@ describe('Filters action test', () => {
   });
 
   it('dispatches RESET_FILTER', () => {
-    store.dispatch(reset());
+    store.dispatch(reset('actors'));
     expect(store.getActions()).toContainEqual({
       type: actionTypes.RESET_FILTER,
       criterion: 'actors'

@@ -47,7 +47,8 @@ describe('movies actions tests', () => {
       payload: {
         totalResults: 1,
         movies: [],
-        paginatorPage: 1
+        paginatorPage: 1,
+        isFiltered: false
       }
     });
   });
