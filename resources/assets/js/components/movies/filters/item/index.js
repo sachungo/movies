@@ -7,7 +7,7 @@ import { fetchMovies,  setPaginatorPage } from '../../../../actions';
 import { getQuery } from '../../../../helpers';
 
 const mapStateToProps = (state, props) => {
-  const { filters } = state;
+  const { filters, allMovies } = state;
   const { criterion } = props;
   const selectedItems = filters[criterion] || [];
   const filterItems = state[criterion][criterion] || [];
@@ -17,7 +17,8 @@ const mapStateToProps = (state, props) => {
     hasSelected: !isEmpty(selectedItems),
     query: getQuery(filters),
     options: filterItems,
-    disableFilter: state[criterion].loading || isEmpty(filterItems)
+    disableFilter: state[criterion].loading || isEmpty(filterItems),
+    isFiltered: allMovies.isFiltered
   }
 };
 

@@ -5,8 +5,9 @@ const initialState = {
   movies: {},
   loading: true,
   error: '',
-  totalResults: 1,
-  activePage: 1
+  totalResults: 0,
+  activePage: 1,
+  isFiltered: false
 };
 
 const movies = (state = initialState, action) => {
@@ -17,14 +18,15 @@ const movies = (state = initialState, action) => {
         loading: action.loading
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
-      const { paginatorPage, totalResults, movies } = action.payload;
+      const { paginatorPage, totalResults, movies, isFiltered } = action.payload;
       return {
         ...state,
         movies: {
           ...state.movies,
           ...paginateData(paginatorPage, movies, totalResults)
         },
-        totalResults: getPaginatorTotalCount(totalResults)
+        totalResults: getPaginatorTotalCount(totalResults),
+        isFiltered
       }
     case actionTypes.FETCH_ALL_MOVIES_ERROR:
       return {

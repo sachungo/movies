@@ -8,6 +8,17 @@ const removeFromArray = (value, list) => (
 
 const addToArray = (value, list) => [...list, value];
 
+const handleReset = (state, action) => {
+  if (!action.criterion) {
+    return initialState;
+  }
+
+  return {
+    ...state,
+    [action.criterion]: []
+  };
+}
+
 const filters = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.FILTER_CRITERIA_OPTION_CHANGED:
@@ -21,10 +32,7 @@ const filters = (state = initialState, action) => {
           : removeFromArray(payload.id, previousSelected)
       };
     case actionTypes.RESET_FILTER:
-      return {
-        ...state,
-        [action.criterion]: []
-      }
+      return handleReset(state, action);
     default:
       return state;
   }

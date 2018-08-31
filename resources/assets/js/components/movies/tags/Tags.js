@@ -26,35 +26,49 @@ const Tag = styled.div`
 `;
 
 const ButtonWrapper = styled.div``;
+export default class Tags extends Component {
+  static propTypes = {
+    tags: PropTypes.array,
+    buttonText: PropTypes.string,
+    hasTags: PropTypes.bool,
+    isFiltered: PropTypes.bool,
+    onClear: PropTypes.func,
+    onResetAll: PropTypes.func,
+    resetPagination: PropTypes.func
+  };
 
-const Tags = ({ tags, hasTags, buttonText, onClear }) => (
-  <Wrapper>
-    <TagsWrapper>
-      {tags.map(tag => (
-        <Tag key={tag.id} data-test="tag">
-          {tag.name}
-        </Tag>
-      ))}
-    </TagsWrapper>
+  handleClear = () => {
+    this.props.onClear();
 
-    {hasTags && (
-      <ButtonWrapper>
-        <styles.Button
-          data-test="clear-tag"
-          onClick={onClear}
-        >
-          {buttonText}
-        </styles.Button>
-      </ButtonWrapper>
-    )}
-  </Wrapper>
-);
+    if (this.props.isFiltered) {
+      this.props.onResetAll();
+      this.props.resetPagination();
+    }
+  };
 
-Tags.propTypes = {
-  tags: PropTypes.array,
-  buttonText: PropTypes.string,
-  hasTags: PropTypes.bool,
-  onClear: PropTypes.func
-};
+  render() {
+    const { tags, hasTags, buttonText, onClear } = this.props;
+    return (
+      <Wrapper>
+        <TagsWrapper>
+          {tags.map(tag => (
+            <Tag key={tag.id} data-test="tag">
+              {tag.name}
+            </Tag>
+          ))}
+        </TagsWrapper>
 
-export default Tags;
+        {hasTags && (
+          <ButtonWrapper>
+            <styles.Button
+              data-test="clear-tag"
+              onClick={this.handleClear}
+            >
+              {buttonText}
+            </styles.Button>
+          </ButtonWrapper>
+        )}
+      </Wrapper>
+    );
+  }
+}

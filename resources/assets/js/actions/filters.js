@@ -6,7 +6,7 @@ export const setSelectedOption = (payload, criterion = 'actors') => ({
   criterion
 });
 
-export const reset = (criterion = 'actors') => ({
+export const reset = criterion => ({
   type: actionTypes.RESET_FILTER,
   criterion
 })

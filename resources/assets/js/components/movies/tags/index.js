@@ -3,6 +3,8 @@ import isEmpty from 'lodash/isEmpty';
 import Tags from './Tags';
 
 import { getTags } from '../../../helpers';
+import { reset } from '../../../actions/filters';
+import { fetchMovies, setPaginatorPage } from '../../../actions';
 
 const mapStateToProps = state => {
   const tags = getTags(state);
@@ -10,17 +12,15 @@ const mapStateToProps = state => {
   return {
     tags,
     hasTags: !isEmpty(tags),
-    buttonText: buttonText
+    buttonText: buttonText,
+    isFiltered: state.allMovies.isFiltered
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  onClear: () => dispatch(clearAllTags(dispatch));
-}
-
-const clearAllTags = dispatch => {
-  // clear selection
-  // if filtered, also reset pagination and apply filter again
-}
+const mapDispatchToProps = dispatch => ({
+  onClear: () => dispatch(reset()),
+  onResetAll: () => dispatch(fetchMovies(1)),
+  resetPagination: () => dispatch(setPaginatorPage(1))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags);

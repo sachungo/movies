@@ -40,13 +40,13 @@ export default class FilterItem extends Component {
     onFilter: PropTypes.func,
     options: PropTypes.array,
     resetPagination: PropTypes.func,
-    disableFilter: PropTypes.bool
+    disableFilter: PropTypes.bool,
+    isFiltered: PropTypes.bool
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      isFiltered: false,
       show: false
     };
     this.filter = createRef();
@@ -72,10 +72,7 @@ export default class FilterItem extends Component {
       this.props.query
     );
     this.props.resetPagination();
-    this.setState({
-      isFiltered: true,
-      show: false
-    });
+    this.setState({ show: false });
   };
 
   handleCancel = event => {
@@ -83,12 +80,11 @@ export default class FilterItem extends Component {
 
     this.props.onClear();
 
-    if (this.state.isFiltered) {
+    if (this.props.isFiltered) {
       this.props.onFilter();
       this.props.resetPagination();
+      this.toggleVisibility();
     }
-
-    this.setState({ isFiltered: false });
   };
 
   toggleVisibility = () => {
