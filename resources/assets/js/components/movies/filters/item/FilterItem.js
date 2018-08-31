@@ -19,19 +19,28 @@ const Item = styled(styles.Button)`
     border-color: ${colors.primary};
     color: ${colors.white};
   `}
+
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    background-color: ${colors.disabled};
+    border-color: ${colors.disabled};
+    color: ${colors.text};
+  }
 `;
 
 export default class FilterItem extends Component {
   static propTypes = {
     criterion: PropTypes.string.isRequired,
-    selectedItems: PropTypes.object.isRequired,
+    selectedItems: PropTypes.arrayOf(PropTypes.number),
     onChange: PropTypes.func.isRequired,
     hasSelected: PropTypes.bool,
     onClear: PropTypes.func,
     query: PropTypes.string,
     onFilter: PropTypes.func,
     options: PropTypes.array,
-    resetPagination: PropTypes.func
+    resetPagination: PropTypes.func,
+    disableFilter: PropTypes.bool
   }
 
   constructor(props) {
@@ -83,6 +92,10 @@ export default class FilterItem extends Component {
   };
 
   toggleVisibility = () => {
+    if (this.props.disableFilter) {
+      return;
+    }
+
     this.setState(prevState => ({
       show: !prevState.show
     }));
@@ -105,6 +118,7 @@ export default class FilterItem extends Component {
           data-test="filter-criterion"
           onClick={this.toggleVisibility}
           active={hasSelected || this.state.show}
+          disabled={this.props.disableFilter}
         >
           {criterion}
         </Item>

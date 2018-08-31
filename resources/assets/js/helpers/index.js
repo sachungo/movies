@@ -97,16 +97,11 @@ export const getQuery = selections => {
 };
 
 const getFilterQuery = (selection, filterType) => {
-  const query = Object.keys(selection)
-    .reduce((query, value, index) => {
-      if(!value) {
-        return query;
-      }
-
-      if (index === 0) {
-        return query += `${value}`;
-      }
-      return query += `|${value}`;
-    }, '');
+  const query = selection.reduce((query, value, index) => {
+    if (index === 0) {
+      return query += `${value}`;
+    }
+    return query += `|${value}`;
+  }, '');
   return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
 };

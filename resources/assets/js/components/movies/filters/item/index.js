@@ -1,27 +1,23 @@
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import FilterItem from './FilterItem';
 
 import { setSelectedOption, reset } from '../../../../actions/filters';
 import { fetchMovies,  setPaginatorPage } from '../../../../actions';
 import { getQuery } from '../../../../helpers';
 
-const checkIfOptionSelected = options => (
-  Object.values(options).includes(true)
-);
-
-const getOptions = (state, props) => {
-  const options = state[props.criterion];
-  return options[props.criterion];
-};
-
 const mapStateToProps = (state, props) => {
   const { filters } = state;
-  const selectedItems = filters[props.criterion] || {};
+  const { criterion } = props;
+  const selectedItems = filters[criterion] || [];
+  const filterItems = state[criterion][criterion] || [];
+
   return {
     selectedItems,
-    hasSelected: checkIfOptionSelected(selectedItems),
+    hasSelected: !isEmpty(selectedItems),
     query: getQuery(filters),
-    options: getOptions(state, props) || []
+    options: filterItems,
+    disableFilter: state[criterion].loading || isEmpty(filterItems)
   }
 };
 

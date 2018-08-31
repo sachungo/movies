@@ -129,7 +129,7 @@ const Header = styled.div`
 export default class Dropdown extends Component {
   static propTypes = {
     listItems: PropTypes.array.isRequired,
-    selectedItems: PropTypes.object.isRequired,
+    selectedItems: PropTypes.arrayOf(PropTypes.number),
     onChange: PropTypes.func.isRequired,
     hasSelected: PropTypes.bool,
     onClear: PropTypes.func,
@@ -179,7 +179,7 @@ export default class Dropdown extends Component {
               <Checkbox
                 item={item}
                 onChange={this.handleChange}
-                checked={selectedItems[item.id]}
+                checked={selectedItems.includes(item.id)}
                 data-test="dropdown-list-item"
               />
             </Item>
