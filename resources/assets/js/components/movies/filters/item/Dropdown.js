@@ -13,6 +13,8 @@ const Wrapper = styled.div`
   z-index: 100;
   margin-top: ${rem('7px')};
   background-color: ${colors.white};
+  top: 100%;
+  left: 0;
 
   ${media.big`
     height: 100%;

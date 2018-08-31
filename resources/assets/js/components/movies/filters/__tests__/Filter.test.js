@@ -13,8 +13,13 @@ describe('Filter component', () => {
     expect(wrapper.find('[data-test="filter-bar"]')).toExist();
   });
 
-  it('renders the Actors filter', () => {
+  it('renders the actors filter', () => {
     const wrapper = shallow(<Filter />);
-    expect(wrapper.find('[data-test="filter-item"]')).toExist();
+    expect(wrapper.find('[data-test="filter-actors"]')).toExist();
+  });
+
+  it('renders the genres filter', () => {
+    const wrapper = shallow(<Filter />);
+    expect(wrapper.find('[data-test="filter-genres"]')).toExist();
   });
 });

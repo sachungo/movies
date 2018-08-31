@@ -2,16 +2,18 @@ import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { colors, styles } from '../../../shared';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
-  flex: 0 0 ${rem('75px')};
+  flex: 0 0 ${rem('115px')};
   position: relative;
 `;
 
 const Item = styled(styles.Button)`
   text-transform: capitalize;
+  margin-right: ${rem('10px')};
 
   ${({ active }) => active && css`
     font-weight: 500;
@@ -26,6 +28,10 @@ const Item = styled(styles.Button)`
     background-color: ${colors.disabled};
     border-color: ${colors.disabled};
     color: ${colors.text};
+  }
+
+  svg {
+    margin-left: ${rem('10px')};
   }
 `;
 
@@ -117,6 +123,10 @@ export default class FilterItem extends Component {
           disabled={this.props.disableFilter}
         >
           {criterion}
+          {this.state.show
+            ? <FontAwesomeIcon icon="chevron-up" />
+            : <FontAwesomeIcon icon="chevron-down" />
+          }
         </Item>
         {this.state.show && (
           <Dropdown

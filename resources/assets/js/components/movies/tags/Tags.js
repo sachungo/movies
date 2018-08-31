@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rem } from 'polished';
@@ -9,11 +9,14 @@ const Wrapper = styles.Container.extend`
 `;
 
 const TagsWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: ${rem('15px')};
-  padding-left: 0;
+  &:not(:empty) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: ${rem('15px')};
+    padding-left: 0;
+    padding-top: 0;
+  }
 `;
 
 const Tag = styled.div`
@@ -51,26 +54,28 @@ export default class Tags extends Component {
   render() {
     const { tags, hasTags, buttonText, onClear } = this.props;
     return (
-      <Wrapper>
-        <TagsWrapper>
-          {tags.map(tag => (
-            <Tag key={tag.id} data-test="tag">
-              {tag.name}
-            </Tag>
-          ))}
-        </TagsWrapper>
-
+      <Fragment>
         {hasTags && (
-          <ButtonWrapper>
-            <styles.Button
-              data-test="clear-tag"
-              onClick={this.handleClear}
-            >
-              {buttonText}
-            </styles.Button>
-          </ButtonWrapper>
+          <Wrapper>
+            <TagsWrapper>
+              {tags.map(tag => (
+                <Tag key={tag.id} data-test="tag">
+                  {tag.name}
+                </Tag>
+              ))}
+            </TagsWrapper>
+
+            <ButtonWrapper>
+              <styles.Button
+                data-test="clear-tag"
+                onClick={this.handleClear}
+              >
+                {buttonText}
+              </styles.Button>
+            </ButtonWrapper>
+          </Wrapper>
         )}
-      </Wrapper>
+      </Fragment>
     );
   }
 }
