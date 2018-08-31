@@ -1,4 +1,21 @@
-import { connect } from 'react-redux';
-import Filter from './Filter';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
+import { rem } from 'polished';
+import { colors, styles } from '../../shared';
 
-export default connect()(Filter);
+import FilterItem from './item';
+
+const FilterBar = styles.Container.extend``;
+
+export default class Filter extends PureComponent {
+  render() {
+    return(
+      <FilterBar data-test="filter-bar">
+        <FilterItem
+          criterion="actors"
+          data-test="filter-item"
+        />
+      </FilterBar>
+    );
+  }
+}
