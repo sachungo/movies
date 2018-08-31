@@ -24,6 +24,7 @@ const Tag = styled.div`
   font-weight: 400;
   font-size: ${rem('15px')};
   margin-right: ${rem('10px')};
+  margin-top: ${rem('10px')};
 `;
 
 const ButtonWrapper = styled.div``;
