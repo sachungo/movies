@@ -2,14 +2,14 @@ import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk'
 import axios from 'axios';
 import actionTypes from '../../moviesConstants';
-import { fetchMovies } from '../';
+import { fetchMovies, setPaginatorPage } from '../';
 
 jest.mock('axios');
 
 const mockStore = configureStore([thunkMiddleware]);
 
 describe('movies actions tests', () => {
-  const moviesSuccess = (data = { page: 1, results: [] }) => (
+  const moviesSuccess = (data = { total_results: 1, results: [] }) => (
     axios.get.mockImplementation(() =>
       Promise.resolve({ data })
     )
@@ -45,10 +45,19 @@ describe('movies actions tests', () => {
     expect(store.getActions()).toContainEqual({
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
-        page: 1,
+        totalResults: 1,
         movies: [],
-        paginatorPage: 1
+        paginatorPage: 1,
+        isFiltered: false
       }
+    });
+  });
+
+  it('dispatches SET_ACTIVE_PAGE', () => {
+    store.dispatch(setPaginatorPage(2));
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.SET_ACTIVE_PAGE,
+      page: 2
     });
   });
 });

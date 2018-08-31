@@ -1,12 +1,20 @@
 import MoviesWrapper from '../MoviesWrapper';
 
+jest.mock('../filters', () => () => <div />);
+jest.mock('../tags', () => () => <div />);
+
 describe('The MoviesWrapper component', () => {
   let props;
   beforeEach(() => {
     props = {
       fetchAll: jest.fn(),
       loading: true,
-      hasMovies: false
+      hasMovies: false,
+      totalPaginatorPages: 1,
+      query: '',
+      totalResults: 5,
+      onPaginatorChange: jest.fn(),
+      activePage: 1
     }
   });
 

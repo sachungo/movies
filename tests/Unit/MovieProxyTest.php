@@ -88,4 +88,23 @@ class MovieProxyTest extends TestCase
         $this->mockHandler->append(new Response(200, [], json_encode($response)));
         $this->assertEquals($response, $this->movieProxy->getMovieCast(299536));
     }
+
+    public function testGetPopularActors()
+    {
+        $data = [
+            'results' => [
+                [
+                    'id' => 1234,
+                    'name' => 'Actor 1'
+                ],
+                [
+                    'id' => 65789,
+                    'name' => 'Actor 2'
+                ]
+            ]
+        ];
+        $this->mockHandler->append(new Response(200, [], json_encode($data)));
+        $response = $this->movieProxy->getPopularActors();
+        $this->assertEquals($data, $response);
+    }
 }

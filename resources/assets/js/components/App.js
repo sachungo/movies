@@ -11,7 +11,8 @@ import PropTypes from 'prop-types';
 import store from '../reducers';
 import { Home, MovieInfo } from './movies';
 import { fetchGenres } from '../actions/genres';
-import { genresSelector } from '../selectors';
+import { fetchActors } from '../actions/actors';
+import { genresSelector, actorsSelector } from '../selectors';
 
 class MoviesApp extends Component {
   static propTypes = {
@@ -20,9 +21,18 @@ class MoviesApp extends Component {
   };
 
 	componentDidMount() {
-    const { hasGenres, fetchGenres } = this.props;
+    const {
+      hasGenres,
+      fetchGenres,
+      hasActors,
+      fetchActors
+    } = this.props;
     if (!hasGenres) {
       fetchGenres();
+    }
+
+    if(!hasActors) {
+      fetchActors();
     }
 	}
 
@@ -39,12 +49,14 @@ class MoviesApp extends Component {
 	}
 }
 
-const mapStateToProps = ({ genres }) => ({
-  hasGenres: genresSelector(genres)
+const mapStateToProps = ({ genres, actors }) => ({
+  hasGenres: genresSelector(genres),
+  hasActors: actorsSelector(actors)
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchGenres: () => dispatch(fetchGenres())
+  fetchGenres: () => dispatch(fetchGenres()),
+  fetchActors: () => dispatch(fetchActors())
 });
 
 const ConnectedMoviesApp = connect(mapStateToProps, mapDispatchToProps)(MoviesApp);

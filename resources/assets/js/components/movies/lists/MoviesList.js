@@ -62,7 +62,7 @@ const Title = styled.p`
   transition: all 0.2s;
   color: ${colors.text};
   ${Movie}:hover & {
-    color: darkturquoise;
+    color: ${colors.primary};
     font-weight: 300;
   }
   ${Movie}:active & {

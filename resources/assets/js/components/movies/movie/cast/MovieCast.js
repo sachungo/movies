@@ -58,7 +58,7 @@ export default class MovieCast extends PureComponent {
         <Wrapper>
           <Loader
             primaryColor={colors.primary}
-            secondaryColor={colors.loadingTransparent}
+            secondaryColor={colors.translucent}
             data-test="movie-cast-loader"
           />
         </Wrapper>

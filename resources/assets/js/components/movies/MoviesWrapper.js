@@ -5,53 +5,50 @@ import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import MoviesLists from './lists';
 import { Loader, styles } from '../shared';
+import Filter from './filters';
+import Tags from './tags';
 
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
+  margin-top: ${rem('100px')};
 `;
 
-const TOTAL_COUNT = 100;
 const PER_PAGE = 10;
 
 export default class MoviesWrapper extends Component {
   static propTypes = {
     fetchAll: PropTypes.func.isRequired,
     hasMovies: PropTypes.bool,
-    nextPage: PropTypes.number,
     loading: PropTypes.bool,
-    paginator: PropTypes.arrayOf(PropTypes.string)
+    paginator: PropTypes.arrayOf(PropTypes.string),
+    totalResults: PropTypes.number,
+    query: PropTypes.string,
+    onPaginatorChange: PropTypes.func,
+    activePage: PropTypes.number
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      activePage: 1
-    };
-  }
-
   componentDidMount() {
-    const { fetchAll, hasMovies } = this.props;
+    const { fetchAll, hasMovies, activePage } = this.props;
 
     if (!hasMovies) {
-      fetchAll(this.state.activePage);
+      fetchAll(activePage);
     }
   }
 
   handlePagination = pageNumber => {
-    this.setState({ activePage: pageNumber });
+    const { paginator, fetchAll, query, onPaginatorChange } = this.props;
+    onPaginatorChange(pageNumber);
 
-    const { paginator, fetchAll } = this.props;
     const pageKey = `page-${pageNumber}`;
     if (paginator.includes(pageKey)) {
       return;
     }
 
-    fetchAll(pageNumber);
+    fetchAll(pageNumber, query);
   };
 
   render() {
-    const { loading } = this.props;
-    const { activePage } = this.state;
+    const { loading, totalResults, activePage } = this.props;
     let content;
     if(loading) {
       content = (
@@ -73,11 +70,13 @@ export default class MoviesWrapper extends Component {
 
     return (
       <Container>
+        <Tags />
+        <Filter />
         {content}
         <Paginator
           hideDisabled
           activePage={activePage}
-          totalItemsCount={TOTAL_COUNT}
+          totalItemsCount={totalResults}
           onChange={this.handlePagination}
           itemsCountPerPage={PER_PAGE}
           itemClass="movies-list__item"

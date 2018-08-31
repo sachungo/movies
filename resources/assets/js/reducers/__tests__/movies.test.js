@@ -7,7 +7,10 @@ describe('ALL movies reducer', () => {
     initialState = {
       movies: {},
       loading: true,
-      error: ''
+      error: '',
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
     };
   });
 
@@ -22,7 +25,10 @@ describe('ALL movies reducer', () => {
     })).toEqual({
       movies: {},
       loading: false,
-      error: ''
+      error: '',
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
     });
   });
 
@@ -31,12 +37,13 @@ describe('ALL movies reducer', () => {
     expect(reducer(state, {
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
-        page: 2,
+        totalResults: 6,
         movies: [{
           id: 176565,
           title: 'Testing movies'
         }],
-        paginatorPage: 3
+        paginatorPage: 3,
+        isFiltered: true
       }
     })).toEqual({
       movies: {
@@ -47,7 +54,10 @@ describe('ALL movies reducer', () => {
         'page-4': []
       },
       loading: false,
-      error: ''
+      error: '',
+      totalResults: 6,
+      activePage: 1,
+      isFiltered: true
     });
   });
 
@@ -59,7 +69,24 @@ describe('ALL movies reducer', () => {
     })).toEqual({
       movies: {},
       loading: false,
-      error: 'An error occurred'
+      error: 'An error occurred',
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: false
+    });
+  });
+
+  it('should handle SET_ACTIVE_PAGE', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.SET_ACTIVE_PAGE,
+      page: 3
+    })).toEqual({
+      movies: {},
+      loading: true,
+      error: '',
+      totalResults: 0,
+      activePage: 3,
+      isFiltered: false
     });
   });
 });

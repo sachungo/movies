@@ -10,11 +10,15 @@ import { createLogger } from 'redux-logger'
 import movies from './movies';
 import movie from './movie';
 import genres from './genres';
+import filters from './filters';
+import actors from './actors';
 
 const reducers = combineReducers({
   allMovies: movies,
   movie,
-  genres
+  genres,
+  filters,
+  actors
 });
 
 const loggerMiddleware = createLogger();

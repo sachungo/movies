@@ -18,14 +18,14 @@ class MovieProxy
         $this->baseURI = env('THEMOVIEDB_API_URL');
     }
 
-    public function getMoviesList($pageNumber = 1)
+    public function getMoviesList($queryParameters = [])
     {
-        $query = $this->constructQueryString([
+        $parameters = array_merge($queryParameters, [
             'sort_by' => 'popularity.desc',
             'include_adult' => false,
-            'include_video' => false,
-            'page' => $pageNumber
+            'include_video' => false
         ]);
+        $query = $this->constructQueryString($parameters);
 
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'discover/movie?' . $query);
@@ -67,6 +67,17 @@ class MovieProxy
         $query = $this->constructQueryString();
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '/credits?' . $query);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            // TODO: handle request exceptions
+        }
+    }
+
+    public function getPopularActors()
+    {
+        $query = $this->constructQueryString();
+        try {
+            $response = $this->apiClient->request('GET', $this->baseURI . 'person/popular?' . $query);
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
             // TODO: handle request exceptions

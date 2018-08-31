@@ -119,7 +119,7 @@ export default class MovieInfo extends PureComponent {
             height={70}
             width={70}
             primaryColor={colors.primary}
-            secondaryColor={colors.loadingTransparent}
+            secondaryColor={colors.translucent}
             data-test="movie-loader"
           />
         </styles.LoaderWrapper>
