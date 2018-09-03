@@ -12,13 +12,15 @@ import movie from './movie';
 import genres from './genres';
 import filters from './filters';
 import actors from './actors';
+import years from './years';
 
 const reducers = combineReducers({
   allMovies: movies,
   movie,
   genres,
   filters,
-  actors
+  actors,
+  years
 });
 
 const loggerMiddleware = createLogger();

@@ -12,5 +12,6 @@ export default {
   RESET_FILTER: 'filter/reset/all',
   LOADING_ACTORS: 'actors/loading/all',
   FETCH_ACTORS_SUCCESS: 'actors/fetch/success',
-  SET_ACTIVE_PAGE: 'movies/pagination/page'
+  SET_ACTIVE_PAGE: 'movies/pagination/page',
+  GET_YEARS_RANGE: 'years/range/generate'
 }

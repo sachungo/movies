@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import getYear from 'date-fns/get_year';
+import subYears from 'date-fns/sub_years';
+import addYears from 'date-fns/add_years';
 
 const LIMIT = 10;
 
@@ -121,4 +124,12 @@ export const getTags = state => {
   });
 
   return tags;
+};
+
+export const generateYearsRange = () => {
+  const today = new Date();
+  const startYear = subYears(today, 9);
+  const endYear = addYears(today, 1);
+
+  return _.range(getYear(startYear), getYear(endYear));
 };
