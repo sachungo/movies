@@ -25,7 +25,7 @@ class MoviesApp extends Component {
     hasGenres: PropTypes.bool,
     fetchActors: PropTypes.func.isRequired,
     fetchGenres: PropTypes.func.isRequired,
-    getRangeOfYears: PropTypes.func.isRequired
+    getYears: PropTypes.func.isRequired
   };
 
 	componentDidMount() {
@@ -34,7 +34,7 @@ class MoviesApp extends Component {
       fetchGenres,
       hasActors,
       fetchActors,
-      getRangeOfYears
+      getYears
     } = this.props;
     if (!hasGenres) {
       fetchGenres();
@@ -44,7 +44,7 @@ class MoviesApp extends Component {
       fetchActors();
     }
 
-    getRangeOfYears();
+    getYears();
 	}
 
   render() {
@@ -68,7 +68,7 @@ const mapStateToProps = ({ genres, actors }) => ({
 const mapDispatchToProps = dispatch => ({
   fetchGenres: () => dispatch(fetchGenres()),
   fetchActors: () => dispatch(fetchActors()),
-  getRangeOfYears: () => dispatch(getYearsRange())
+  getYears: () => dispatch(getYearsRange())
 });
 
 const ConnectedMoviesApp = connect(mapStateToProps, mapDispatchToProps)(MoviesApp);

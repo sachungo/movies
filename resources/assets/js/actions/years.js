@@ -1,9 +1,9 @@
 import actionTypes from '../moviesConstants';
-import { generateYearsRange } from '../helpers';
+import { getYearsOptions } from '../helpers';
 
 const getYearsRange = () => ({
   type: actionTypes.GET_YEARS_RANGE,
-  years: generateYearsRange()
+  years: getYearsOptions()
 });
 
 export default getYearsRange;

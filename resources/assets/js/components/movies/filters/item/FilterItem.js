@@ -114,6 +114,7 @@ export default class FilterItem extends Component {
       onFilter,
       options
     } = this.props;
+    const isYearsFilter = criterion === 'years';
     return (
       <Wrapper innerRef={this.filter}>
         <Item
@@ -138,6 +139,7 @@ export default class FilterItem extends Component {
             query={query}
             onSubmit={this.handleSubmit}
             onClose={this.toggleVisibility}
+            isYearsFilter={isYearsFilter}
             data-test="filter-list"
           />
         )}

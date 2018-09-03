@@ -83,7 +83,8 @@ export const getPaginatorTotalCount = count => {
 
 const FILTER_TYPES = {
   actors: 'with_cast',
-  genres: 'with_genres'
+  genres: 'with_genres',
+  years: 'primary_release_year'
 };
 
 export const getQuery = selections => {
@@ -126,10 +127,20 @@ export const getTags = state => {
   return tags;
 };
 
-export const generateYearsRange = () => {
+const generateYearsRange = () => {
   const today = new Date();
-  const startYear = subYears(today, 9);
+  const startYear = subYears(today, 10);
   const endYear = addYears(today, 1);
 
-  return _.range(getYear(startYear), getYear(endYear));
+  return _.range(getYear(today), getYear(startYear));
+};
+
+export const getYearsOptions = () => {
+  const rangeofYears = generateYearsRange();
+  const options = rangeofYears.map(year => ({
+    id: year,
+    name: year
+  }));
+
+  return options;
 };
