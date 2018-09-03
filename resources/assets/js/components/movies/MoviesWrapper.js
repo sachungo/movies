@@ -49,6 +49,7 @@ export default class MoviesWrapper extends Component {
 
   render() {
     const { loading, totalResults, activePage } = this.props;
+    const showPaginator = totalResults > PER_PAGE;
     let content;
     if(loading) {
       content = (
@@ -73,18 +74,21 @@ export default class MoviesWrapper extends Component {
         <Tags />
         <Filter />
         {content}
-        <Paginator
-          hideDisabled
-          activePage={activePage}
-          totalItemsCount={totalResults}
-          onChange={this.handlePagination}
-          itemsCountPerPage={PER_PAGE}
-          itemClass="movies-list__item"
-          activeLinkClass="movies-list__link--active"
-          activeClass="movies-list__item--active"
-          linkClass="movies-list__link"
-          data-test="movies-paginator"
-        />
+
+        {showPaginator && (
+          <Paginator
+            hideDisabled
+            activePage={activePage}
+            totalItemsCount={totalResults}
+            onChange={this.handlePagination}
+            itemsCountPerPage={PER_PAGE}
+            itemClass="movies-list__item"
+            activeLinkClass="movies-list__link--active"
+            activeClass="movies-list__item--active"
+            linkClass="movies-list__link"
+            data-test="movies-paginator"
+          />
+        )}
       </Container>
     );
   }
