@@ -53,7 +53,8 @@ export default class FilterItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      appliedFilterCleared: false
     };
     this.filter = createRef();
   }
@@ -64,6 +65,21 @@ export default class FilterItem extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutOfBounds);
+  }
+
+  componentDidUpdate(prevProps) {
+    const resetItems =
+      (this.props.query !== prevProps.query) &&
+      this.props.isFiltered &&
+      this.state.appliedFilterCleared;
+
+    if (resetItems) {
+      this.props.onFilter(this.props.query);
+      this.props.resetPagination();
+      this.toggleVisibility();
+
+      this.setState({ appliedFilterCleared: false });
+    }
   }
 
   handleClickOutOfBounds = event => {
@@ -87,9 +103,9 @@ export default class FilterItem extends Component {
     this.props.onClear();
 
     if (this.props.isFiltered) {
-      this.props.onFilter();
-      this.props.resetPagination();
-      this.toggleVisibility();
+      this.setState({
+        appliedFilterCleared: true
+      });
     }
   };
 

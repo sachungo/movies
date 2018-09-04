@@ -91,10 +91,9 @@ export const getQuery = selections => {
   const filterTypes = Object.keys(selections);
   let query = '';
   filterTypes.forEach((filterType, index) => {
-    if (filterTypes[0] === filterType) {
-      query += `${getFilterQuery(selections[filterType], filterType)}`;
-    } else {
-      query += `&${getFilterQuery(selections[filterType], filterType)}`;
+    const filterSelection = selections[filterType];
+    if (!_.isEmpty(filterSelection)) {
+      query += `&${getFilterQuery(filterSelection, filterType)}`;
     }
   });
   return query;
