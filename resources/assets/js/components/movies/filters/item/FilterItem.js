@@ -2,13 +2,14 @@ import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, styles } from '../../../shared';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
   flex: 0 0 ${rem('115px')};
   position: relative;
+  margin-top: ${rem('10px')};
 `;
 
 const Item = styled(styles.Button)`
