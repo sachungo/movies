@@ -66,7 +66,8 @@ describe('movies actions tests', () => {
     store.dispatch(setPaginatorPage(2));
     expect(store.getActions()).toContainEqual({
       type: actionTypes.SET_ACTIVE_PAGE,
-      page: 2
+      page: 2,
+      reset: false
     });
   });
 

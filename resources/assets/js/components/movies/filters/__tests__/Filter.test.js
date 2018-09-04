@@ -2,7 +2,6 @@ import React from 'react';
 import Filter from '../';
 
 jest.mock('../item', () => () => <div />);
-jest.mock('../year', () => () => <div />);
 
 describe('Filter component', () => {
   it('renders without throwing an error', () => {
