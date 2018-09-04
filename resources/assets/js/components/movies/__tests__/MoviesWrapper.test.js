@@ -14,7 +14,8 @@ describe('The MoviesWrapper component', () => {
       query: '',
       totalResults: 5,
       onPaginatorChange: jest.fn(),
-      activePage: 1
+      activePage: 1,
+      isEmpty: false
     }
   });
 
@@ -38,7 +39,18 @@ describe('The MoviesWrapper component', () => {
   });
 
   it('renders the paginator', () => {
-    const wrapper = shallow(<MoviesWrapper {...props} loading={false} />);
+    const wrapper = shallow(
+      <MoviesWrapper
+        {...props}
+        loading={false}
+        totalResults={12}
+      />
+    );
     expect(wrapper.find('[data-test="movies-paginator"]')).toExist();
+  });
+
+  it('renders the empty state when isEmpty is true', () => {
+    const wrapper = shallow(<MoviesWrapper {...props} loading={false} isEmpty />);
+    expect(wrapper.find('[data-test="empty-state"]')).toExist();
   });
 });

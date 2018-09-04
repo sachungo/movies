@@ -9,21 +9,24 @@ export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
 
     const page = deriveApiPage(paginatorPage);
     const query = filterQuery
-      ? `page=${page}&${filterQuery}`
+      ? `page=${page}${filterQuery}`
       : `page=${page}`;
     return axios.get(`/api/movies?${query}`)
       .then(response => {
         dispatch(loadingMovies(false));
 
         const { data = {} } = response;
-        if (!_.isEmpty(data)) {
-          dispatch(fetchingMoviesSuccess({
-            movies: data.results,
-            paginatorPage,
-            totalResults: data.total_results,
-            isFiltered: !!filterQuery
-          }));
+        const isFiltered = !!filterQuery;
+        if (_.isEmpty(data.results)) {
+          return dispatch(empty(isFiltered));
         }
+
+        dispatch(fetchingMoviesSuccess({
+          movies: data.results,
+          paginatorPage,
+          totalResults: data.total_results,
+          isFiltered
+        }));
       })
       .catch(error => {
         dispatch(loadingMovies(false));
@@ -63,7 +66,13 @@ const getErrorMessage = error => {
   return 'Unknown error occurred. Please try again after a few minutes';
 }
 
-export const setPaginatorPage = page => ({
+export const setPaginatorPage = (page, reset = false) => ({
   type: actionTypes.SET_ACTIVE_PAGE,
-  page
+  page,
+  reset
+});
+
+const empty = isFiltered => ({
+  type: actionTypes.EMPTY_RESPONSE,
+  isFiltered
 });

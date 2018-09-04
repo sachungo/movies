@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(setSelectedOption(payload, props.criterion)),
   onClear: () => dispatch(reset(props.criterion)),
   onFilter: query => dispatch(fetchMovies(1, query)),
-  resetPagination: () => dispatch(setPaginatorPage(1))
+  resetPagination: () => dispatch(setPaginatorPage(1, true))
 });
 
 export default connect(

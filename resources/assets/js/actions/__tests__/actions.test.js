@@ -9,7 +9,7 @@ jest.mock('axios');
 const mockStore = configureStore([thunkMiddleware]);
 
 describe('movies actions tests', () => {
-  const moviesSuccess = (data = { total_results: 1, results: [] }) => (
+  const moviesSuccess = (data = { total_results: 0, results: [] }) => (
     axios.get.mockImplementation(() =>
       Promise.resolve({ data })
     )
@@ -39,14 +39,23 @@ describe('movies actions tests', () => {
   });
 
   it('dispatches FETCH_ALL_MOVIES_SUCCESS when the fetching process is completed', async () => {
-    moviesSuccess();
+    moviesSuccess({
+      total_results: 1,
+      results: [{
+        name: 'testing',
+        id: 1
+      }]
+    });
 
     await store.dispatch(fetchMovies());
     expect(store.getActions()).toContainEqual({
       type: actionTypes.FETCH_ALL_MOVIES_SUCCESS,
       payload: {
         totalResults: 1,
-        movies: [],
+        movies: [{
+          name: 'testing',
+          id: 1
+        }],
         paginatorPage: 1,
         isFiltered: false
       }
@@ -58,6 +67,15 @@ describe('movies actions tests', () => {
     expect(store.getActions()).toContainEqual({
       type: actionTypes.SET_ACTIVE_PAGE,
       page: 2
+    });
+  });
+
+  it('dispatches EMPTY_RESPONSE when fetch results is empty', async() => {
+    moviesSuccess();
+    await store.dispatch(fetchMovies());
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.EMPTY_RESPONSE,
+      isFiltered: false
     });
   });
 });

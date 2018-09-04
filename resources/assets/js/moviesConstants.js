@@ -13,5 +13,6 @@ export default {
   LOADING_ACTORS: 'actors/loading/all',
   FETCH_ACTORS_SUCCESS: 'actors/fetch/success',
   SET_ACTIVE_PAGE: 'movies/pagination/page',
-  GET_YEARS_RANGE: 'years/range/generate'
+  GET_YEARS_RANGE: 'years/range/generate',
+  EMPTY_RESPONSE: 'movies/all/empty'
 }
