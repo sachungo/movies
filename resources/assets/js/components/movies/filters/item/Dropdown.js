@@ -33,6 +33,8 @@ const Wrapper = styled.div`
 const List = styled.ul`
   width: ${rem('230px')};
   padding-left: 0;
+  max-height: ${rem('310px')};
+  overflow-y: scroll;
 `;
 
 const Item = styled.li`
