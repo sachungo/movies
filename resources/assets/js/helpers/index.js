@@ -104,7 +104,7 @@ const getFilterQuery = (selection, filterType) => {
     if (index === 0) {
       return query += `${value}`;
     }
-    return query += `|${value}`;
+    return query += `,${value}`;
   }, '');
   return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
 };
