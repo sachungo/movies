@@ -26,18 +26,42 @@ const Icon = Icons.extend`
   }
 `;
 
+const Loading = Icons.extend`
+  svg rect {
+    fill: transparent;
+  }
+`;
+
 const Input = styled.input`
   flex: 1;
   border: none;
   outline: none;
   padding:${rem('8px')} ${rem('5px')};
   background: none;
-  color: ${colors.white};
-`;
 
-const Loading = Icons.extend`
-  svg rect {
-    fill: transparent;
+  &::placeholder {
+    color: ${colors.white};
+  }
+
+  /* WebKit, Blink, Edge */
+  &::-webkit-input-placeholder {
+    color: ${colors.white};
+  }
+
+  /* Internet Explorer 10-11 */
+  &:-ms-input-placeholder {
+    color: ${colors.white};
+  }
+
+  /* Microsoft Edge */
+  &::-ms-input-placeholder {
+    color: ${colors.white};
+  }
+
+  /* Mozilla Firefox 19+ */
+  &::-moz-placeholder {
+    color: ${colors.white};
+    opacity:  1;
   }
 `;
 
