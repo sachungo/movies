@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import store from '../reducers';
 import { Home, MovieInfo } from './movies';
@@ -16,7 +16,7 @@ import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
 import { genresSelector, actorsSelector } from '../selectors';
 
-library.add(faChevronUp, faChevronDown);
+library.add(faChevronUp, faChevronDown, faSearch);
 
 class MoviesApp extends Component {
   static propTypes = {
