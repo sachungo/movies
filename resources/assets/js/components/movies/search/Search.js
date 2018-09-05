@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { rem } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Loader, colors } from '../../shared';
+import Dropdown from './Dropdown';
 
 const Form = styled.form`
   display: flex;
@@ -11,6 +12,7 @@ const Form = styled.form`
   width: ${rem('300px')};
   background-color: ${colors.search};
   border-radius: ${rem('8px')};
+  position: relative;
 
   &:hover,
   &:focus,
@@ -75,6 +77,20 @@ const Input = styled.input`
   }
 `;
 
+const dummyData = [
+  {
+    id: 124,
+    name: 'Testing A'
+  },
+  {
+    id: 34,
+    name: 'Testing B'
+  },
+  {
+    id: 67898,
+    name: 'Testing B'
+  }
+]
 export default class Search extends PureComponent {
   static propTypes = {
     loading: PropTypes.bool
@@ -115,6 +131,7 @@ export default class Search extends PureComponent {
             data-test="search-loading"
           />
         </LoadingIcon>
+        <Dropdown items={dummyData} data-test="search-dropdown" />
       </Form>
     );
   }

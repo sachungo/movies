@@ -30,4 +30,9 @@ describe('Search component', () => {
     const wrapper = shallow(<Search {...props} />);
     expect(wrapper.find('[data-test="search-loading"]')).toExist();
   });
+
+  it('renders the dropdown', () => {
+    const wrapper = shallow(<Search {...props} />);
+    expect(wrapper.find('[data-test="search-dropdown"]')).toExist();
+  });
 });
