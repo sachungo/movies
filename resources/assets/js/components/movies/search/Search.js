@@ -11,6 +11,12 @@ const Form = styled.form`
   width: ${rem('300px')};
   background-color: ${colors.search};
   border-radius: ${rem('8px')};
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    background-color: ${colors.white};
+  }
 `;
 
 const Icons = styled.div`
@@ -24,9 +30,18 @@ const Icon = Icons.extend`
   svg path {
     fill: ${colors.white};
   }
+
+  ${Form}:hover &,
+  ${Form}:focus &,
+  ${Form}:focus-within & {
+    svg path {
+      fill: ${colors.primary};
+    }
+  }
 `;
 
-const Loading = Icons.extend`
+const LoaderWrapper = Icons.extend`
+  display: none;
   svg rect {
     fill: transparent;
   }
@@ -38,30 +53,20 @@ const Input = styled.input`
   outline: none;
   padding:${rem('8px')} ${rem('5px')};
   background: none;
+  caret-color: ${colors.primary};
 
   &::placeholder {
     color: ${colors.white};
   }
 
-  /* WebKit, Blink, Edge */
-  &::-webkit-input-placeholder {
-    color: ${colors.white};
-  }
+  ${Form}:hover &,
+  ${Form}:focus &,
+  ${Form}:focus-within & {
+    color: ${colors.text};
 
-  /* Internet Explorer 10-11 */
-  &:-ms-input-placeholder {
-    color: ${colors.white};
-  }
-
-  /* Microsoft Edge */
-  &::-ms-input-placeholder {
-    color: ${colors.white};
-  }
-
-  /* Mozilla Firefox 19+ */
-  &::-moz-placeholder {
-    color: ${colors.white};
-    opacity:  1;
+    &::placeholder {
+      color: ${colors.primary};
+    }
   }
 `;
 
@@ -93,7 +98,7 @@ export default class Search extends PureComponent {
           value={this.state.value}
           data-test="search-input"
         />
-        <Loading>
+        <LoaderWrapper>
           <Loader
             width={20}
             height={20}
@@ -101,7 +106,7 @@ export default class Search extends PureComponent {
             secondaryColor={colors.translucent}
             data-test="search-loading"
           />
-        </Loading>
+        </LoaderWrapper>
       </Form>
     );
   }
