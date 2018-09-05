@@ -35,6 +35,11 @@ const List = styled.ul`
   padding-left: 0;
   max-height: ${rem('310px')};
   overflow-y: scroll;
+
+  ${media.big`
+    max-height: none;
+    overflow-y: visible;
+  `}
 `;
 
 const Item = styled.li`
