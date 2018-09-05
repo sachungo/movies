@@ -84,6 +84,17 @@ class MovieProxy
         }
     }
 
+    public function searchByActorName($queryParameters = [])
+    {
+        $query = $this->constructQueryString($queryParameters);
+        try {
+            $response = $this->apiClient->request('GET', $this->baseURI . 'search/movie?' . $query);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            // TODO: handle request exceptions
+        }
+    }
+
     private function constructQueryString($queryArgs = [])
     {
         $params = array_merge($queryArgs, [
