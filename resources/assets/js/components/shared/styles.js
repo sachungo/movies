@@ -60,10 +60,23 @@ const Container = styled.div`
   }
 `
 
+const DropdownWrapper = styled.div`
+  border: ${rem('1px')} solid ${colors.border};
+  border-radius: ${rem('5px')};
+  padding: ${rem('20px')};
+  position: absolute;
+  z-index: 100;
+  margin-top: ${rem('7px')};
+  background-color: ${colors.white};
+  top: 100%;
+  left: 0;
+`;
+
 export default {
   LoaderWrapper,
   Label,
   Text,
   Button,
-  Container
+  Container,
+  DropdownWrapper
 };

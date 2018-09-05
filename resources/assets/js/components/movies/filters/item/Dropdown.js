@@ -5,31 +5,6 @@ import { rem } from 'polished';
 import Checkbox from './Checkbox';
 import { colors, styles, media } from '../../../shared';
 
-const Wrapper = styled.div`
-  border: ${rem('1px')} solid ${colors.border};
-  border-radius: ${rem('5px')};
-  padding: ${rem('20px')};
-  position: absolute;
-  z-index: 100;
-  margin-top: ${rem('7px')};
-  background-color: ${colors.white};
-  top: 100%;
-  left: 0;
-
-  ${media.big`
-    height: 100%;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 0;
-    margin: 0;
-    border: none;
-  `}
-`;
-
 const List = styled.ul`
   width: ${rem('230px')};
   padding-left: 0;
@@ -125,6 +100,21 @@ const Header = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: ${rem('16px')};
+  `}
+`;
+
+const Wrapper = styles.DropdownWrapper.extend`
+  ${media.big`
+    height: 100%;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    margin: 0;
+    border: none;
   `}
 `;
 
