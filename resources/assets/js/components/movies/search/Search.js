@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -19,14 +19,14 @@ const Form = styled.form`
   }
 `;
 
-const Icons = styled.div`
+const IconsWrapper = styled.div`
   flex: 0 0 ${rem('30px')};
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const Icon = Icons.extend`
+const Icon = IconsWrapper.extend`
   svg path {
     fill: ${colors.white};
   }
@@ -40,11 +40,16 @@ const Icon = Icons.extend`
   }
 `;
 
-const LoaderWrapper = Icons.extend`
-  display: none;
+const LoadingIcon = IconsWrapper.extend`
+  visibility: hidden;
+
   svg rect {
     fill: transparent;
   }
+
+  ${({ show }) => show && css`
+    visibility: show;
+  `}
 `;
 
 const Input = styled.input`
@@ -71,7 +76,9 @@ const Input = styled.input`
 `;
 
 export default class Search extends PureComponent {
-  static propTypes = {};
+  static propTypes = {
+    loading: PropTypes.bool
+  };
 
   state = {
     value: ''
@@ -86,6 +93,7 @@ export default class Search extends PureComponent {
   };
 
   render() {
+    const { loading } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Icon data-test="search-icon">
@@ -98,7 +106,7 @@ export default class Search extends PureComponent {
           value={this.state.value}
           data-test="search-input"
         />
-        <LoaderWrapper>
+        <LoadingIcon show={loading}>
           <Loader
             width={20}
             height={20}
@@ -106,7 +114,7 @@ export default class Search extends PureComponent {
             secondaryColor={colors.translucent}
             data-test="search-loading"
           />
-        </LoaderWrapper>
+        </LoadingIcon>
       </Form>
     );
   }

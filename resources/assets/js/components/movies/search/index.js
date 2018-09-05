@@ -1,4 +1,8 @@
 import { connect } from 'react-redux';
 import Search from './Search';
 
-export default connect()(Search);
+const mapStatToProps = (state) => ({
+  loading: false
+});
+
+export default connect(mapStatToProps)(Search);
