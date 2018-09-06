@@ -93,7 +93,7 @@ const Dropdown = ({ items, hasResults, text }) => (
     )}
 
     {text && (
-      <Empty>{text}</Empty>
+      <Empty data-test="list-empty">{text}</Empty>
     )}
   </Wrapper>
 );

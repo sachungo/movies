@@ -32,15 +32,17 @@ describe('Search action test', () => {
   it('dispatches SEARCH_FETCHING_SUCCESS on completing the get request successfully', async () => {
     const data = {
       results: [{
-        id: 1,
-        name: 'Search testing'
+        known_for: [{
+          id: 1,
+          name: 'Search testing'
+        }]
       }]
-    }
+    };
     searchSuccess(data);
     await store.dispatch(fetchSearchMovies('testing'));
     expect(store.getActions()).toContainEqual({
       type: actionTypes.SEARCH_FETCHING_SUCCESS,
-      payload: data.results
+      payload: [{ id: 1, name: 'Search testing' }]
     });
   });
 

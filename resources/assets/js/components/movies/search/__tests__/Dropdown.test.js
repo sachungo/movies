@@ -5,7 +5,9 @@ describe('SEARCH dropdown', () => {
   let props;
   beforeEach(() => {
     props = {
-      items: []
+      items: [],
+      hasResults: false,
+      text: ''
     };
   });
 
@@ -19,9 +21,19 @@ describe('SEARCH dropdown', () => {
       items: [{
         id: 1234,
         name: 'Search Item'
-      }]
+      }],
+      hasResults: true
     }
     const wrapper = shallow(<Dropdown {...props} />);
     expect(wrapper.find('[data-test="list-item"]').first()).toExist();
+  });
+
+  it('renders the empty message when results not found', () => {
+    props = {
+      ...props,
+      text: 'testing'
+    };
+    const wrapper = shallow(<Dropdown {...props} />);
+    expect(wrapper.find('[data-test="list-empty"]')).toExist();
   });
 });
