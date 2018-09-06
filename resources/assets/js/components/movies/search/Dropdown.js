@@ -72,39 +72,36 @@ const Overview = styled.p`
   margin-bottom: 0;
 `;
 
-export default class Dropdown extends Component {
-  static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object),
-    hasResults: PropTypes.bool,
-    text: PropTypes.string
-  }
+const Dropdown = ({ items, hasResults, text }) => (
+  <Wrapper>
+    {hasResults && (
+      <List>
+        {items.map((item, index) => (
+          <Item
+            key={`${item.id}-${index}`}
+            to={{
+              pathname: `/movies/${item.id}`,
+              state: { data: item }
+            }}
+            data-test="list-item"
+          >
+            <Title>{item.title}</Title>
+            <Overview>{item.overview}</Overview>
+          </Item>
+        ))}
+      </List>
+    )}
 
-  render() {
-    const { items, hasResults, text } = this.props;
-    return (
-      <Wrapper>
-        {hasResults && (
-          <List>
-            {items.map((item, index) => (
-              <Item
-                key={`${item.id}-${index}`}
-                to={{
-                  pathname: `/movies/${item.id}`,
-                  state: { data: item }
-                }}
-                data-test="list-item"
-              >
-                <Title>{item.title}</Title>
-                <Overview>{item.overview}</Overview>
-              </Item>
-            ))}
-          </List>
-        )}
+    {text && (
+      <Empty>{text}</Empty>
+    )}
+  </Wrapper>
+);
 
-        {text && (
-          <Empty>{text}</Empty>
-        )}
-      </Wrapper>
-    );
-  }
-}
+Dropdown.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  hasResults: PropTypes.bool,
+  text: PropTypes.string
+};
+
+export default Dropdown;
