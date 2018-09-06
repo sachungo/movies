@@ -33,6 +33,13 @@ const Wrapper = styled.div`
 const List = styled.ul`
   width: ${rem('230px')};
   padding-left: 0;
+  max-height: ${rem('310px')};
+  overflow-y: scroll;
+
+  ${media.big`
+    max-height: none;
+    overflow-y: visible;
+  `}
 `;
 
 const Item = styled.li`
@@ -97,8 +104,8 @@ const ApplyButton = styles.Button.extend`
   }
 
   ${media.big`
-      width: 100%;
-      padding: ${rem('16px')};
+    width: 100%;
+    padding: ${rem('16px')};
   `}
 `;
 
@@ -137,7 +144,8 @@ export default class Dropdown extends Component {
     onClear: PropTypes.func,
     query: PropTypes.string,
     onSubmit: PropTypes.func,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    isYearsFilter: PropTypes.bool
   };
 
   handleChange = event => {
@@ -155,7 +163,8 @@ export default class Dropdown extends Component {
       hasSelected,
       onClear,
       onSubmit,
-      onClose
+      onClose,
+      isYearsFilter
     } = this.props;
 
     return (
@@ -186,6 +195,7 @@ export default class Dropdown extends Component {
                 item={item}
                 onChange={this.handleChange}
                 checked={selectedItems.includes(item.id)}
+                type={isYearsFilter ? 'radio' : 'checkbox'}
                 data-test="dropdown-list-item"
               />
             </Item>

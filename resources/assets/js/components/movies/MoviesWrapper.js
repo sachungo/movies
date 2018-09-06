@@ -13,6 +13,13 @@ const Container = styled.div`
   padding: ${rem('20px')};
 `;
 
+const EmptyState = styled.div`
+  margin-top: ${rem('20px')};
+  font-weight: 500;
+  font-size: ${rem('20px')};
+  text-align: center;
+`;
+
 const PER_PAGE = 10;
 
 export default class MoviesWrapper extends Component {
@@ -24,7 +31,8 @@ export default class MoviesWrapper extends Component {
     totalResults: PropTypes.number,
     query: PropTypes.string,
     onPaginatorChange: PropTypes.func,
-    activePage: PropTypes.number
+    activePage: PropTypes.number,
+    isEmpty: PropTypes.bool
   };
 
   componentDidMount() {
@@ -48,8 +56,12 @@ export default class MoviesWrapper extends Component {
   };
 
   render() {
-    const { loading, totalResults, activePage } = this.props;
-    let content;
+    const { loading, totalResults, activePage, isEmpty } = this.props;
+    const showPaginator = totalResults > PER_PAGE;
+    let content = (
+      <MoviesLists data-test="movies-list" page={activePage} />
+    );
+
     if(loading) {
       content = (
         <styles.LoaderWrapper>
@@ -62,9 +74,13 @@ export default class MoviesWrapper extends Component {
           />
         </styles.LoaderWrapper>
       );
-    } else {
+    }
+
+    if (isEmpty) {
       content = (
-        <MoviesLists data-test="movies-list" page={activePage} />
+        <EmptyState data-test="empty-state">
+          No results found!
+        </EmptyState>
       );
     }
 
@@ -73,18 +89,21 @@ export default class MoviesWrapper extends Component {
         <Tags />
         <Filter />
         {content}
-        <Paginator
-          hideDisabled
-          activePage={activePage}
-          totalItemsCount={totalResults}
-          onChange={this.handlePagination}
-          itemsCountPerPage={PER_PAGE}
-          itemClass="movies-list__item"
-          activeLinkClass="movies-list__link--active"
-          activeClass="movies-list__item--active"
-          linkClass="movies-list__link"
-          data-test="movies-paginator"
-        />
+
+        {showPaginator && (
+          <Paginator
+            hideDisabled
+            activePage={activePage}
+            totalItemsCount={totalResults}
+            onChange={this.handlePagination}
+            itemsCountPerPage={PER_PAGE}
+            itemClass="movies-list__item"
+            activeLinkClass="movies-list__link--active"
+            activeClass="movies-list__item--active"
+            linkClass="movies-list__link"
+            data-test="movies-paginator"
+          />
+        )}
       </Container>
     );
   }

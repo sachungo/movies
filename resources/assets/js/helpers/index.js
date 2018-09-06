@@ -1,4 +1,7 @@
 import _ from 'lodash';
+import getYear from 'date-fns/get_year';
+import subYears from 'date-fns/sub_years';
+import addYears from 'date-fns/add_years';
 
 const LIMIT = 10;
 
@@ -80,17 +83,17 @@ export const getPaginatorTotalCount = count => {
 
 const FILTER_TYPES = {
   actors: 'with_cast',
-  genres: 'with_genres'
+  genres: 'with_genres',
+  years: 'primary_release_year'
 };
 
 export const getQuery = selections => {
   const filterTypes = Object.keys(selections);
   let query = '';
   filterTypes.forEach((filterType, index) => {
-    if (filterTypes[0] === filterType) {
-      query += `${getFilterQuery(selections[filterType], filterType)}`;
-    } else {
-      query += `&${getFilterQuery(selections[filterType], filterType)}`;
+    const filterSelection = selections[filterType];
+    if (!_.isEmpty(filterSelection)) {
+      query += `&${getFilterQuery(filterSelection, filterType)}`;
     }
   });
   return query;
@@ -101,7 +104,7 @@ const getFilterQuery = (selection, filterType) => {
     if (index === 0) {
       return query += `${value}`;
     }
-    return query += `|${value}`;
+    return query += `,${value}`;
   }, '');
   return query ? `${FILTER_TYPES[filterType]}=${query}` : '';
 };
@@ -121,4 +124,22 @@ export const getTags = state => {
   });
 
   return tags;
+};
+
+const generateYearsRange = () => {
+  const today = new Date();
+  const startYear = subYears(today, 10);
+  const endYear = addYears(today, 1);
+
+  return _.range(getYear(today), getYear(startYear));
+};
+
+export const getYearsOptions = () => {
+  const rangeofYears = generateYearsRange();
+  const options = rangeofYears.map(year => ({
+    id: year,
+    name: year
+  }));
+
+  return options;
 };

@@ -6,7 +6,12 @@ const removeFromArray = (value, list) => (
   list.filter(item => item !== value)
 );
 
-const addToArray = (value, list) => [...list, value];
+const addToArray = (value, list, criterion) => {
+  if (criterion === 'years') {
+    return [value];
+  }
+  return [...list, value];
+};
 
 const handleReset = (state, action) => {
   if (!action.criterion) {
@@ -28,7 +33,7 @@ const filters = (state = initialState, action) => {
       return {
         ...state,
         [criterion]: payload.isChecked
-          ? addToArray(payload.id, previousSelected)
+          ? addToArray(payload.id, previousSelected, criterion)
           : removeFromArray(payload.id, previousSelected)
       };
     case actionTypes.RESET_FILTER:

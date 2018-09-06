@@ -22,4 +22,9 @@ describe('Filter component', () => {
     const wrapper = shallow(<Filter />);
     expect(wrapper.find('[data-test="filter-genres"]')).toExist();
   });
+
+  it('renders the years filter', () => {
+    const wrapper = shallow(<Filter />);
+    expect(wrapper.find('[data-test="filter-years"]')).toExist();
+  });
 });
