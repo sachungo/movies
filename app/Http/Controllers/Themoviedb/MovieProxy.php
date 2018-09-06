@@ -86,7 +86,10 @@ class MovieProxy
 
     public function searchByActorName($queryParameters = [])
     {
-        $query = $this->constructQueryString($queryParameters);
+        $parameters = array_merge($queryParameters, [
+            'include_adult' => false
+        ]);
+        $query = $this->constructQueryString($parameters);
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'search/movie?' . $query);
             return json_decode($response->getBody(), true);

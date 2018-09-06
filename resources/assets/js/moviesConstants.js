@@ -12,5 +12,9 @@ export default {
   RESET_FILTER: 'filter/reset/all',
   LOADING_ACTORS: 'actors/loading/all',
   FETCH_ACTORS_SUCCESS: 'actors/fetch/success',
-  SET_ACTIVE_PAGE: 'movies/pagination/page'
+  SET_ACTIVE_PAGE: 'movies/pagination/page',
+  LOADING_SEARCH_RESULTS: 'movies/loading/search',
+  SEARCH_FETCHING_SUCCESS: 'movies/search/success',
+  SEARCH_RESULTS_EMPTY: 'movies/search/empty',
+  SEARCH_FETCHING_ERROR: 'movies/search/error',
 }
