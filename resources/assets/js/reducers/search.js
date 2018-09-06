@@ -21,7 +21,8 @@ const search = (state = initialState, action) => {
     case actionTypes.SEARCH_RESULTS_EMPTY:
       return {
         ...state,
-        empty: 'No results found!'
+        empty: 'No results found!',
+        results: []
       }
     default:
       return state;

@@ -50,7 +50,7 @@ const LoadingIcon = IconsWrapper.extend`
   }
 
   ${({ show }) => show && css`
-    visibility: show;
+    visibility: visible;
   `}
 `;
 
@@ -77,23 +77,13 @@ const Input = styled.input`
   }
 `;
 
-const dummyData = [
-  {
-    id: 124,
-    name: 'Testing A'
-  },
-  {
-    id: 34,
-    name: 'Testing B'
-  },
-  {
-    id: 67898,
-    name: 'Testing B'
-  }
-]
 export default class Search extends PureComponent {
   static propTypes = {
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    results: PropTypes.array,
+    emptyText: PropTypes.string,
+    onSearch: PropTypes.func,
+    hasResults: PropTypes.bool
   };
 
   state = {
@@ -106,10 +96,11 @@ export default class Search extends PureComponent {
 
   handleSubmit = event => {
     event.preventDefault();
+    this.props.onSearch(this.state.value);
   };
 
   render() {
-    const { loading } = this.props;
+    const { loading, results, emptyText, hasResults } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Icon data-test="search-icon">
@@ -131,7 +122,12 @@ export default class Search extends PureComponent {
             data-test="search-loading"
           />
         </LoadingIcon>
-        <Dropdown items={dummyData} data-test="search-dropdown" />
+        <Dropdown
+          items={results}
+          text={emptyText}
+          hasResults={hasResults}
+          data-test="search-dropdown"
+        />
       </Form>
     );
   }

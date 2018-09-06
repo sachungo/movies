@@ -17,6 +17,8 @@ const List = styled.ul`
   margin: 0;
   padding: 0;
   width: ${rem('300px')};
+  max-height: ${rem('350px')};
+  overflow-y: scroll;
 `;
 
 const Item = styled(Link)`
@@ -46,29 +48,51 @@ const Item = styled(Link)`
   }
 `;
 
+const EmptyWrapper = Item.withComponent('div');
+
+const Empty = EmptyWrapper.extend`
+  width: ${rem('300px')};
+  cursor: default;
+
+  &:active,
+  &:hover {
+    background-color: ${colors.white};
+    color: ${colors.text};
+    border-radius: ${rem('5px')};
+  }
+`;
+
 export default class Dropdown extends Component {
   static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object)
+    items: PropTypes.arrayOf(PropTypes.object),
+    hasResults: PropTypes.bool,
+    text: PropTypes.string
   }
 
   render() {
-    const { items } = this.props;
+    const { items, hasResults, text } = this.props;
     return (
       <Wrapper>
-        <List>
-          {items.map(item => (
-            <Item
-              key={item.id}
-              to={{
-                pathname: `/movies/${item.id}`,
-                state: { data: item }
-              }}
-              data-test="list-item"
-            >
-              {item.name}
-            </Item>
-          ))}
-        </List>
+        {hasResults && (
+          <List>
+            {items.map(item => (
+              <Item
+                key={item.id}
+                to={{
+                  pathname: `/movies/${item.id}`,
+                  state: { data: item }
+                }}
+                data-test="list-item"
+              >
+                {item.title}
+              </Item>
+            ))}
+          </List>
+        )}
+
+        {text && (
+          <Empty>{text}</Empty>
+        )}
       </Wrapper>
     );
   }
