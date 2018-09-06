@@ -83,24 +83,34 @@ export default class Search extends PureComponent {
     results: PropTypes.array,
     emptyText: PropTypes.string,
     onSearch: PropTypes.func,
-    hasResults: PropTypes.bool
+    hasResults: PropTypes.bool,
+    onReset: PropTypes.func,
+    onChange: PropTypes.func,
+    value: PropTypes.string
   };
 
-  state = {
-    value: ''
-  };
+  componentWillUnmount() {
+    this.props.onReset();
+  }
 
   handleChange = event => {
-    this.setState({ value: event.target.value });
+    this.props.onChange(event.target.value);
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSearch(this.state.value);
+    this.props.onSearch(this.props.value);
   };
 
   render() {
-    const { loading, results, emptyText, hasResults } = this.props;
+    const {
+      loading,
+      results,
+      emptyText,
+      hasResults,
+      value,
+      onReset
+    } = this.props;
     return (
       <Form onSubmit={this.handleSubmit}>
         <Icon data-test="search-icon">
@@ -110,7 +120,7 @@ export default class Search extends PureComponent {
           type="text"
           placeholder="Search by actor name"
           onChange={this.handleChange}
-          value={this.state.value}
+          value={value}
           data-test="search-input"
         />
         <LoadingIcon show={loading}>
@@ -126,6 +136,7 @@ export default class Search extends PureComponent {
           items={results}
           text={emptyText}
           hasResults={hasResults}
+          onMouseLeave={onReset}
           data-test="search-dropdown"
         />
       </Form>

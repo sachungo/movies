@@ -38,3 +38,12 @@ const searchSuccess = payload => ({
 const emptySearch = () => ({
   type: actionTypes.SEARCH_RESULTS_EMPTY
 });
+
+export const reset = () => ({
+  type: actionTypes.SEARCH_RESET
+});
+
+export const setValue = payload => ({
+  type: actionTypes.SEARCH_VALUE_CHANGED,
+  payload
+});

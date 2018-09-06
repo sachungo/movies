@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk';
 import axios from 'axios';
 import actionTypes from '../../moviesConstants';
-import { fetchSearchMovies } from '../search';
+import { fetchSearchMovies, reset, setValue } from '../search';
 
 jest.mock('axios');
 
@@ -49,6 +49,21 @@ describe('Search action test', () => {
     await store.dispatch(fetchSearchMovies('testing'));
     expect(store.getActions()).toContainEqual({
       type: actionTypes.SEARCH_RESULTS_EMPTY
+    });
+  });
+
+  it('dispatches SEARCH_RESET', () => {
+    store.dispatch(reset());
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.SEARCH_RESET
+    });
+  });
+
+  it('dispatches SEARCH_VALUE_CHANGED', () => {
+    store.dispatch(setValue('test'));
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.SEARCH_VALUE_CHANGED,
+      payload: 'test'
     });
   });
 });

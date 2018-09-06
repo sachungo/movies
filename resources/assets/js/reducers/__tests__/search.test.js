@@ -7,7 +7,8 @@ describe('Search reducer test', () => {
     initialState = {
       loading: false,
       results: [],
-      empty: ''
+      empty: '',
+      value: ''
     };
   });
 
@@ -20,9 +21,8 @@ describe('Search reducer test', () => {
       type: actionTypes.LOADING_SEARCH_RESULTS,
       loading: true
     })).toEqual({
-      loading: true,
-      results: [],
-      empty: ''
+      ...initialState,
+      loading: true
     });
   });
 
@@ -31,9 +31,8 @@ describe('Search reducer test', () => {
       type: actionTypes.SEARCH_FETCHING_SUCCESS,
       payload: [{ id: 1 }]
     })).toEqual({
-      loading: false,
-      results: [{ id: 1}],
-      empty: ''
+      ...initialState,
+      results: [{ id: 1}]
     })
   });
 
@@ -41,9 +40,24 @@ describe('Search reducer test', () => {
     expect(reducer(initialState, {
       type: actionTypes.SEARCH_RESULTS_EMPTY
     })).toEqual({
-      loading: false,
-      results: [],
+      ...initialState,
       empty: 'No results found!'
+    });
+  });
+
+  it('should handle SEARCH_RESET', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.SEARCH_RESET
+    })).toEqual(initialState);
+  });
+
+  it('should handle SEARCH_VALUE_CHANGED', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.SEARCH_VALUE_CHANGED,
+      payload: 'Test'
+    })).toEqual({
+      ...initialState,
+      value: 'Test'
     });
   });
 });

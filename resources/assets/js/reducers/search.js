@@ -3,7 +3,8 @@ import actionTypes from '../moviesConstants';
 const initialState = {
   loading: false,
   results: [],
-  empty: ''
+  empty: '',
+  value: ''
 };
 
 const search = (state = initialState, action) => {
@@ -23,6 +24,16 @@ const search = (state = initialState, action) => {
         ...state,
         empty: 'No results found!',
         results: []
+      }
+    case actionTypes.SEARCH_VALUE_CHANGED:
+      return {
+        ...state,
+        value: action.payload
+      }
+    case actionTypes.SEARCH_RESET:
+      return {
+        ...state,
+        ...initialState
       }
     default:
       return state;

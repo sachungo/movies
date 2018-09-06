@@ -2,16 +2,19 @@ import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 import Search from './Search';
 
-import { fetchSearchMovies } from '../../../actions/search';
+import { fetchSearchMovies, reset, setValue } from '../../../actions/search';
 
 const mapStatToProps = ({ search }) => ({
   loading: search.loading,
   results: search.results,
   emptyText: search.empty,
+  value: search.value,
   hasResults: !isEmpty(search.results)
 });
 
 
 export default connect(mapStatToProps, {
-  onSearch: fetchSearchMovies
+  onSearch: fetchSearchMovies,
+  onReset: reset,
+  onChange: setValue
 })(Search);

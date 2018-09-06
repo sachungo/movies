@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { rem } from 'polished';
+import { rem, ellipsis } from 'polished';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { styles, colors } from '../../shared';
@@ -62,17 +62,28 @@ const Empty = EmptyWrapper.extend`
   }
 `;
 
+const Title = styled.p`
+  margin-bottom: 0;
+  font-weight: 400;
+`;
+
+const Overview = styled.p`
+  ${ellipsis('280px')};
+  margin-bottom: 0;
+`;
+
 export default class Dropdown extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     hasResults: PropTypes.bool,
-    text: PropTypes.string
+    text: PropTypes.string,
+    onMouseLeave: PropTypes.func
   }
 
   render() {
-    const { items, hasResults, text } = this.props;
+    const { items, hasResults, text, onMouseLeave } = this.props;
     return (
-      <Wrapper>
+      <Wrapper onMouseLeave={onMouseLeave}>
         {hasResults && (
           <List>
             {items.map(item => (
@@ -84,7 +95,8 @@ export default class Dropdown extends Component {
                 }}
                 data-test="list-item"
               >
-                {item.title}
+                <Title>{item.title}</Title>
+                <Overview>{item.overview}</Overview>
               </Item>
             ))}
           </List>
