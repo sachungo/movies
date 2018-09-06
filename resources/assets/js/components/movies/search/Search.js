@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem } from 'polished';
@@ -89,8 +89,18 @@ export default class Search extends PureComponent {
     value: PropTypes.string
   };
 
+  constructor(props) {
+    super(props);
+    this.search = createRef();
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.handleClickOutofBounds);
+  }
+
   componentWillUnmount() {
     this.props.onReset();
+    document.removeEventListener('click', this.handleClickOutofBounds);
   }
 
   handleChange = event => {
@@ -102,6 +112,13 @@ export default class Search extends PureComponent {
     this.props.onSearch(this.props.value);
   };
 
+  handleClickOutofBounds = event => {
+    if (this.search.current.contains(event.target)) {
+      return;
+    }
+    this.props.onReset();
+  }
+
   render() {
     const {
       loading,
@@ -112,7 +129,7 @@ export default class Search extends PureComponent {
       onReset
     } = this.props;
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} innerRef={this.search}>
         <Icon data-test="search-icon">
           <FontAwesomeIcon icon="search" />
         </Icon>
@@ -136,7 +153,7 @@ export default class Search extends PureComponent {
           items={results}
           text={emptyText}
           hasResults={hasResults}
-          onMouseLeave={onReset}
+          onReset={onReset}
           data-test="search-dropdown"
         />
       </Form>

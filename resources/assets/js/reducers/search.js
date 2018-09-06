@@ -17,7 +17,8 @@ const search = (state = initialState, action) => {
     case actionTypes.SEARCH_FETCHING_SUCCESS:
       return {
         ...state,
-        results: action.payload
+        results: action.payload,
+        empty: ''
       }
     case actionTypes.SEARCH_RESULTS_EMPTY:
       return {
@@ -28,7 +29,9 @@ const search = (state = initialState, action) => {
     case actionTypes.SEARCH_VALUE_CHANGED:
       return {
         ...state,
-        value: action.payload
+        value: action.payload,
+        results: [],
+        empty: ''
       }
     case actionTypes.SEARCH_RESET:
       return {

@@ -76,19 +76,18 @@ export default class Dropdown extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     hasResults: PropTypes.bool,
-    text: PropTypes.string,
-    onMouseLeave: PropTypes.func
+    text: PropTypes.string
   }
 
   render() {
-    const { items, hasResults, text, onMouseLeave } = this.props;
+    const { items, hasResults, text } = this.props;
     return (
-      <Wrapper onMouseLeave={onMouseLeave}>
+      <Wrapper>
         {hasResults && (
           <List>
-            {items.map(item => (
+            {items.map((item, index) => (
               <Item
-                key={item.id}
+                key={`${item.id}-${index}`}
                 to={{
                   pathname: `/movies/${item.id}`,
                   state: { data: item }
