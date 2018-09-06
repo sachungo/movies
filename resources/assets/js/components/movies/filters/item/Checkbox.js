@@ -7,16 +7,17 @@ import { colors } from '../../../shared';
 const Label = styled.label`
   margin-bottom: 0;
   width: 100%;
+  margin-left: 1px;
 `;
 
 const Input = styled.input`
   margin-right: ${rem('8px')};
 `;
 
-const Checkbox = ({ item, onChange, checked = false }) => (
+const Checkbox = ({ item, onChange, checked = false, type = 'checkbox' }) => (
   <Label>
     <Input
-      type="checkbox"
+      type={type}
       checked={checked}
       onChange={onChange}
       value={item.id}

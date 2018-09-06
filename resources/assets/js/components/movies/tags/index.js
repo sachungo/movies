@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   onClear: () => dispatch(reset()),
   onResetAll: () => dispatch(fetchMovies(1)),
-  resetPagination: () => dispatch(setPaginatorPage(1))
+  resetPagination: () => dispatch(setPaginatorPage(1, true))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags);

@@ -19,4 +19,6 @@ export default {
   SEARCH_FETCHING_ERROR: 'search/fetch/error',
   SEARCH_RESET: 'search/reset/all',
   SEARCH_VALUE_CHANGED: 'search/value/change',
+  GET_YEARS_RANGE: 'years/range/generate',
+  EMPTY_RESPONSE: 'movies/all/empty'
 }

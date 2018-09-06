@@ -10,7 +10,8 @@ describe('ALL movies reducer', () => {
       error: '',
       totalResults: 0,
       activePage: 1,
-      isFiltered: false
+      isFiltered: false,
+      isEmpty: false
     };
   });
 
@@ -28,7 +29,8 @@ describe('ALL movies reducer', () => {
       error: '',
       totalResults: 0,
       activePage: 1,
-      isFiltered: false
+      isFiltered: false,
+      isEmpty: false
     });
   });
 
@@ -57,7 +59,8 @@ describe('ALL movies reducer', () => {
       error: '',
       totalResults: 6,
       activePage: 1,
-      isFiltered: true
+      isFiltered: true,
+      isEmpty: false
     });
   });
 
@@ -72,7 +75,8 @@ describe('ALL movies reducer', () => {
       error: 'An error occurred',
       totalResults: 0,
       activePage: 1,
-      isFiltered: false
+      isFiltered: false,
+      isEmpty: false
     });
   });
 
@@ -86,7 +90,23 @@ describe('ALL movies reducer', () => {
       error: '',
       totalResults: 0,
       activePage: 3,
-      isFiltered: false
+      isFiltered: false,
+      isEmpty: false
+    });
+  });
+
+  it('should handle EMPTY_RESPONSE', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.EMPTY_RESPONSE,
+      isFiltered: true
+    })).toEqual({
+      movies: {},
+      loading: true,
+      error: '',
+      totalResults: 0,
+      activePage: 1,
+      isFiltered: true,
+      isEmpty: true
     });
   });
 });

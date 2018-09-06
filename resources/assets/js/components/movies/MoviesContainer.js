@@ -12,7 +12,8 @@ const mapStateToProps = ({ allMovies, genres, filters }) => ({
   paginator: Object.keys(allMovies.movies),
   totalResults: allMovies.totalResults,
   query: getQuery(filters),
-  activePage: allMovies.activePage
+  activePage: allMovies.activePage,
+  isEmpty: allMovies.isEmpty
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -14,14 +14,18 @@ import store from '../reducers';
 import { Home, MovieInfo } from './movies';
 import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
+import getYearsRange from '../actions/years';
 import { genresSelector, actorsSelector } from '../selectors';
 
 library.add(faChevronUp, faChevronDown, faSearch);
 
 class MoviesApp extends Component {
   static propTypes = {
+    hasActors: PropTypes.bool,
     hasGenres: PropTypes.bool,
-    fetchGenres: PropTypes.func.isRequired
+    fetchActors: PropTypes.func.isRequired,
+    fetchGenres: PropTypes.func.isRequired,
+    getYears: PropTypes.func.isRequired
   };
 
 	componentDidMount() {
@@ -29,7 +33,8 @@ class MoviesApp extends Component {
       hasGenres,
       fetchGenres,
       hasActors,
-      fetchActors
+      fetchActors,
+      getYears
     } = this.props;
     if (!hasGenres) {
       fetchGenres();
@@ -38,6 +43,8 @@ class MoviesApp extends Component {
     if(!hasActors) {
       fetchActors();
     }
+
+    getYears();
 	}
 
   render() {
@@ -60,7 +67,8 @@ const mapStateToProps = ({ genres, actors }) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchGenres: () => dispatch(fetchGenres()),
-  fetchActors: () => dispatch(fetchActors())
+  fetchActors: () => dispatch(fetchActors()),
+  getYears: () => dispatch(getYearsRange())
 });
 
 const ConnectedMoviesApp = connect(mapStateToProps, mapDispatchToProps)(MoviesApp);

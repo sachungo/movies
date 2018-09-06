@@ -2,13 +2,14 @@ import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { colors, styles } from '../../../shared';
 import Dropdown from './Dropdown';
 
 const Wrapper = styled.div`
   flex: 0 0 ${rem('115px')};
   position: relative;
+  margin-top: ${rem('10px')};
 `;
 
 const Item = styled(styles.Button)`
@@ -53,7 +54,8 @@ export default class FilterItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      appliedFilterCleared: false
     };
     this.filter = createRef();
   }
@@ -64,6 +66,21 @@ export default class FilterItem extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutOfBounds);
+  }
+
+  componentDidUpdate(prevProps) {
+    const resetItems =
+      (this.props.query !== prevProps.query) &&
+      this.props.isFiltered &&
+      this.state.appliedFilterCleared;
+
+    if (resetItems) {
+      this.props.onFilter(this.props.query);
+      this.props.resetPagination();
+      this.toggleVisibility();
+
+      this.setState({ appliedFilterCleared: false });
+    }
   }
 
   handleClickOutOfBounds = event => {
@@ -87,9 +104,9 @@ export default class FilterItem extends Component {
     this.props.onClear();
 
     if (this.props.isFiltered) {
-      this.props.onFilter();
-      this.props.resetPagination();
-      this.toggleVisibility();
+      this.setState({
+        appliedFilterCleared: true
+      });
     }
   };
 
@@ -114,6 +131,7 @@ export default class FilterItem extends Component {
       onFilter,
       options
     } = this.props;
+    const isYearsFilter = criterion === 'years';
     return (
       <Wrapper innerRef={this.filter}>
         <Item
@@ -138,6 +156,7 @@ export default class FilterItem extends Component {
             query={query}
             onSubmit={this.handleSubmit}
             onClose={this.toggleVisibility}
+            isYearsFilter={isYearsFilter}
             data-test="filter-list"
           />
         )}

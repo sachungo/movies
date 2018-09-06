@@ -13,6 +13,7 @@ import genres from './genres';
 import filters from './filters';
 import actors from './actors';
 import search from './search';
+import years from './years';
 
 const reducers = combineReducers({
   allMovies: movies,
@@ -20,7 +21,8 @@ const reducers = combineReducers({
   genres,
   filters,
   actors,
-  search
+  search,
+  years
 });
 
 const loggerMiddleware = createLogger();

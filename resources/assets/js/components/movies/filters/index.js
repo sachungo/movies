@@ -19,6 +19,10 @@ export default class Filter extends PureComponent {
           criterion="genres"
           data-test="filter-genres"
         />
+        <FilterItem
+          criterion="years"
+          data-test="filter-years"
+        />
       </FilterBar>
     );
   }

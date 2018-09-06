@@ -7,7 +7,8 @@ const initialState = {
   error: '',
   totalResults: 0,
   activePage: 1,
-  isFiltered: false
+  isFiltered: false,
+  isEmpty: false
 };
 
 const movies = (state = initialState, action) => {
@@ -15,7 +16,8 @@ const movies = (state = initialState, action) => {
     case actionTypes.LOADING_ALL_MOVIES:
       return {
         ...state,
-        loading: action.loading
+        loading: action.loading,
+        isEmpty: false
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
       const { paginatorPage, totalResults, movies, isFiltered } = action.payload;
@@ -34,10 +36,18 @@ const movies = (state = initialState, action) => {
         error: action.payload
       }
     case actionTypes.SET_ACTIVE_PAGE:
-        return {
-          ...state,
-          activePage: action.page
-        }
+      const total = action.reset ? 0 : state.totalResults;
+      return {
+        ...state,
+        activePage: action.page,
+        totalResults: total
+      }
+    case actionTypes.EMPTY_RESPONSE:
+      return {
+        ...state,
+        isFiltered: action.isFiltered,
+        isEmpty: true
+      }
     default:
       return state;
   }
