@@ -112,9 +112,11 @@ class MovieProxyTest extends TestCase
     {
         $results = [
             'results' => [
-                [
-                    'id' => 1234,
-                    'title' => 'Search Movie'
+                'known_for' => [
+                    [
+                        'id' => 1234,
+                        'title' => 'Search Movie'
+                    ]
                 ]
             ]
         ];

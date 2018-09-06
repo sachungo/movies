@@ -91,7 +91,7 @@ class MovieProxy
         ]);
         $query = $this->constructQueryString($parameters);
         try {
-            $response = $this->apiClient->request('GET', $this->baseURI . 'search/movie?' . $query);
+            $response = $this->apiClient->request('GET', $this->baseURI . 'search/person?' . $query);
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
             // TODO: handle request exceptions
