@@ -85,7 +85,7 @@ const Dropdown = ({ items, hasResults, text }) => (
             }}
             data-test="list-item"
           >
-            <Title>{item.title}</Title>
+            <Title>{item.title || item.name || 'No Title'}</Title>
             <Overview>{item.overview}</Overview>
           </Item>
         ))}
