@@ -45,7 +45,7 @@ const Actor = ({ actor }) => (
       </Label>
       <Label>
         <Text>Character:</Text>
-        {actor.character}
+        {actor.character || 'Not specified'}
       </Label>
     </ActorInfo>
   </ActorContainer>

@@ -135,7 +135,7 @@ export default class Search extends PureComponent {
         </Icon>
         <Input
           type="text"
-          placeholder="Search by actor name"
+          placeholder="Search by movie name"
           onChange={this.handleChange}
           value={value}
           data-test="search-input"

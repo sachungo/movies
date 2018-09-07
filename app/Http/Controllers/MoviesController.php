@@ -39,8 +39,8 @@ class MoviesController extends Controller
         return $this->movieProxy->getPopularActors();
     }
 
-    public function searchByActor(Request $request)
+    public function searchByName(Request $request)
     {
-        return $this->movieProxy->searchByActorName($request->query());
+        return $this->movieProxy->searchByMovieName($request->query());
     }
 }

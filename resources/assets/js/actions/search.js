@@ -16,8 +16,7 @@ export const fetchSearchMovies = (query = '') => {
           return dispatch(emptySearch());
         }
 
-        const list = getSearchResults(results);
-        dispatch(searchSuccess(list))
+        dispatch(searchSuccess(results))
       })
       .catch(error => {
         dispatch(loadingResults(false));
@@ -48,10 +47,3 @@ export const setValue = payload => ({
   type: actionTypes.SEARCH_VALUE_CHANGED,
   payload
 });
-
-const getSearchResults = results => {
-  const items = results.reduce((list, result) =>
-    [...list, ...result.known_for], []);
-
-  return items;
-}

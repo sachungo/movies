@@ -99,16 +99,14 @@ class MoviesControllerTest extends TestCase
     {
         $results = [
             'results' => [
-                'known_for' => [
-                    [
-                        'id' => 1234,
-                        'title' => 'Search Movie'
-                    ]
+                [
+                    'id' => 1234,
+                    'title' => 'Search Movie'
                 ]
             ]
         ];
-        $this->mock->method('searchByActorName')->willReturn($results);
+        $this->mock->method('searchByMovieName')->willReturn($results);
         $instance = new MoviesController($this->mock);
-        $this->assertEquals($results, $instance->searchByActor($this->request));
+        $this->assertEquals($results, $instance->searchByName($this->request));
     }
 }
