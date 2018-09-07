@@ -32,10 +32,8 @@ describe('Search action test', () => {
   it('dispatches SEARCH_FETCHING_SUCCESS on completing the get request successfully', async () => {
     const data = {
       results: [{
-        known_for: [{
-          id: 1,
-          name: 'Search testing'
-        }]
+        id: 1,
+        name: 'Search testing'
       }]
     };
     searchSuccess(data);

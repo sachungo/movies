@@ -22,4 +22,4 @@ Route::get('/genres', 'MoviesController@getAllGenres');
 Route::get('/movie/{movie_id}', 'MoviesController@getMovieInfo');
 Route::get('/movie/{movie_id}/cast', 'MoviesController@getMovieCast');
 Route::get('/actors', 'MoviesController@getActors');
-Route::get('/search', 'MoviesController@searchByActor');
+Route::get('/search', 'MoviesController@searchByName');

@@ -108,21 +108,19 @@ class MovieProxyTest extends TestCase
         $this->assertEquals($data, $response);
     }
 
-    public function testSearchByActorName()
+    public function testSearchByMovieName()
     {
         $results = [
             'results' => [
-                'known_for' => [
-                    [
-                        'id' => 1234,
-                        'title' => 'Search Movie'
-                    ]
+                [
+                    'id' => 1234,
+                    'title' => 'Search Movie'
                 ]
             ]
         ];
 
         $this->mockHandler->append(new Response(200, [], json_encode($results)));
-        $response = $this->movieProxy->searchByActorName();
+        $response = $this->movieProxy->searchByMovieName();
         $this->assertEquals($results, $response);
     }
 }
