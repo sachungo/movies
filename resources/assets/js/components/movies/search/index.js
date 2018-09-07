@@ -12,7 +12,6 @@ const mapStatToProps = ({ search }) => ({
   hasResults: !isEmpty(search.results)
 });
 
-
 export default connect(mapStatToProps, {
   onSearch: fetchSearchMovies,
   onReset: reset,
