@@ -13,6 +13,12 @@ export default {
   LOADING_ACTORS: 'actors/loading/all',
   FETCH_ACTORS_SUCCESS: 'actors/fetch/success',
   SET_ACTIVE_PAGE: 'movies/pagination/page',
+  LOADING_SEARCH_RESULTS: 'movies/loading/search',
+  SEARCH_FETCHING_SUCCESS: 'search/fetch/success',
+  SEARCH_RESULTS_EMPTY: 'search/fetch/empty',
+  SEARCH_FETCHING_ERROR: 'search/fetch/error',
+  SEARCH_RESET: 'search/reset/all',
+  SEARCH_VALUE_CHANGED: 'search/value/change',
   GET_YEARS_RANGE: 'years/range/generate',
   EMPTY_RESPONSE: 'movies/all/empty'
 }

@@ -6,5 +6,6 @@ export default {
   white: '#ffffff',
   primaryHover: '#00b9bc',
   primaryActive: '#00a4a7',
-  disabled: '#f4f4f4'
+  disabled: '#f4f4f4',
+  search: 'rgba(0, 0, 0, 0.1)'
 }

@@ -1,16 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import MoviesLists from './lists';
-import { Loader, styles } from '../shared';
+import { Loader, styles, colors } from '../shared';
 import Filter from './filters';
 import Tags from './tags';
+import Search from './search';
 
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
   padding: ${rem('20px')};
+`;
+
+const SearchWrapper = styled.div`
+  background-color: ${colors.primary};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: ${rem('20px')};
+  padding-bottom: ${rem('20px')};
 `;
 
 const EmptyState = styled.div`
@@ -68,8 +78,8 @@ export default class MoviesWrapper extends Component {
           <Loader
             height={80}
             width={80}
-            primaryColor="#00ced1"
-            secondaryColor="rgba(0, 206, 209, 0.1)"
+            primaryColor={colors.primary}
+            secondaryColor={colors.translucent}
             data-test="movies-loader"
           />
         </styles.LoaderWrapper>
@@ -85,26 +95,32 @@ export default class MoviesWrapper extends Component {
     }
 
     return (
-      <Container>
-        <Tags />
-        <Filter />
-        {content}
+      <Fragment>
+        <SearchWrapper>
+          <Search />
+        </SearchWrapper>
 
-        {showPaginator && (
-          <Paginator
-            hideDisabled
-            activePage={activePage}
-            totalItemsCount={totalResults}
-            onChange={this.handlePagination}
-            itemsCountPerPage={PER_PAGE}
-            itemClass="movies-list__item"
-            activeLinkClass="movies-list__link--active"
-            activeClass="movies-list__item--active"
-            linkClass="movies-list__link"
-            data-test="movies-paginator"
-          />
-        )}
-      </Container>
+        <Container>
+          <Tags />
+          <Filter />
+          {content}
+
+          {showPaginator && (
+            <Paginator
+              hideDisabled
+              activePage={activePage}
+              totalItemsCount={totalResults}
+              onChange={this.handlePagination}
+              itemsCountPerPage={PER_PAGE}
+              itemClass="movies-list__item"
+              activeLinkClass="movies-list__link--active"
+              activeClass="movies-list__item--active"
+              linkClass="movies-list__link"
+              data-test="movies-paginator"
+            />
+          )}
+        </Container>
+      </Fragment>
     );
   }
 }
