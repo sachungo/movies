@@ -48,7 +48,8 @@ export default class FilterItem extends Component {
     options: PropTypes.array,
     resetPagination: PropTypes.func,
     disableFilter: PropTypes.bool,
-    isFiltered: PropTypes.bool
+    isFiltered: PropTypes.bool,
+    onReset: PropTypes.func
   }
 
   constructor(props) {
@@ -75,6 +76,7 @@ export default class FilterItem extends Component {
       this.state.appliedFilterCleared;
 
     if (resetItems) {
+      this.props.onReset();
       this.props.onFilter(this.props.query);
       this.props.resetPagination();
       this.toggleVisibility();
@@ -91,6 +93,7 @@ export default class FilterItem extends Component {
   };
 
   handleSubmit = () => {
+    this.props.onReset();
     this.props.onFilter(
       this.props.query
     );

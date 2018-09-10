@@ -23,8 +23,8 @@ export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
 
         dispatch(fetchingMoviesSuccess({
           movies: data.results,
-          paginatorPage,
           totalResults: data.total_results,
+          page: data.page,
           isFiltered
         }));
       })
@@ -75,4 +75,8 @@ export const setPaginatorPage = (page, reset = false) => ({
 const empty = isFiltered => ({
   type: actionTypes.EMPTY_RESPONSE,
   isFiltered
+});
+
+export const reset = () => ({
+  type: actionTypes.RESET_MOVIES
 });

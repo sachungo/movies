@@ -1,5 +1,5 @@
 import actionTypes from '../moviesConstants';
-import { paginateData, getPaginatorTotalCount } from '../helpers';
+import { getPaginatorTotalCount } from '../helpers';
 
 const initialState = {
   movies: {},
@@ -11,6 +11,16 @@ const initialState = {
   isEmpty: false
 };
 
+const paginateMovies = (payload, limit = 10) => {
+  const MULTIPLIER = 2;
+  const { page, movies } = payload;
+  const end = page * MULTIPLIER;
+  return {
+    [`page_${end - 1}`]: movies.slice(0, limit),
+    [`page_${end}`]: movies.slice(limit)
+  }
+};
+
 const movies = (state = initialState, action) => {
   switch(action.type) {
     case actionTypes.LOADING_ALL_MOVIES:
@@ -20,12 +30,12 @@ const movies = (state = initialState, action) => {
         isEmpty: false
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
-      const { paginatorPage, totalResults, movies, isFiltered } = action.payload;
+      const { totalResults, isFiltered } = action.payload;
       return {
         ...state,
         movies: {
           ...state.movies,
-          ...paginateData(paginatorPage, movies, totalResults)
+          ...paginateMovies(action.payload)
         },
         totalResults: getPaginatorTotalCount(totalResults),
         isFiltered
@@ -47,6 +57,11 @@ const movies = (state = initialState, action) => {
         ...state,
         isFiltered: action.isFiltered,
         isEmpty: true
+      }
+    case actionTypes.RESET_MOVIES:
+      return {
+        ...state,
+        ...initialState
       }
     default:
       return state;
