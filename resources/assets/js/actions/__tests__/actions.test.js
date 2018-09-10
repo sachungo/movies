@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunkMiddleware from 'redux-thunk'
 import axios from 'axios';
 import actionTypes from '../../moviesConstants';
-import { fetchMovies, setPaginatorPage } from '../';
+import { fetchMovies, setPaginatorPage, reset } from '../';
 
 jest.mock('axios');
 
@@ -78,6 +78,13 @@ describe('movies actions tests', () => {
     expect(store.getActions()).toContainEqual({
       type: actionTypes.EMPTY_RESPONSE,
       isFiltered: false
+    });
+  });
+
+  it('can dispatch RESET_MOVIES', () => {
+    store.dispatch(reset());
+    expect(store.getActions()).toContainEqual({
+      type: actionTypes.RESET_MOVIES
     });
   });
 });

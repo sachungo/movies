@@ -38,15 +38,17 @@ export default class Tags extends Component {
     hasTags: PropTypes.bool,
     isFiltered: PropTypes.bool,
     onClear: PropTypes.func,
-    onResetAll: PropTypes.func,
-    resetPagination: PropTypes.func
+    onFetchMovies: PropTypes.func,
+    resetPagination: PropTypes.func,
+    onResetMovies: PropTypes.func
   };
 
   handleClear = () => {
     this.props.onClear();
 
     if (this.props.isFiltered) {
-      this.props.onResetAll();
+      this.props.onResetMovies();
+      this.props.onFetchMovies();
       this.props.resetPagination();
     }
   };

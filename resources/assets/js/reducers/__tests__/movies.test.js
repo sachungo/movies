@@ -109,4 +109,10 @@ describe('ALL movies reducer', () => {
       isEmpty: true
     });
   });
+
+  it('should handle RESET_MOVIES', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.RESET_MOVIES
+    })).toEqual(initialState);
+  });
 });

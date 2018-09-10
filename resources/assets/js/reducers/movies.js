@@ -58,6 +58,11 @@ const movies = (state = initialState, action) => {
         isFiltered: action.isFiltered,
         isEmpty: true
       }
+    case actionTypes.RESET_MOVIES:
+      return {
+        ...state,
+        ...initialState
+      }
     default:
       return state;
   }

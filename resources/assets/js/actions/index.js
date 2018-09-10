@@ -76,3 +76,7 @@ const empty = isFiltered => ({
   type: actionTypes.EMPTY_RESPONSE,
   isFiltered
 });
+
+export const reset = () => ({
+  type: actionTypes.RESET_MOVIES
+});

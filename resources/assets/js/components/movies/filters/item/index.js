@@ -3,7 +3,11 @@ import isEmpty from 'lodash/isEmpty';
 import FilterItem from './FilterItem';
 
 import { setSelectedOption, reset } from '../../../../actions/filters';
-import { fetchMovies,  setPaginatorPage } from '../../../../actions';
+import {
+  fetchMovies,
+  setPaginatorPage,
+  reset as moviesReset
+} from '../../../../actions';
 import { getQuery } from '../../../../helpers';
 
 const mapStateToProps = (state, props) => {
@@ -27,7 +31,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(setSelectedOption(payload, props.criterion)),
   onClear: () => dispatch(reset(props.criterion)),
   onFilter: query => dispatch(fetchMovies(1, query)),
-  resetPagination: () => dispatch(setPaginatorPage(1, true))
+  resetPagination: () => dispatch(setPaginatorPage(1, true)),
+  onReset: () => dispatch(moviesReset())
 });
 
 export default connect(
