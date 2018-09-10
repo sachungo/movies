@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import MoviesLists from './lists';
-import { Loader, styles, colors } from '../shared';
+import { Loader, styles, colors, StatusMessage } from '../shared';
 import Filter from './filters';
 import Tags from './tags';
 import Search from './search';
@@ -94,9 +94,7 @@ export default class MoviesWrapper extends Component {
 
     if (isEmpty) {
       content = (
-        <EmptyState data-test="empty-state">
-          No results found!
-        </EmptyState>
+        <StatusMessage data-test="empty-state" />
       );
     }
 
