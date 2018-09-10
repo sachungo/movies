@@ -53,16 +53,22 @@ export default class MoviesWrapper extends Component {
     }
   }
 
-  handlePagination = pageNumber => {
-    const { paginator, fetchAll, query, onPaginatorChange } = this.props;
-    onPaginatorChange(pageNumber);
-
-    const pageKey = `page-${pageNumber}`;
-    if (paginator.includes(pageKey)) {
-      return;
+  componentDidUpdate(prevProps) {
+    const {
+      fetchAll,
+      query,
+      activePage,
+      paginator
+    } = this.props;
+    const activePageChanged = prevProps.activePage !== activePage;
+    const pageKey = `page_${activePage}`;
+    if (activePageChanged && !paginator.includes(pageKey)) {
+      fetchAll(activePage, query);
     }
+  }
 
-    fetchAll(pageNumber, query);
+  handlePagination = pageNumber => {
+    this.props.onPaginatorChange(pageNumber);
   };
 
   render() {

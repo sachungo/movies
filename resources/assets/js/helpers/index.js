@@ -38,41 +38,6 @@ export const deriveApiPage = paginatorPage => {
   return Math.ceil((paginatorPage * LIMIT) / API_LIMIT);
 }
 
-const isEven = number => (number % 2 === 0);
-
-const getPaginatorKey = page => `page-${page}`;
-
-const totalPages = total => {
-  const count = getPaginatorTotalCount(total);
-  return Math.ceil(count / LIMIT );
-};
-
-const isOutOfBounds = (page, lastPage) => (page > lastPage);
-
-export const paginateData = (paginatorPage, data, total) => {
-  const paginatorPages = totalPages(total);
-  const offset = 1;
-  let firstPage = paginatorPage;
-  let secondPage = paginatorPage + offset;
-  if (isEven(paginatorPage)) {
-    firstPage = paginatorPage - offset;
-    secondPage = paginatorPage;
-  }
-
-  let paginated = {
-    [getPaginatorKey(firstPage)]: data.slice(0, LIMIT)
-  };
-
-  if (isOutOfBounds(secondPage)) {
-    return paginated;
-  }
-
-  return {
-    ...paginated,
-    [getPaginatorKey(secondPage)]: data.slice(LIMIT)
-  };
-};
-
 export const getPaginatorTotalCount = count => {
   const MAX_COUNT = 100;
   if (count > MAX_COUNT) {

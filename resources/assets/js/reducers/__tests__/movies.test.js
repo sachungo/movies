@@ -44,16 +44,16 @@ describe('ALL movies reducer', () => {
           id: 176565,
           title: 'Testing movies'
         }],
-        paginatorPage: 3,
+        page: 3,
         isFiltered: true
       }
     })).toEqual({
       movies: {
-        'page-3': [{
+        'page_5': [{
           id: 176565,
           title: 'Testing movies'
         }],
-        'page-4': []
+        'page_6': []
       },
       loading: false,
       error: '',

@@ -44,7 +44,8 @@ describe('movies actions tests', () => {
       results: [{
         name: 'testing',
         id: 1
-      }]
+      }],
+      page: 1
     });
 
     await store.dispatch(fetchMovies());
@@ -56,7 +57,7 @@ describe('movies actions tests', () => {
           name: 'testing',
           id: 1
         }],
-        paginatorPage: 1,
+        page: 1,
         isFiltered: false
       }
     });
