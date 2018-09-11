@@ -22,7 +22,8 @@ const mapStateToProps = (state, props) => {
     query: getQuery(filters),
     options: filterItems,
     disableFilter: state[criterion].loading || isEmpty(filterItems),
-    isFiltered: allMovies.isFiltered
+    isFiltered: allMovies.isFiltered,
+    hideFilter: !!state[criterion].error
   }
 };
 
