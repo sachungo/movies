@@ -3,6 +3,7 @@ export default {
   LOADING_ALL_MOVIES: 'movies/loading/all',
   FETCH_ALL_MOVIES_ERROR: 'movies/fetch/all/error',
   ADD_MOVIE_INFO: 'movies/fetch/movie/success',
+  FETCH_MOVIE_INFO_ERROR: 'movies/fetch/movie/error',
   LOADING_ALL_GENRES: 'movies/loading/genres',
   FETCH_GENRES_SUCCESS: 'movies/fetch/genres/success',
   FETCH_GENRES_ERROR: 'movies/fetch/genres/error',

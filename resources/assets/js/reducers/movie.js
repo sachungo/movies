@@ -5,7 +5,8 @@ const initialState = {
   loading: false,
   hasInfo: false,
   cast: [],
-  loadingCast: false
+  loadingCast: false,
+  error: ''
 };
 
 const movie = (state = initialState, action) => {
@@ -14,12 +15,14 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
-        hasInfo: true
+        hasInfo: true,
+        error: ''
       }
     case actionTypes.LOADING_MOVIE_INFO:
       return {
         ...state,
-        loading: action.loading
+        loading: action.loading,
+        error: ''
       }
     case actionTypes.ADD_MOVIE_CAST:
       return {
@@ -30,6 +33,11 @@ const movie = (state = initialState, action) => {
       return {
         ...state,
         loadingCast: action.loading
+      }
+    case actionTypes.FETCH_MOVIE_INFO_ERROR:
+      return {
+        ...state,
+        error: action.payload
       }
     default:
       return state;

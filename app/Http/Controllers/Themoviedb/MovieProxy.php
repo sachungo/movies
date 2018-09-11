@@ -57,10 +57,9 @@ class MovieProxy
         ]);
         try{
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '?' . $query);
-            // dd(json_decode($response->getBody(), true));
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
-            // TODO: handle the error
+            return $this->handleExceptions($e);
         }
     }
 
