@@ -35,11 +35,7 @@ class MovieProxy
             return json_decode($response->getBody(), true);
 
         } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-                return response()->json(['errors' =>  $error]);
-           }
-           return respone()->json(['errors' => $e->getRequest()]);
+            return $this->handleExceptions($e);
         }
     }
 
@@ -50,7 +46,7 @@ class MovieProxy
             $response = $this->apiClient->request('GET', $this->baseURI . 'genre/movie/list?' . $query);
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
-            // TODO: handle the error
+            return $this->handleExceptions($e);
         }
     }
 
@@ -110,5 +106,13 @@ class MovieProxy
             'api_key' => $this->apiKey
         ]);
         return http_build_query($params);
+    }
+
+    private function handleExceptions($exception) {
+        if ($exception->hasResponse()) {
+            $error = json_decode($exception->getResponse()->getBody()->getContents(), true);
+            return response()->json(['errors' =>  $error]);
+       }
+       return response()->json(['errors' => $exception->getRequest()]);
     }
 }
