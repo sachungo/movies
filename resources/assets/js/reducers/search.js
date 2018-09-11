@@ -4,7 +4,8 @@ const initialState = {
   loading: false,
   results: [],
   empty: '',
-  value: ''
+  value: '',
+  error: ''
 };
 
 const search = (state = initialState, action) => {
@@ -12,7 +13,8 @@ const search = (state = initialState, action) => {
     case actionTypes.LOADING_SEARCH_RESULTS:
       return {
         ...state,
-        loading: action.loading
+        loading: action.loading,
+        error: ''
       }
     case actionTypes.SEARCH_FETCHING_SUCCESS:
       return {
@@ -31,12 +33,18 @@ const search = (state = initialState, action) => {
         ...state,
         value: action.payload,
         results: [],
-        empty: ''
+        empty: '',
+        error: ''
       }
     case actionTypes.SEARCH_RESET:
       return {
         ...state,
         ...initialState
+      }
+    case actionTypes.SEARCH_FETCHING_ERROR:
+      return {
+        ...state,
+        error: action.payload
       }
     default:
       return state;

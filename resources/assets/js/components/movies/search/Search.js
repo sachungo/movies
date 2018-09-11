@@ -86,7 +86,8 @@ export default class Search extends PureComponent {
     hasResults: PropTypes.bool,
     onReset: PropTypes.func,
     onChange: PropTypes.func,
-    value: PropTypes.string
+    value: PropTypes.string,
+    error: PropTypes.string
   };
 
   constructor(props) {
@@ -126,7 +127,8 @@ export default class Search extends PureComponent {
       emptyText,
       hasResults,
       value,
-      onReset
+      onReset,
+      error
     } = this.props;
     return (
       <Form onSubmit={this.handleSubmit} innerRef={this.search}>
@@ -154,6 +156,7 @@ export default class Search extends PureComponent {
           text={emptyText}
           hasResults={hasResults}
           onReset={onReset}
+          error={error}
           data-test="search-dropdown"
         />
       </Form>

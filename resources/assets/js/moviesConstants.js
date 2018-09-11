@@ -17,6 +17,7 @@ export default {
   SET_ACTIVE_PAGE: 'movies/pagination/page',
   LOADING_SEARCH_RESULTS: 'movies/loading/search',
   SEARCH_FETCHING_SUCCESS: 'search/fetch/success',
+  SEARCH_FETCHING_ERROR: 'search/fetch/error',
   SEARCH_RESULTS_EMPTY: 'search/fetch/empty',
   SEARCH_FETCHING_ERROR: 'search/fetch/error',
   SEARCH_RESET: 'search/reset/all',

@@ -9,7 +9,8 @@ const mapStatToProps = ({ search }) => ({
   results: search.results,
   emptyText: search.empty,
   value: search.value,
-  hasResults: !isEmpty(search.results)
+  hasResults: !isEmpty(search.results),
+  error: search.error
 });
 
 export default connect(mapStatToProps, {
