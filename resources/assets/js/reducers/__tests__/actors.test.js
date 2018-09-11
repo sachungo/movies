@@ -6,15 +6,13 @@ describe('Actors reducer test', () => {
   beforeEach(() => {
     initialState = {
       loading: false,
-      actors: []
+      actors: [],
+      error: ''
     };
   });
 
   it('should return the initial state for default actions', () => {
-    expect(reducer(undefined, {})).toEqual({
-      loading: false,
-      actors: []
-    });
+    expect(reducer(undefined, {})).toEqual(initialState);
   });
 
   it('should handle LOADING_ACTORS', () => {
@@ -22,8 +20,8 @@ describe('Actors reducer test', () => {
       type: actionTypes.LOADING_ACTORS,
       loading: true
     })).toEqual({
-      loading: true,
-      actors: []
+      ...initialState,
+      loading: true
     });
   });
 
@@ -36,7 +34,7 @@ describe('Actors reducer test', () => {
       type: actionTypes.FETCH_ACTORS_SUCCESS,
       payload
     })).toEqual({
-      loading: false,
+      ...initialState,
       actors: payload
     });
   });

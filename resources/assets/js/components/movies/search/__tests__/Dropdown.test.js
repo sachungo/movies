@@ -36,4 +36,13 @@ describe('SEARCH dropdown', () => {
     const wrapper = shallow(<Dropdown {...props} />);
     expect(wrapper.find('[data-test="list-empty"]')).toExist();
   });
+
+  it('renders the error message', () => {
+    props = {
+      ...props,
+      error: 'Error occurred'
+    };
+    const wrapper = shallow(<Dropdown {...props} />);
+    expect(wrapper.find('[data-test="list-error"]')).toExist();
+  });
 });

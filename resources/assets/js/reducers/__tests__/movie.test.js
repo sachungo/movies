@@ -10,7 +10,9 @@ describe('SINGLE movie reducer', () => {
       loading: false,
       hasInfo: false,
       cast: [],
-      loadingCast: false
+      loadingCast: false,
+      error: '',
+      hasCastError: false
     };
   });
 
@@ -27,11 +29,9 @@ describe('SINGLE movie reducer', () => {
       type: actionTypes.ADD_MOVIE_INFO,
       payload
     })).toEqual({
+      ...initialState,
       data: payload,
-      loading: false,
-      hasInfo: true,
-      cast: [],
-      loadingCast: false
+      hasInfo: true
     })
   });
 
@@ -40,11 +40,8 @@ describe('SINGLE movie reducer', () => {
       type: actionTypes.LOADING_MOVIE_INFO,
       loading: true
     })).toEqual({
-      data: {},
-      loading: true,
-      hasInfo: false,
-      cast: [],
-      loadingCast: false
+      ...initialState,
+      loading: true
     });
   });
 
@@ -61,11 +58,8 @@ describe('SINGLE movie reducer', () => {
       type: actionTypes.ADD_MOVIE_CAST,
       cast
     })).toEqual({
-      data: {},
-      loading: false,
-      hasInfo: false,
-      cast,
-      loadingCast: false
+      ...initialState,
+      cast
     });
   });
 
@@ -74,10 +68,7 @@ describe('SINGLE movie reducer', () => {
       type: actionTypes.LOADING_MOVIE_CAST,
       loading: true
     })).toEqual({
-      data: {},
-      loading: false,
-      hasInfo: false,
-      cast: [],
+      ...initialState,
       loadingCast: true
     });
   });
