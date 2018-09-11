@@ -9,7 +9,8 @@ import {
 const mapStateToProps = ({ movie }) => ({
   loading: movie.loadingCast,
   cast: movie.cast,
-  hasCast: !_.isEmpty(movie.cast)
+  hasCast: !_.isEmpty(movie.cast),
+  hasCastError: movie.hasCastError
 });
 
 const mapDispatchToProps = dispatch => ({

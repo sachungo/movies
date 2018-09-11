@@ -64,13 +64,21 @@ export const fetchMovieCast = movieId => {
       .then(response => {
         dispatch(loadingCast(false));
 
-        const { cast = [] } = response.data;
+        const { cast = [], errors = [] } = response.data;
+
+        if (!isEmpty(errors)) {
+          return dispatch(fetchCastError());
+        }
+
         dispatch(addMovieCastInfo(cast));
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(loadingCast(false));
-
-        // TODO: handle error
+        dispatch(fetchCastError());
       });
   }
 };
+
+const fetchCastError = () => ({
+  type: actionTypes.FETCH_MOVIE_CAST
+})

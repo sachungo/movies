@@ -9,6 +9,7 @@ export default {
   FETCH_GENRES_ERROR: 'movies/fetch/genres/error',
   LOADING_MOVIE_INFO: 'movies/loading/movie',
   ADD_MOVIE_CAST: 'movies/movie/cast/info',
+  FETCH_MOVIE_CAST: 'movies/movie/cast/error',
   LOADING_MOVIE_CAST: 'movies/loading/movie/cast',
   FILTER_CRITERIA_OPTION_CHANGED: 'filter/selected/option',
   RESET_FILTER: 'filter/reset/all',
