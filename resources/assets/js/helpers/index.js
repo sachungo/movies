@@ -108,3 +108,17 @@ export const getYearsOptions = () => {
 
   return options;
 };
+
+export const getAxiosErrorMessage = error => {
+  if (error.response) {
+    return (error.response.data && error.response.data.message);
+  }
+  if (error.request) {
+    return error.request;
+  }
+  if (error.message) {
+    return error.message;
+  }
+
+  return 'Unknown error occurred. Please try again after a few minutes';
+}

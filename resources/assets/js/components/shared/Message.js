@@ -28,27 +28,38 @@ const Text = styled.p`
   font-size: ${rem('16px')};
 `;
 
-const Message = ({ type, header, description }) => {
+const Message = ({ type, description }) => {
   const url = type === 'empty' ? '/images/empty.svg' : '/images/error.svg';
+  const message = statusEnum[type];
+
   return (
     <Container>
-      <Header isError={type !== 'empty'}>{header}</Header>
+      <Header isError={type !== 'empty'}>{message.header}</Header>
       <Image src={url} alt={`${type}-icon`} />
-      <Text>{description}</Text>
+      <Text>{description || message.description}</Text>
     </Container>
   )
 };
 
 Message.defaultProps = {
   type:'empty',
-  header: 'Nothing here!',
-  description: 'Sorry, no movies found! Try filtering by actor, genre and year, or searching by the movie\'s name.'
+  description: ''
 };
 
 Message.propTypes = {
   type: PropTypes.string,
-  header: PropTypes.string,
   description: PropTypes.string
+};
+
+const statusEnum = {
+  error: {
+    header: 'Oops, something went wrong!',
+    description: 'Try refreshing the page or check your internet connection.'
+  },
+  empty: {
+    header: 'Nothing here!',
+    description: 'Sorry, no movies found! Try filtering by actor, genre and year; or searching by the movie\'s name.'
+  }
 };
 
 export default Message;

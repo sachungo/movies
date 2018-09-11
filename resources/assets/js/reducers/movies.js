@@ -27,7 +27,8 @@ const movies = (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading,
-        isEmpty: false
+        isEmpty: false,
+        error: ''
       }
     case actionTypes.FETCH_ALL_MOVIES_SUCCESS:
       const { totalResults, isFiltered } = action.payload;

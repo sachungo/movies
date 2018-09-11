@@ -1,7 +1,7 @@
 import axios from 'axios';
-import _ from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import actionTypes from '../moviesConstants';
-import { deriveApiPage } from '../helpers';
+import { deriveApiPage, getAxiosErrorMessage } from '../helpers';
 
 export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
   return dispatch => {
@@ -16,8 +16,14 @@ export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
         dispatch(loadingMovies(false));
 
         const { data = {} } = response;
+
+        if (!isEmpty(data.errors)) {
+          const message = data.errors.status_message || 'An error occured!';
+          return dispatch(fetchingMoviesError(message));
+        }
+
         const isFiltered = !!filterQuery;
-        if (_.isEmpty(data.results)) {
+        if (isEmpty(data.results)) {
           return dispatch(empty(isFiltered));
         }
 
@@ -31,7 +37,7 @@ export const fetchMovies = (paginatorPage = 1, filterQuery = '') => {
       .catch(error => {
         dispatch(loadingMovies(false));
 
-        const errorMessage = getErrorMessage(error);
+        const errorMessage = getAxiosErrorMessage(error);
         dispatch(fetchingMoviesError(errorMessage));
       })
   }
@@ -51,20 +57,6 @@ const fetchingMoviesError = errorMessage => ({
   type: actionTypes.FETCH_ALL_MOVIES_ERROR,
   payload: errorMessage
 });
-
-const getErrorMessage = error => {
-  if (error.response) {
-    return error.response.data;
-  }
-  if (error.request) {
-    return error.request;
-  }
-  if (error.message) {
-    return error.message;
-  }
-
-  return 'Unknown error occurred. Please try again after a few minutes';
-}
 
 export const setPaginatorPage = (page, reset = false) => ({
   type: actionTypes.SET_ACTIVE_PAGE,

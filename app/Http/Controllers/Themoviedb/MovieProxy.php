@@ -31,10 +31,15 @@ class MovieProxy
             $response = $this->apiClient->request('GET', $this->baseURI . 'discover/movie?' . $query);
 
             // TODO: use a resource that have only the data I need
+            // $response->json();
             return json_decode($response->getBody(), true);
 
         } catch (RequestException $e) {
-            // TODO: handle the exception properly
+            if ($e->hasResponse()) {
+                $error = json_decode($e->getResponse()->getBody()->getContents(), true);
+                return response()->json(['errors' =>  $error]);
+           }
+           return respone()->json(['errors' => $e->getRequest()]);
         }
     }
 
@@ -56,6 +61,7 @@ class MovieProxy
         ]);
         try{
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '?' . $query);
+            // dd(json_decode($response->getBody(), true));
             return json_decode($response->getBody(), true);
         } catch (RequestException $e) {
             // TODO: handle the error
