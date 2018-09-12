@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Themoviedb;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
+use App\Http\Resources\Cast;
+use App\Http\Resources\Movie;
+use App\Http\Resources\Movies;
+use App\Http\Resources\Actors;
+
 class MovieProxy
 {
     protected $apiClient;
@@ -29,11 +34,8 @@ class MovieProxy
 
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'discover/movie?' . $query);
-
-            // TODO: use a resource that have only the data I need
-            // $response->json();
-            return json_decode($response->getBody(), true);
-
+            $collection = collect(json_decode($response->getBody(), true));
+            return new Movies($collection);
         } catch (RequestException $e) {
             return $this->handleExceptions($e);
         }
@@ -57,7 +59,8 @@ class MovieProxy
         ]);
         try{
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '?' . $query);
-            return json_decode($response->getBody(), true);
+            $collection = collect(json_decode($response->getBody(), true));
+            return new Movie($collection);
         } catch (RequestException $e) {
             return $this->handleExceptions($e);
         }
@@ -68,7 +71,8 @@ class MovieProxy
         $query = $this->constructQueryString();
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'movie/' . $movie_id . '/credits?' . $query);
-            return json_decode($response->getBody(), true);
+            $collection = collect(json_decode($response->getBody(), true));
+            return new Cast($collection);
         } catch (RequestException $e) {
             return $this->handleExceptions($e);
         }
@@ -79,7 +83,8 @@ class MovieProxy
         $query = $this->constructQueryString();
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'person/popular?' . $query);
-            return json_decode($response->getBody(), true);
+            $collection = collect(json_decode($response->getBody(), true));
+            return new Actors($collection);
         } catch (RequestException $e) {
             return $this->handleExceptions($e);
         }
@@ -93,7 +98,8 @@ class MovieProxy
         $query = $this->constructQueryString($parameters);
         try {
             $response = $this->apiClient->request('GET', $this->baseURI . 'search/movie?' . $query);
-            return json_decode($response->getBody(), true);
+            $collection = collect(json_decode($response->getBody(), true));
+            return new Movies($collection);
         } catch (RequestException $e) {
             return $this->handleExceptions($e);
         }

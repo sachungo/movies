@@ -17,7 +17,7 @@ const actors = (state = initialState, action) => {
     case actionTypes.FETCH_ACTORS_SUCCESS:
       return {
         ...state,
-        actors: action.payload.slice(0, 10)
+        actors: action.payload
       };
     case actionTypes.FETCH_ACTORS_ERROR:
       return {
