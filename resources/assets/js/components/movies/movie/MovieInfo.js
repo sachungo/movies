@@ -4,7 +4,13 @@ import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
 import MovieCast from './cast';
-import { colors, media, Loader, styles } from '../../shared';
+import {
+  colors,
+  media,
+  Loader,
+  styles,
+  StatusMessage
+} from '../../shared';
 
 const Movie = styled.div`
   padding: ${rem('20px')};
@@ -80,6 +86,7 @@ export default class MovieInfo extends PureComponent {
     shouldAddInfo: PropTypes.bool,
     shouldFetchInfo: PropTypes.bool,
     cast: PropTypes.arrayOf(PropTypes.object),
+    error: PropTypes.string
   };
 
   componentDidMount() {
@@ -110,7 +117,8 @@ export default class MovieInfo extends PureComponent {
       hasCast,
       cast,
       match,
-      shouldAddInfo
+      shouldAddInfo,
+      error
     } = this.props;
     if (loading) {
       return (
@@ -124,6 +132,16 @@ export default class MovieInfo extends PureComponent {
           />
         </styles.LoaderWrapper>
       );
+    }
+
+    if(error) {
+      const description = `${error} Please go to homepage and filter or search for the movie.`;
+      return (
+        <StatusMessage
+          type="error"
+          description={description}
+        />
+      )
     }
 
     return (

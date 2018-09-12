@@ -33,7 +33,8 @@ export default class MovieCast extends PureComponent {
     fetchCast: PropTypes.func,
     id: PropTypes.string,
     shouldFetchCast: PropTypes.bool,
-    resetCast: PropTypes.func
+    resetCast: PropTypes.func,
+    hasCastError: PropTypes.bool
   };
 
   componentDidMount() {
@@ -51,7 +52,7 @@ export default class MovieCast extends PureComponent {
   }
 
   render() {
-    const { loading, cast, hasCast } = this.props;
+    const { loading, cast, hasCast, hasCastError } = this.props;
 
     if (loading) {
       return (
@@ -78,6 +79,15 @@ export default class MovieCast extends PureComponent {
                   data-test="movie-actor"
                 />
               ))}
+            </MovieCastContainer>
+          </Fragment>
+        )}
+
+        {hasCastError && (
+          <Fragment>
+            <TitleWithBorder>Cast</TitleWithBorder>
+            <MovieCastContainer>
+              Sorry, we are unable to show you the cast of the movie right now.
             </MovieCastContainer>
           </Fragment>
         )}

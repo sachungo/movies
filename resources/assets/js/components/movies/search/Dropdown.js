@@ -50,7 +50,7 @@ const Item = styled(Link)`
 
 const EmptyWrapper = Item.withComponent('div');
 
-const Empty = EmptyWrapper.extend`
+const Status = EmptyWrapper.extend`
   width: ${rem('300px')};
   cursor: default;
 
@@ -72,7 +72,7 @@ const Overview = styled.p`
   margin-bottom: 0;
 `;
 
-const Dropdown = ({ items, hasResults, text }) => (
+const Dropdown = ({ items, hasResults, text, error }) => (
   <Wrapper>
     {hasResults && (
       <List>
@@ -93,7 +93,11 @@ const Dropdown = ({ items, hasResults, text }) => (
     )}
 
     {text && (
-      <Empty data-test="list-empty">{text}</Empty>
+      <Status data-test="list-empty">{text}</Status>
+    )}
+
+    {error && (
+      <Status data-test="list-error">{error}</Status>
     )}
   </Wrapper>
 );
@@ -101,7 +105,8 @@ const Dropdown = ({ items, hasResults, text }) => (
 Dropdown.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   hasResults: PropTypes.bool,
-  text: PropTypes.string
+  text: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default Dropdown;

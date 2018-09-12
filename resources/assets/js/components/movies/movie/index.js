@@ -19,7 +19,8 @@ const mapStateToProps = (state, ownProps) => {
     hasGenres: !_.isEmpty(movieGenres),
     shouldAddInfo,
     shouldFetchInfo,
-    loading: state.movie.loading
+    loading: state.movie.loading,
+    error: state.movie.error
   }
 };
 

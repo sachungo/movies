@@ -1,6 +1,7 @@
 import axios from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import actionTypes from '../moviesConstants';
+import { getAxiosErrorMessage } from '../helpers';
 
 export const fetchSearchMovies = (query = '') => {
   return dispatch => {
@@ -11,7 +12,12 @@ export const fetchSearchMovies = (query = '') => {
       .then(response => {
         dispatch(loadingResults(false));
 
-        const { results = [] } = response.data;
+        const { results = [], errors = [] } = response.data;
+        if (!isEmpty(errors)) {
+          const message = errors.status_message || 'An error occured!';
+          return dispatch(searchError(message));
+        }
+
         if (isEmpty(results)) {
           return dispatch(emptySearch());
         }
@@ -20,7 +26,9 @@ export const fetchSearchMovies = (query = '') => {
       })
       .catch(error => {
         dispatch(loadingResults(false));
-        // TODO: handle the error successfully
+
+        const errorMessage = getAxiosErrorMessage(error);
+        dispatch(searchError(errorMessage));
       });
   }
 };
@@ -32,6 +40,11 @@ const loadingResults = loading => ({
 
 const searchSuccess = payload => ({
   type: actionTypes.SEARCH_FETCHING_SUCCESS,
+  payload
+});
+
+const searchError = payload => ({
+  type: actionTypes.SEARCH_FETCHING_ERROR,
   payload
 });
 

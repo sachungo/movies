@@ -42,7 +42,8 @@ export default class MoviesWrapper extends Component {
     query: PropTypes.string,
     onPaginatorChange: PropTypes.func,
     activePage: PropTypes.number,
-    isEmpty: PropTypes.bool
+    isEmpty: PropTypes.bool,
+    error: PropTypes.string
   };
 
   componentDidMount() {
@@ -72,7 +73,7 @@ export default class MoviesWrapper extends Component {
   };
 
   render() {
-    const { loading, totalResults, activePage, isEmpty } = this.props;
+    const { loading, totalResults, activePage, isEmpty, error } = this.props;
     const showPaginator = totalResults > PER_PAGE;
     let content = (
       <MoviesLists data-test="movies-list" page={activePage} />
@@ -92,9 +93,14 @@ export default class MoviesWrapper extends Component {
       );
     }
 
-    if (isEmpty) {
+    if (isEmpty || error) {
+      const errorMessage = `${error} Try refreshing the page.`;
       content = (
-        <StatusMessage data-test="empty-state" />
+        <StatusMessage
+          type={isEmpty ? 'empty' : 'error'}
+          description={error ? errorMessage : ''}
+          data-test="empty-state"
+        />
       );
     }
 

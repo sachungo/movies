@@ -8,7 +8,8 @@ describe('Search reducer test', () => {
       loading: false,
       results: [],
       empty: '',
-      value: ''
+      value: '',
+      error: ''
     };
   });
 

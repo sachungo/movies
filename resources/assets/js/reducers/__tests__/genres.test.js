@@ -7,7 +7,8 @@ describe('ALL genres reducer', () => {
   beforeEach(() => {
     initialState = {
       genres: [],
-      loading: false
+      loading: false,
+      error: ''
     }
   });
 
@@ -20,7 +21,7 @@ describe('ALL genres reducer', () => {
       type: actionTypes.LOADING_ALL_GENRES,
       loading: true
     })).toEqual({
-      genres: [],
+      ...initialState,
       loading: true
     });
   });
@@ -33,11 +34,11 @@ describe('ALL genres reducer', () => {
         name: 'Testing'
       }]
     })).toEqual({
+      ...initialState,
       genres: [{
         id: 1,
         name: 'Testing'
-      }],
-      loading: false
+      }]
     });
   });
 });

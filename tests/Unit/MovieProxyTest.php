@@ -4,7 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use GuzzleHttp\Client;
+use App\Http\Resources\Cast;
 use GuzzleHttp\Psr7\Response;
+use App\Http\Resources\Movie;
+use App\Http\Resources\Movies;
+use App\Http\Resources\Actors;
 use GuzzleHttp\Handler\MockHandler;
 use App\Http\Controllers\Themoviedb\MovieProxy;
 
@@ -28,16 +32,15 @@ class MovieProxyTest extends TestCase
                 [
                     'id' => 1234,
                     'title' => "testing"
-                ],
-                [
-                    'id' => 65789,
-                    'title' => 'Movies testing'
                 ]
-            ]
+            ],
+            'total_results' => 1,
+            'page' => 1
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($data)));
+        $resource = new Movies(collect($data));
         $response = $this->movieProxy->getMoviesList();
-        $this->assertEquals($data, $response);
+        $this->assertEquals($resource, $response);
     }
 
     public function testGetGenres()
@@ -69,7 +72,8 @@ class MovieProxyTest extends TestCase
             'title' => 'Testing movie'
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($response)));
-        $this->assertEquals($response, $this->movieProxy->getMovie(1));
+        $resource = new Movie(collect($response));
+        $this->assertEquals($resource, $this->movieProxy->getMovie(1));
     }
 
     public function testGetMovieCast()
@@ -86,7 +90,8 @@ class MovieProxyTest extends TestCase
             ]
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($response)));
-        $this->assertEquals($response, $this->movieProxy->getMovieCast(299536));
+        $resource = new Cast(collect($response));
+        $this->assertEquals($resource, $this->movieProxy->getMovieCast(299536));
     }
 
     public function testGetPopularActors()
@@ -105,7 +110,8 @@ class MovieProxyTest extends TestCase
         ];
         $this->mockHandler->append(new Response(200, [], json_encode($data)));
         $response = $this->movieProxy->getPopularActors();
-        $this->assertEquals($data, $response);
+        $resource = new Actors(collect($data));
+        $this->assertEquals($resource, $response);
     }
 
     public function testSearchByMovieName()
@@ -116,11 +122,14 @@ class MovieProxyTest extends TestCase
                     'id' => 1234,
                     'title' => 'Search Movie'
                 ]
-            ]
+            ],
+            'total_pages' => 1,
+            'page' => 1
         ];
 
         $this->mockHandler->append(new Response(200, [], json_encode($results)));
         $response = $this->movieProxy->searchByMovieName();
-        $this->assertEquals($results, $response);
+        $resource = new Movies(collect($results));
+        $this->assertEquals($resource, $response);
     }
 }

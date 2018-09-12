@@ -1,5 +1,7 @@
-import actionTypes from '../moviesConstants';
 import axios from 'axios';
+import isEmpty from 'lodash/isEmpty';
+import actionTypes from '../moviesConstants';
+import { getAxiosErrorMessage } from '../helpers';
 
 export const addMovieInfo = payload => ({
   type: actionTypes.ADD_MOVIE_INFO,
@@ -13,18 +15,31 @@ export const fetchMovie = movieId => {
     return axios.get(`/api/movie/${movieId}`)
       .then(response => {
         dispatch(loadingMovie(false));
-        dispatch(addMovieInfo(response.data));
 
-        const { cast = [] } = response.data.credits;
+        const { data = {} } = response;
+        if (!isEmpty(data.errors)) {
+          const message = data.errors.status_message || 'An error occured!';
+          return dispatch(fetchMovieError(message));
+        }
+
+        dispatch(addMovieInfo(data));
+
+        const { cast = [] } = data.credits;
         dispatch(addMovieCastInfo(cast));
       })
       .catch(error => {
         dispatch(loadingMovie(false));
 
-        // TODO: handle error
+        const errorMessage = getAxiosErrorMessage(error);
+        dispatch(fetchMovieError(errorMessage));
       });
   }
 }
+
+const fetchMovieError = payload => ({
+  type: actionTypes.FETCH_MOVIE_INFO_ERROR,
+  payload
+});
 
 const loadingMovie = loading => ({
   type: actionTypes.LOADING_MOVIE_INFO,
@@ -49,13 +64,21 @@ export const fetchMovieCast = movieId => {
       .then(response => {
         dispatch(loadingCast(false));
 
-        const { cast = [] } = response.data;
+        const { cast = [], errors = [] } = response.data;
+
+        if (!isEmpty(errors)) {
+          return dispatch(fetchCastError());
+        }
+
         dispatch(addMovieCastInfo(cast));
       })
-      .catch(error => {
+      .catch(() => {
         dispatch(loadingCast(false));
-
-        // TODO: handle error
+        dispatch(fetchCastError());
       });
   }
 };
+
+const fetchCastError = () => ({
+  type: actionTypes.FETCH_MOVIE_CAST
+})

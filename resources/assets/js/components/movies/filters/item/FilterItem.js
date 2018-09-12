@@ -10,6 +10,10 @@ const Wrapper = styled.div`
   flex: 0 0 ${rem('115px')};
   position: relative;
   margin-top: ${rem('10px')};
+
+  ${({ hide }) => hide && css`
+    display: none;
+  `}
 `;
 
 const Item = styled(styles.Button)`
@@ -49,7 +53,8 @@ export default class FilterItem extends Component {
     resetPagination: PropTypes.func,
     disableFilter: PropTypes.bool,
     isFiltered: PropTypes.bool,
-    onReset: PropTypes.func
+    onReset: PropTypes.func,
+    hideFilter: PropTypes.bool
   }
 
   constructor(props) {
@@ -132,11 +137,12 @@ export default class FilterItem extends Component {
       onClear,
       query,
       onFilter,
-      options
+      options,
+      hideFilter
     } = this.props;
     const isYearsFilter = criterion === 'years';
     return (
-      <Wrapper innerRef={this.filter}>
+      <Wrapper innerRef={this.filter} hide={hideFilter}>
         <Item
           data-test="filter-criterion"
           onClick={this.toggleVisibility}

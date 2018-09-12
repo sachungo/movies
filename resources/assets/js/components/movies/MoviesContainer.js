@@ -13,7 +13,8 @@ const mapStateToProps = ({ allMovies, genres, filters }) => ({
   totalResults: allMovies.totalResults,
   query: getQuery(filters),
   activePage: allMovies.activePage,
-  isEmpty: allMovies.isEmpty
+  isEmpty: allMovies.isEmpty,
+  error: allMovies.error
 });
 
 const mapDispatchToProps = dispatch => ({
