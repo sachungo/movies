@@ -19,6 +19,19 @@ import {
 const Movie = styled.div`
   padding: 0 ${rem('20px')};
   margin: 0 auto ${rem('100px')};
+  max-width: ${rem('1185px')};
+
+  ${media.laptop`
+    max-width: ${rem('900px')};
+  `}
+
+  ${media.big`
+    max-width: ${rem('615px')};
+  `}
+
+  ${media.medium`
+    max-width: none;
+  `}
 `;
 
 const Wrapper = styled.div`
