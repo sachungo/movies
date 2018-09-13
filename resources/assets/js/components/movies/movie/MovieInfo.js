@@ -143,24 +143,20 @@ export default class MovieInfo extends PureComponent {
           />
 
           <BasicInfo data-test="movie-basics">
-            {data.title && (
-              <styles.Label>
-                <Text>Title:</Text>
-                <styles.Text>{data.title}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Title:</Text>
+              <styles.Text>{data.title || 'No title specified'}</styles.Text>
+            </styles.Label>
 
             <styles.Label>
               <Text>Popularity:</Text>
-              <styles.Text>{data.popularity}</styles.Text>
+              <styles.Text>{data.popularity || 'No popularity value specified'}</styles.Text>
             </styles.Label>
 
-            {data.release_date && (
-              <styles.Label>
-                <Text>Date of release:</Text>
-                <styles.Text>{data.release_date}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Date of release:</Text>
+              <styles.Text>{data.release_date || 'No release date specified'}</styles.Text>
+            </styles.Label>
 
             {hasGenres && (
               <styles.Label>
@@ -181,12 +177,10 @@ export default class MovieInfo extends PureComponent {
         </Wrapper>
 
         <ExtraInfo>
-          {data.overview  && (
-            <div data-test="movie-overview">
-              <TitleWithBorder>Overview</TitleWithBorder>
-              <styles.Text>{data.overview}</styles.Text>
-            </div>
-          )}
+          <div data-test="movie-overview">
+            <TitleWithBorder>Overview</TitleWithBorder>
+            <styles.Text>{data.overview || 'No movie overview'}</styles.Text>
+          </div>
         </ExtraInfo>
 
         <MovieCast
