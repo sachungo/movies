@@ -125,7 +125,6 @@ export default class MovieInfo extends PureComponent {
       hasCast,
       cast,
       match,
-      shouldAddInfo,
       error
     } = this.props;
     if (loading) {
@@ -207,7 +206,6 @@ export default class MovieInfo extends PureComponent {
         <MovieCast
           data-test="movie-cast"
           id={match.params.id}
-          shouldFetchCast={shouldAddInfo}
         />
       </Movie>
     );

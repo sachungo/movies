@@ -32,8 +32,6 @@ export default class MovieCast extends PureComponent {
     hasCast: PropTypes.bool,
     fetchCast: PropTypes.func,
     id: PropTypes.string,
-    shouldFetchCast: PropTypes.bool,
-    resetCast: PropTypes.func,
     hasCastError: PropTypes.bool
   };
 
@@ -41,12 +39,10 @@ export default class MovieCast extends PureComponent {
     const {
       fetchCast,
       id,
-      shouldFetchCast,
-      resetCast
+      hasCast
     } = this.props;
 
-    if(shouldFetchCast) {
-      resetCast();
+    if(!hasCast) {
       fetchCast(id);
     }
   }

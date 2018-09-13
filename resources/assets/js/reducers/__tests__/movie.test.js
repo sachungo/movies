@@ -9,7 +9,7 @@ describe('SINGLE movie reducer', () => {
       data: {},
       loading: false,
       hasInfo: false,
-      cast: [],
+      cast: {},
       loadingCast: false,
       error: '',
       hasCastError: false
@@ -56,10 +56,13 @@ describe('SINGLE movie reducer', () => {
 
     expect(reducer(state, {
       type: actionTypes.ADD_MOVIE_CAST,
-      cast
+      cast,
+      movieId: 123
     })).toEqual({
       ...initialState,
-      cast
+      cast: {
+        123: cast
+      }
     });
   });
 

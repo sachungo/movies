@@ -25,26 +25,11 @@ describe('MovieCast component test', () => {
   });
 
   it('fetches the cast information when there is none', () => {
-    const wrapper = mount(
-      <MovieCast
-        {...props}
-        shouldFetchCast
-      />
-    );
+    const wrapper = mount(<MovieCast {...props} />);
 
     expect(wrapper.props().fetchCast).toHaveBeenCalledWith('12');
   });
 
-  it('resets the cast information when shouldFetchCast is true', () => {
-    const wrapper = mount(
-      <MovieCast
-        {...props}
-        shouldFetchCast
-      />
-    );
-
-    expect(wrapper.props().resetCast).toHaveBeenCalled();
-  });
 
   it('renders the cast information', () => {
     const wrapper = shallow(
