@@ -148,6 +148,7 @@ export default class MovieInfo extends PureComponent {
         <StatusMessage
           type="error"
           description={description}
+          buttonText="Back to homepage"
         />
       )
     }

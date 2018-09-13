@@ -9,6 +9,10 @@ export const addMovieInfo = payload => ({
 });
 
 export const fetchMovie = movieId => {
+  if (!Number.isInteger(+movieId)) {
+    return fetchMovieError('Invalid movie id! It must be a whole number.');
+  }
+
   return dispatch => {
     dispatch(loadingMovie(true));
 
