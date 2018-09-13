@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
+import format from 'date-fns/format';
+import isAfter from 'date-fns/is_after';
 
 import MovieCast from './cast';
 import Poster from './Poster';
@@ -104,6 +106,16 @@ export default class MovieInfo extends PureComponent {
     }
   }
 
+  getDate(releaseDate) {
+    if (!releaseDate) {
+      return 'No release date specified';
+    }
+
+    const isFuture = isAfter(releaseDate, new Date());
+    const date = format(releaseDate, 'ddd, Do MMM YYYY');
+    return isFuture ? `${date} (FUTURE RELEASE)` : date;
+  }
+
   render() {
     const {
       data,
@@ -163,7 +175,7 @@ export default class MovieInfo extends PureComponent {
 
             <styles.Label>
               <Text>Date of release:</Text>
-              <styles.Text>{data.release_date || 'No release date specified'}</styles.Text>
+              <styles.Text>{this.getDate(data.release_date)}</styles.Text>
             </styles.Label>
 
             {hasGenres && (
