@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import MovieCast from './cast';
 import Poster from './Poster';
+import Navigation from './Navbar';
 import {
   colors,
   media,
@@ -14,8 +15,8 @@ import {
 } from '../../shared';
 
 const Movie = styled.div`
-  padding: ${rem('20px')};
-  margin: ${rem('50px')} auto ${rem('100px')};
+  padding: 0 ${rem('20px')};
+  margin: 0 auto ${rem('100px')};
 `;
 
 const Wrapper = styled.div`
@@ -141,6 +142,7 @@ export default class MovieInfo extends PureComponent {
 
     return (
       <Movie>
+        <Navigation header={data.title} />
         <Wrapper>
           <Poster
             posterPath={data.poster_path}
