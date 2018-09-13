@@ -52,7 +52,13 @@ const TitleWithBorder = Title.extend`
   font-size: ${rem('24px')};
 `;
 
-const GenreText = styles.Text.withComponent('span');
+const withSpan = styles.Text.withComponent('span');
+const GenreText = withSpan.extend`
+  &:not(:last-of-type):after {
+      content: ",";
+    }
+  }
+`;
 
 const GenresWrapper = styled.div`
   margin-left: ${rem('10px')};
