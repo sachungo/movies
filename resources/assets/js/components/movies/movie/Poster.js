@@ -39,20 +39,13 @@ const Poster = ({ posterPath, alternativeTitle }) => {
     );
   }
 
+  const image500Width = `${IMAGE_BASE_URL}/w500${posterPath}`;
+  const image342Width = `${IMAGE_BASE_URL}/w342${posterPath}`;
   return (
     <Image
       src={`${IMAGE_BASE_URL}/w154${posterPath}`}
-      srcset={
-        `
-          ${IMAGE_BASE_URL}/w500${posterPath} 500w,
-          ${IMAGE_BASE_URL}/w342${posterPath} 342w,
-        `
-      }
-      sizes="
-        (max-width: 320px) 95vw,
-        (max-width: 480px) 95vw,
-        154px
-      "
+      srcSet={`${image342Width} 342w, ${image500Width} 500w`}
+      sizes="(max-width: 320px) 95vw, (max-width: 480px) 95vw, 154px"
       alt={alternativeTitle}
       data-test="poster"
     />
