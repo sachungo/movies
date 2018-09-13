@@ -4,6 +4,7 @@ import { rem } from 'polished';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import isAfter from 'date-fns/is_after';
+import { CSSTransitionGroup } from 'react-transition-group'
 
 import MovieCast from './cast';
 import Poster from './Poster';
@@ -166,61 +167,69 @@ export default class MovieInfo extends PureComponent {
     }
 
     return (
-      <Movie>
-        <Navigation header={data.title} />
-        <Wrapper>
-          <Poster
-            posterPath={data.poster_path}
-            alternativeTitle={`${data.title} movie poster`}
-            data-test="movie-image"
-          />
+      <CSSTransitionGroup
+        transitionName="movie-information"
+        transitionAppear={true}
+        transitionAppearTimeout={300}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <Movie key="movie-info">
+          <Navigation header={data.title} />
+          <Wrapper>
+            <Poster
+              posterPath={data.poster_path}
+              alternativeTitle={`${data.title} movie poster`}
+              data-test="movie-image"
+            />
 
-          <BasicInfo data-test="movie-basics">
-            <styles.Label>
-              <Text>Title:</Text>
-              <styles.Text>{data.title || 'No title specified'}</styles.Text>
-            </styles.Label>
-
-            <styles.Label>
-              <Text>Popularity:</Text>
-              <styles.Text>{data.popularity || 'No popularity value specified'}</styles.Text>
-            </styles.Label>
-
-            <styles.Label>
-              <Text>Date of release:</Text>
-              <styles.Text>{this.getDate(data.release_date)}</styles.Text>
-            </styles.Label>
-
-            {hasGenres && (
+            <BasicInfo data-test="movie-basics">
               <styles.Label>
-                Genres:
-                <GenresWrapper>
-                  {genres.map(genre => (
-                    <GenreText
-                      key={genre.id}
-                      data-test="movie-genre"
-                    >
-                      {genre.name}
-                    </GenreText>
-                ))}
-                </GenresWrapper>
+                <Text>Title:</Text>
+                <styles.Text>{data.title || 'No title specified'}</styles.Text>
               </styles.Label>
-            )}
-          </BasicInfo>
-        </Wrapper>
 
-        <ExtraInfo>
-          <div data-test="movie-overview">
-            <TitleWithBorder>Overview</TitleWithBorder>
-            <styles.Text>{data.overview || 'No movie overview'}</styles.Text>
-          </div>
-        </ExtraInfo>
+              <styles.Label>
+                <Text>Popularity:</Text>
+                <styles.Text>{data.popularity || 'No popularity value specified'}</styles.Text>
+              </styles.Label>
 
-        <MovieCast
-          data-test="movie-cast"
-          id={match.params.id}
-        />
-      </Movie>
+              <styles.Label>
+                <Text>Date of release:</Text>
+                <styles.Text>{this.getDate(data.release_date)}</styles.Text>
+              </styles.Label>
+
+              {hasGenres && (
+                <styles.Label>
+                  Genres:
+                  <GenresWrapper>
+                    {genres.map(genre => (
+                      <GenreText
+                        key={genre.id}
+                        data-test="movie-genre"
+                      >
+                        {genre.name}
+                      </GenreText>
+                  ))}
+                  </GenresWrapper>
+                </styles.Label>
+              )}
+            </BasicInfo>
+          </Wrapper>
+
+          <ExtraInfo>
+            <div data-test="movie-overview">
+              <TitleWithBorder>Overview</TitleWithBorder>
+              <styles.Text>{data.overview || 'No movie overview'}</styles.Text>
+            </div>
+          </ExtraInfo>
+
+          <MovieCast
+            data-test="movie-cast"
+            id={match.params.id}
+          />
+        </Movie>
+      </CSSTransitionGroup>
     );
   }
 }
