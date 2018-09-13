@@ -4,6 +4,7 @@ import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
 import MovieCast from './cast';
+import Poster from './Poster';
 import {
   colors,
   media,
@@ -15,16 +16,6 @@ import {
 const Movie = styled.div`
   padding: ${rem('20px')};
   margin: ${rem('50px')} auto ${rem('100px')};
-`;
-
-const Image = styled.img`
-  border-radius: ${rem('8px')};
-  flex: 0 0 ${rem('154px')};
-  height: ${rem('200px')};
-
-  ${media.medium`
-    flex: 0 0 200px;
-  `}
 `;
 
 const Wrapper = styled.div`
@@ -72,8 +63,6 @@ const GenresWrapper = styled.div`
 const Text = styled.span`
   margin-right: ${rem('10px')};
 `;
-
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 export default class MovieInfo extends PureComponent {
   static propTypes = {
@@ -147,24 +136,11 @@ export default class MovieInfo extends PureComponent {
     return (
       <Movie>
         <Wrapper>
-          {data.poster_path && (
-            <Image
-              src={`${IMAGE_BASE_URL}/w154${data.poster_path}`}
-              srcset={
-                `
-                  ${IMAGE_BASE_URL}/w500${data.poster_path} 500w,
-                  ${IMAGE_BASE_URL}/w342${data.poster_path} 342w,
-                `
-              }
-              sizes="
-                (max-width: 320px) 95vw,
-                (max-width: 480px) 95vw,
-                154px
-              "
-              alt={`${data.title} movie poster`}
-              data-test="movie-image"
-            />
-          )}
+          <Poster
+            posterPath={data.poster_path}
+            alternativeTitle={`${data.title} movie poster`}
+            data-test="movie-image"
+          />
 
           <BasicInfo data-test="movie-basics">
             {data.title && (
@@ -174,12 +150,10 @@ export default class MovieInfo extends PureComponent {
               </styles.Label>
             )}
 
-            {data.popularity && (
-              <styles.Label>
-                <Text>Popularity:</Text>
-                <styles.Text>{data.popularity}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Popularity:</Text>
+              <styles.Text>{data.popularity}</styles.Text>
+            </styles.Label>
 
             {data.release_date && (
               <styles.Label>
