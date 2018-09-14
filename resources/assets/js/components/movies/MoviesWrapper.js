@@ -1,21 +1,60 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Paginator from 'react-js-pagination';
 import { rem } from 'polished';
 import MoviesLists from './lists';
-import { Loader, styles, colors, StatusMessage } from '../shared';
+import { Loader, styles, colors, StatusMessage, media } from '../shared';
 import Filter from './filters';
 import Tags from './tags';
 import Search from './search';
 
+const ContainerApp = styled.div`
+  width: 100vw;
+  padding-bottom: ${rem('5px')};
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: "";
+    background: url(images/background_pattern.png), #99ebec;
+    clip-path: polygon(0% 100%, 100% 70%, 100% 0%, 0% 0%);
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+`;
+
+const Wrapper = styled.div`
+  max-width: ${rem('1090px')};
+  margin: 0 auto;
+  position: relative;
+
+  ${media.laptop`
+    max-width: ${rem('885px')};
+  `}
+
+  ${media.big`
+    max-width: ${rem('670px')};
+  `}
+
+  ${media.medium`
+    max-width: ${rem('340px')};
+  `}
+
+  ${media.small`
+    max-width: none;
+  `}
+`;
+
 const Container = styled.div`
   margin-bottom: ${rem('100px')};
   padding: ${rem('20px')};
+  background-color: ${colors.white};
+  border-radius: ${rem('4px')};
 `;
 
 const SearchWrapper = styled.div`
-  background-color: ${colors.primary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,32 +144,34 @@ export default class MoviesWrapper extends Component {
     }
 
     return (
-      <Fragment>
-        <SearchWrapper>
-          <Search />
-        </SearchWrapper>
+      <ContainerApp>
+        <Wrapper>
+          <SearchWrapper>
+            <Search />
+          </SearchWrapper>
 
-        <Container>
-          <Tags />
-          <Filter />
-          {content}
+          <Container>
+            <Tags />
+            <Filter />
+            {content}
 
-          {showPaginator && (
-            <Paginator
-              hideDisabled
-              activePage={activePage}
-              totalItemsCount={totalResults}
-              onChange={this.handlePagination}
-              itemsCountPerPage={PER_PAGE}
-              itemClass="movies-list__item"
-              activeLinkClass="movies-list__link--active"
-              activeClass="movies-list__item--active"
-              linkClass="movies-list__link"
-              data-test="movies-paginator"
-            />
-          )}
-        </Container>
-      </Fragment>
+            {showPaginator && (
+              <Paginator
+                hideDisabled
+                activePage={activePage}
+                totalItemsCount={totalResults}
+                onChange={this.handlePagination}
+                itemsCountPerPage={PER_PAGE}
+                itemClass="movies-list__item"
+                activeLinkClass="movies-list__link--active"
+                activeClass="movies-list__item--active"
+                linkClass="movies-list__link"
+                data-test="movies-paginator"
+              />
+            )}
+          </Container>
+        </Wrapper>
+      </ContainerApp>
     );
   }
 }

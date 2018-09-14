@@ -7,6 +7,7 @@
 import { css } from 'styled-components';
 
 const sizes = {
+  laptop: 1024,
   big: 768,
   medium: 480,
   small: 320
