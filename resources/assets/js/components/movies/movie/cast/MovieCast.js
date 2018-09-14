@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem } from 'polished';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { colors, styles, Loader } from '../../../shared';
 import Actor from './Actor';
 
@@ -32,8 +33,6 @@ export default class MovieCast extends PureComponent {
     hasCast: PropTypes.bool,
     fetchCast: PropTypes.func,
     id: PropTypes.string,
-    shouldFetchCast: PropTypes.bool,
-    resetCast: PropTypes.func,
     hasCastError: PropTypes.bool
   };
 
@@ -41,12 +40,10 @@ export default class MovieCast extends PureComponent {
     const {
       fetchCast,
       id,
-      shouldFetchCast,
-      resetCast
+      hasCast
     } = this.props;
 
-    if(shouldFetchCast) {
-      resetCast();
+    if(!hasCast) {
       fetchCast(id);
     }
   }
@@ -67,31 +64,39 @@ export default class MovieCast extends PureComponent {
     }
 
     return (
-      <Wrapper>
-        {hasCast && (
-          <Fragment>
-            <TitleWithBorder>Cast</TitleWithBorder>
-            <MovieCastContainer>
-              {cast.map(actor => (
-                <Actor
-                  key={actor.id}
-                  actor={actor}
-                  data-test="movie-actor"
-                />
-              ))}
-            </MovieCastContainer>
-          </Fragment>
-        )}
+      <CSSTransitionGroup
+        transitionName="movie"
+        transitionAppear={true}
+        transitionAppearTimeout={300}
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
+        <Wrapper key="movie-cast">
+          {hasCast && (
+            <Fragment>
+              <TitleWithBorder>Cast</TitleWithBorder>
+              <MovieCastContainer>
+                {cast.map(actor => (
+                  <Actor
+                    key={actor.id}
+                    actor={actor}
+                    data-test="movie-actor"
+                  />
+                ))}
+              </MovieCastContainer>
+            </Fragment>
+          )}
 
-        {hasCastError && (
-          <Fragment>
-            <TitleWithBorder>Cast</TitleWithBorder>
-            <MovieCastContainer>
-              Sorry, we are unable to show you the cast of the movie right now.
-            </MovieCastContainer>
-          </Fragment>
-        )}
-      </Wrapper>
+          {hasCastError && (
+            <Fragment>
+              <TitleWithBorder>Cast</TitleWithBorder>
+              <MovieCastContainer>
+                Sorry, we are unable to show you the cast of the movie right now.
+              </MovieCastContainer>
+            </Fragment>
+          )}
+        </Wrapper>
+      </CSSTransitionGroup>
     );
   }
 }

@@ -9,6 +9,10 @@ export const addMovieInfo = payload => ({
 });
 
 export const fetchMovie = movieId => {
+  if (!Number.isInteger(+movieId)) {
+    return fetchMovieError('Invalid movie id! It must be a whole number.');
+  }
+
   return dispatch => {
     dispatch(loadingMovie(true));
 
@@ -25,7 +29,7 @@ export const fetchMovie = movieId => {
         dispatch(addMovieInfo(data));
 
         const { cast = [] } = data.credits;
-        dispatch(addMovieCastInfo(cast));
+        dispatch(addMovieCastInfo(cast, movieId));
       })
       .catch(error => {
         dispatch(loadingMovie(false));
@@ -46,9 +50,10 @@ const loadingMovie = loading => ({
   loading
 });
 
-export const addMovieCastInfo = cast => ({
+const addMovieCastInfo = (cast, movieId) => ({
   type: actionTypes.ADD_MOVIE_CAST,
-  cast
+  cast,
+  movieId
 });
 
 const loadingCast = loading => ({
@@ -70,7 +75,7 @@ export const fetchMovieCast = movieId => {
           return dispatch(fetchCastError());
         }
 
-        dispatch(addMovieCastInfo(cast));
+        dispatch(addMovieCastInfo(cast, movieId));
       })
       .catch(() => {
         dispatch(loadingCast(false));

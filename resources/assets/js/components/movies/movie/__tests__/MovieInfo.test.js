@@ -2,6 +2,7 @@ import React from 'react';
 import MovieInfo from '../MovieInfo';
 
 jest.mock('../cast', () => () => <div />);
+jest.mock('../Navbar', () => () => <div />);
 
 describe('The MovieInfo component', () => {
   let props;
