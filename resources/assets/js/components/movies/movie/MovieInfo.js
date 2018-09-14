@@ -195,7 +195,6 @@ export default class MovieInfo extends PureComponent {
             {hasGenres && (
               <CSSTransitionGroup
                 transitionName="movie"
-                transitionAppearTimeout={300}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={300}
               >
