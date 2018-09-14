@@ -32,6 +32,7 @@ const Movie = styled(Link)`
   align-items: center;
   justify-content: flex-start;
   padding-top: ${rem('10px')};
+  transition: box-shadow 0.2s ease-in-out;
 
   &:hover {
     box-shadow: 0 ${rem('4px')} ${rem('10px')} 0 rgba(99, 107, 111, 0.5);
@@ -62,6 +63,8 @@ const Title = styled.p`
   ${ellipsis('154px')};
   transition: all 0.2s;
   color: ${colors.text};
+  transition: all 0.2s ease-in-out;
+
   ${Movie}:hover & {
     color: ${colors.primary};
     font-weight: 300;
