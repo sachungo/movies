@@ -82,9 +82,10 @@ export const getTags = state => {
   filterTypes.forEach(type => {
     const availableOptions = state[type][type];
     const selectedOptions = availableOptions.filter(option => filters[type].includes(option.id));
+    const withFilterType = selectedOptions.map(selected => ({ ... selected, criterion: type }));
     tags = [
       ...tags,
-      ...selectedOptions
+      ...withFilterType
     ];
   });
 
