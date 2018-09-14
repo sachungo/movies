@@ -11,6 +11,7 @@ import Search from './search';
 
 const ContainerApp = styled.div`
   width: 100vw;
+  height: 100%;
   padding-bottom: ${rem('5px')};
   position: relative;
 

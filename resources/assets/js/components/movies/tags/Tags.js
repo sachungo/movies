@@ -31,6 +31,14 @@ const Tag = styled.div`
 `;
 
 const ButtonWrapper = styled.div``;
+
+const Count = styled.p`
+  color: ${colors.notFound};
+  font-size: ${rem('16px')};
+  font-weight: 400;
+  margin-bottom: 0;
+`;
+
 export default class Tags extends Component {
   static propTypes = {
     tags: PropTypes.array,
@@ -40,7 +48,8 @@ export default class Tags extends Component {
     onClear: PropTypes.func,
     onFetchMovies: PropTypes.func,
     resetPagination: PropTypes.func,
-    onResetMovies: PropTypes.func
+    onResetMovies: PropTypes.func,
+    totalResults: PropTypes.number
   };
 
   handleClear = () => {
@@ -54,9 +63,22 @@ export default class Tags extends Component {
   };
 
   render() {
-    const { tags, hasTags, buttonText, onClear } = this.props;
+    const {
+      tags,
+      hasTags,
+      buttonText,
+      onClear,
+      isFiltered,
+      totalResults
+    } = this.props;
+    const plural = totalResults > 1 ? 's' : '';
+
     return (
       <Fragment>
+        {isFiltered && (
+          <Count>{`${totalResults} result${plural} found`}</Count>
+        )}
+
         {hasTags && (
           <Wrapper>
             <TagsWrapper>

@@ -17,7 +17,8 @@ const mapStateToProps = state => {
     tags,
     hasTags: !isEmpty(tags),
     buttonText: buttonText,
-    isFiltered: state.allMovies.isFiltered
+    isFiltered: state.allMovies.isFiltered,
+    totalResults: state.allMovies.totalResults
   };
 };
 
