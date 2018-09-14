@@ -12,7 +12,8 @@ import {
   faChevronUp,
   faChevronDown,
   faSearch,
-  faChevronLeft
+  faChevronLeft,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from '../reducers';
@@ -22,7 +23,13 @@ import { fetchActors } from '../actions/actors';
 import getYearsRange from '../actions/years';
 import { genresSelector, actorsSelector } from '../selectors';
 
-library.add(faChevronUp, faChevronDown, faSearch, faChevronLeft);
+library.add(
+  faChevronUp,
+  faChevronDown,
+  faSearch,
+  faChevronLeft,
+  faTimesCircle
+);
 
 class MoviesApp extends Component {
   static propTypes = {
