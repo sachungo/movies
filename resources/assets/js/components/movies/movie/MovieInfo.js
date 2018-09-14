@@ -2,8 +2,13 @@ import React, { PureComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
+import format from 'date-fns/format';
+import isAfter from 'date-fns/is_after';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 import MovieCast from './cast';
+import Poster from './Poster';
+import Navigation from './Navbar';
 import {
   colors,
   media,
@@ -13,17 +18,20 @@ import {
 } from '../../shared';
 
 const Movie = styled.div`
-  padding: ${rem('20px')};
-  margin: ${rem('50px')} auto ${rem('100px')};
-`;
+  padding: 0 ${rem('20px')};
+  margin: 0 auto ${rem('100px')};
+  max-width: ${rem('1185px')};
 
-const Image = styled.img`
-  border-radius: ${rem('8px')};
-  flex: 0 0 ${rem('154px')};
-  height: ${rem('200px')};
+  ${media.laptop`
+    max-width: ${rem('900px')};
+  `}
+
+  ${media.big`
+    max-width: ${rem('615px')};
+  `}
 
   ${media.medium`
-    flex: 0 0 200px;
+    max-width: none;
   `}
 `;
 
@@ -61,7 +69,13 @@ const TitleWithBorder = Title.extend`
   font-size: ${rem('24px')};
 `;
 
-const GenreText = styles.Text.withComponent('span');
+const withSpan = styles.Text.withComponent('span');
+const GenreText = withSpan.extend`
+  &:not(:last-of-type):after {
+      content: ",";
+    }
+  }
+`;
 
 const GenresWrapper = styled.div`
   margin-left: ${rem('10px')};
@@ -72,8 +86,6 @@ const GenresWrapper = styled.div`
 const Text = styled.span`
   margin-right: ${rem('10px')};
 `;
-
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 
 export default class MovieInfo extends PureComponent {
   static propTypes = {
@@ -108,6 +120,16 @@ export default class MovieInfo extends PureComponent {
     }
   }
 
+  getDate(releaseDate) {
+    if (!releaseDate) {
+      return 'No release date specified';
+    }
+
+    const isFuture = isAfter(releaseDate, new Date());
+    const date = format(releaseDate, 'ddd, Do MMM YYYY');
+    return isFuture ? `${date} (FUTURE RELEASE)` : date;
+  }
+
   render() {
     const {
       data,
@@ -117,7 +139,6 @@ export default class MovieInfo extends PureComponent {
       hasCast,
       cast,
       match,
-      shouldAddInfo,
       error
     } = this.props;
     if (loading) {
@@ -140,85 +161,71 @@ export default class MovieInfo extends PureComponent {
         <StatusMessage
           type="error"
           description={description}
+          buttonText="Back to homepage"
         />
       )
     }
 
     return (
-      <Movie>
+      <Movie key="movie-info">
+        <Navigation header={data.title} />
         <Wrapper>
-          {data.poster_path && (
-            <Image
-              src={`${IMAGE_BASE_URL}/w154${data.poster_path}`}
-              srcset={
-                `
-                  ${IMAGE_BASE_URL}/w500${data.poster_path} 500w,
-                  ${IMAGE_BASE_URL}/w342${data.poster_path} 342w,
-                `
-              }
-              sizes="
-                (max-width: 320px) 95vw,
-                (max-width: 480px) 95vw,
-                154px
-              "
-              alt={`${data.title} movie poster`}
-              data-test="movie-image"
-            />
-          )}
+          <Poster
+            posterPath={data.poster_path}
+            alternativeTitle={`${data.title} movie poster`}
+            data-test="movie-image"
+          />
 
           <BasicInfo data-test="movie-basics">
-            {data.title && (
-              <styles.Label>
-                <Text>Title:</Text>
-                <styles.Text>{data.title}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Title:</Text>
+              <styles.Text>{data.title || 'No title specified'}</styles.Text>
+            </styles.Label>
 
-            {data.popularity && (
-              <styles.Label>
-                <Text>Popularity:</Text>
-                <styles.Text>{data.popularity}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Popularity:</Text>
+              <styles.Text>{data.popularity || 'No popularity value specified'}</styles.Text>
+            </styles.Label>
 
-            {data.release_date && (
-              <styles.Label>
-                <Text>Date of release:</Text>
-                <styles.Text>{data.release_date}</styles.Text>
-              </styles.Label>
-            )}
+            <styles.Label>
+              <Text>Date of release:</Text>
+              <styles.Text>{this.getDate(data.release_date)}</styles.Text>
+            </styles.Label>
 
             {hasGenres && (
-              <styles.Label>
-                Genres:
-                <GenresWrapper>
-                  {genres.map(genre => (
-                    <GenreText
-                      key={genre.id}
-                      data-test="movie-genre"
-                    >
-                      {genre.name}
-                    </GenreText>
-                ))}
-                </GenresWrapper>
-              </styles.Label>
+              <CSSTransitionGroup
+                transitionName="movie"
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={300}
+              >
+                <styles.Label key="movie-genres">
+                  Genres:
+                  <GenresWrapper>
+                    {genres.map(genre => (
+                      <GenreText
+                        key={genre.id}
+                        data-test="movie-genre"
+                      >
+                        {genre.name}
+                      </GenreText>
+                  ))}
+                  </GenresWrapper>
+                </styles.Label>
+              </CSSTransitionGroup>
             )}
           </BasicInfo>
         </Wrapper>
 
         <ExtraInfo>
-          {data.overview  && (
-            <div data-test="movie-overview">
-              <TitleWithBorder>Overview</TitleWithBorder>
-              <styles.Text>{data.overview}</styles.Text>
-            </div>
-          )}
+          <div data-test="movie-overview">
+            <TitleWithBorder>Overview</TitleWithBorder>
+            <styles.Text>{data.overview || 'No movie overview'}</styles.Text>
+          </div>
         </ExtraInfo>
 
         <MovieCast
           data-test="movie-cast"
           id={match.params.id}
-          shouldFetchCast={shouldAddInfo}
         />
       </Movie>
     );

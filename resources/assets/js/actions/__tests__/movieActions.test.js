@@ -86,7 +86,8 @@ describe('Single movie action test', () => {
         id: 500,
         name: 'Tom Cruise',
         profile_path: '/3oWEuo0e8Nx8JvkqYCDec2iMY6K.jpg'
-      }]
+      }],
+      movieId: 34
     });
   });
 
@@ -113,7 +114,8 @@ describe('Single movie action test', () => {
     await store.dispatch(fetchMovieCast(123));
     expect(store.getActions()).toContainEqual({
       type: actionTypes.ADD_MOVIE_CAST,
-      cast: data.cast
+      cast: data.cast,
+      movieId: 123
     });
   });
 });

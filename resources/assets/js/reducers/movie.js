@@ -4,7 +4,7 @@ const initialState = {
   data: {},
   loading: false,
   hasInfo: false,
-  cast: [],
+  cast: {},
   loadingCast: false,
   error: '',
   hasCastError: false
@@ -28,7 +28,10 @@ const movie = (state = initialState, action) => {
     case actionTypes.ADD_MOVIE_CAST:
       return {
         ...state,
-        cast: action.cast
+        cast: {
+          ...state.cast,
+          [action.movieId]: action.cast
+        }
       }
     case actionTypes.LOADING_MOVIE_CAST:
       return {
