@@ -1,8 +1,26 @@
-.movie-information-appear {
+.movie-appear {
   opacity: 0.01;
 }
 
-.movie-information-appear.movie-information-appear-active {
+.movie-appear.movie-appear-active {
 	opacity: 1;
-	transition: opacity .3s ease-in;
+	transition: opacity 300ms ease-in;
+}
+
+.movie-enter {
+  opacity: 0.01;
+}
+
+.movie-enter.movie-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.movie-leave {
+  opacity: 1;
+}
+
+.movie-leave.movie-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }
