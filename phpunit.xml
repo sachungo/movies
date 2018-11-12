@@ -31,5 +31,6 @@
         <env name="MAIL_DRIVER" value="array"/>
         <env name="THEMOVIEDB_API_URL" value="https://test.com/"/>
         <env name="THEMOVIEDB_API_KEY" value="5634758697087687980"/>
+        <env name="DB_DATABASE" value="testing"/>
     </php>
 </phpunit>

@@ -26,4 +26,8 @@ Route::get('/search', 'MoviesController@searchByName');
 
 Route::post('register', 'Auth\RegisterController@register');
 Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout');
+Route::get('logout', 'Auth\LoginController@logout');
+
+Route::resource('favorites', 'FavoriteController')->only([
+    'index', 'store', 'destroy'
+]);
