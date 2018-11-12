@@ -27,7 +27,9 @@ import {
 import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
 import getYearsRange from '../actions/years';
+import { isAuthenticated } from '../actions/authentication';
 import { genresSelector, actorsSelector } from '../selectors';
+import Navbar from './movies/authenticate';
 
 library.add(
   faChevronUp,
@@ -35,6 +37,17 @@ library.add(
   faSearch,
   faChevronLeft,
   faTimesCircle
+);
+
+const DashboardRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      isAuthenticated()
+        ? <Component {...props} />
+        : <Redirect to="/login" />
+    )}
+  />
 );
 
 class MoviesApp extends Component {
@@ -67,16 +80,19 @@ class MoviesApp extends Component {
 
   render() {
 		return (
-			<Router>
-				<Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/home" component={Dashboard} />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-					<Route path="/movies/:id" component={MovieInfo} />
-					<Redirect from='*' to='/' />
-				</Switch>
-			</Router>
+      <Router>
+        <div>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <DashboardRoute path="/home" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/movies/:id" component={MovieInfo} />
+            <Redirect from='*' to='/' />
+          </Switch>
+        </div>
+      </Router>
 		);
 	}
 }

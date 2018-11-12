@@ -26,5 +26,7 @@ export default {
   SEARCH_VALUE_CHANGED: 'search/value/change',
   GET_YEARS_RANGE: 'years/range/generate',
   EMPTY_RESPONSE: 'movies/all/empty',
-  RESET_MOVIES: 'movies/reset/all'
+  RESET_MOVIES: 'movies/reset/all',
+  USER_SUCCESS: 'user/log/in/success',
+  USER_LOADING: 'user/log/in/loading',
 }

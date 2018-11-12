@@ -1,39 +1,99 @@
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
-import { rem } from 'polished';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { StatusMessage, colors } from '../../shared';
+import { register } from '../../../actions/authentication';
 
-const Container = styled.div``;
-
-export default class Register extends Component {
+class Register extends Component {
   static propTypes = {};
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
+    };
+  }
+
+  handleChange = (event) => {
+    const { target } = event;
+    this.setState({
+      [target.name]: target.value
+    });
+  }
+
+  handleRegister = (event) => {
+    event.preventDefault();
+    const { name, email, password, password_confirmation } = this.state;
+    this.props.register({
+      name,
+      email,
+      password,
+      password_confirmation
+    });
+  }
+
   render() {
-    const { hasFavorites } = this.props;
     return (
       <div className="container">
-        <form>
+        <form onSubmit={this.handleRegister}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input type="text" className="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter email" name="name" />
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              placeholder="Enter name"
+              name="name"
+              onChange={this.handleChange}
+              value={this.state.name}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="email">Email address</label>
-            <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" name="email" />
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
+            />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" name="password" />
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Password"
+              name="password"
+              onChange={this.handleChange}
+              value={this.state.password}
+            />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <label htmlFor="confirm_password">Password</label>
-            <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" name="password_confirmation" />
+            <input
+              type="password"
+              className="form-control"
+              id="confirm_password"
+              placeholder="Confirm Password"
+              name="password_confirmation"
+              onChange={this.handleChange}
+              value={this.state.password_confirmation}
+            />
           </div>
-          <button class="btn btn-primary">Submit</button>
+          <button className="btn btn-primary">Submit</button>
         </form>
       </div>
     )
   }
 }
+
+export default connect(null, { register })(Register);

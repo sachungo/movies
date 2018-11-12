@@ -14,6 +14,7 @@ import filters from './filters';
 import actors from './actors';
 import search from './search';
 import years from './years';
+import user from './user';
 
 const reducers = combineReducers({
   allMovies: movies,
@@ -22,7 +23,8 @@ const reducers = combineReducers({
   filters,
   actors,
   search,
-  years
+  years,
+  user
 });
 
 const loggerMiddleware = createLogger();
