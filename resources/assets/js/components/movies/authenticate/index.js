@@ -3,13 +3,17 @@ import isEmpty from 'lodash/isEmpty';
 import Navbar from './Navbar';
 import {
   logout,
-  isAuthenticated
+  isAuthenticated,
+  getUser
 } from '../../../actions/authentication';
 
-const mapStateToProps = ({ user }) => ({
-  user: user.user,
-  isLoggedIn: isAuthenticated() && !isEmpty(user.user),
-  loading: user.loading
-});
+const mapStateToProps = ({ user }) => {
+  const authenticatedUser = isEmpty(user.user) ? getUser() : user.user;
+  return {
+    user: authenticatedUser,
+    isLoggedIn: isAuthenticated(),
+    loading: user.loading
+  }
+};
 
 export default connect(mapStateToProps, { logout })(Navbar);

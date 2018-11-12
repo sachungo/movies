@@ -24,7 +24,12 @@ const handleResponse = (response, dispatch) => {
   const { results = {} } = response.data;
   dispatch(setUser(results));
   if (!isEmpty(results)) {
+    const user = {
+      name: results.name,
+      id: results.id
+    };
     localStorage.setItem('token', results.access_token);
+    localStorage.setItem('user', JSON.stringify(user));
   }
   history.push('/home');
 }
@@ -62,6 +67,7 @@ export const logout = () => {
       .then(() => {
         dispatch(setUser());
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         history.push('/');
       })
       .catch((error) => {
@@ -72,3 +78,5 @@ export const logout = () => {
 }
 
 export const isAuthenticated = () => (!!localStorage.getItem('token'));
+
+export const getUser = () => (JSON.parse(localStorage.getItem('user')))

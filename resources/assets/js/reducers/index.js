@@ -15,6 +15,7 @@ import actors from './actors';
 import search from './search';
 import years from './years';
 import user from './user';
+import favorites from './favorites';
 
 const reducers = combineReducers({
   allMovies: movies,
@@ -24,7 +25,8 @@ const reducers = combineReducers({
   actors,
   search,
   years,
-  user
+  user,
+  favorites
 });
 
 const loggerMiddleware = createLogger();
