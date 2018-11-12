@@ -1,16 +1,10 @@
-import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
-import { rem } from 'polished';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-const Container = styled.div``
+import Dashboard from './Dashboard';
 
-export default class Dashboard extends Component {
-  render() {
-    return (
-      <Container>
-        You are viewing the dashboard!
-      </Container>
-    )
-  }
-}
+const mapStateToProps = () => ({
+  favorites: [],
+  hasFavorites: false
+});
+
+export default connect(mapStateToProps)(Dashboard);
