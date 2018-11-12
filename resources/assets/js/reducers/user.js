@@ -2,7 +2,8 @@ import actionTypes from '../moviesConstants';
 
 const initialState = {
   user: {},
-  loading: false
+  loading: false,
+  isLoggedIn: false
 }
 
 export default (state = initialState, action) => {
@@ -11,11 +12,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: action.loading
-      }
+      };
     case actionTypes.USER_SUCCESS:
       return {
         ...state,
         user: action.payload
+      };
+    case actionTypes.USER_LOGGEDIN:
+      return {
+        ...state,
+        isLoggedIn: action.isLoggedIn
       }
     default:
       return state;

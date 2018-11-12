@@ -15,10 +15,10 @@ const User = ({ user, onLogout }) => (
     >
       {user.name}
     </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-      <Link class="dropdown-item" to="/home">Dashboard</Link>
+    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+      <Link className="dropdown-item" to="/home">Dashboard</Link>
       <Link
-        class="dropdown-item"
+        className="dropdown-item"
         to="#"
         onClick={onLogout}
       >

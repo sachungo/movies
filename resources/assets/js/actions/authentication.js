@@ -11,7 +11,12 @@ const setUser = (payload = {}) => ({
 const loadingUser = loading => ({
   type: actionTypes.USER_LOADING,
   loading
-})
+});
+
+const loggedIn = isLoggedIn => ({
+  type: actionTypes.USER_LOGGEDIN,
+  isLoggedIn
+});
 
 const handleResponse = (response, dispatch) => {
   console.log('Response: ', response);
@@ -31,6 +36,7 @@ const handleResponse = (response, dispatch) => {
     localStorage.setItem('token', results.access_token);
     localStorage.setItem('user', JSON.stringify(user));
   }
+  dispatch(loggedIn(true));
   history.push('/home');
 }
 
@@ -68,6 +74,7 @@ export const logout = () => {
         dispatch(setUser());
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        dispatch(loggedIn(false));
         history.push('/');
       })
       .catch((error) => {
@@ -76,7 +83,3 @@ export const logout = () => {
       });
   }
 }
-
-export const isAuthenticated = () => (!!localStorage.getItem('token'));
-
-export const getUser = () => (JSON.parse(localStorage.getItem('user')))

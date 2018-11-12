@@ -29,6 +29,7 @@ export default {
   RESET_MOVIES: 'movies/reset/all',
   USER_SUCCESS: 'user/log/in/success',
   USER_LOADING: 'user/log/in/loading',
+  USER_LOGGEDIN: 'user/logged/in/check',
   FAVORITES_LOADING: 'user/favorites/loading',
   FAVORITES_SUCCESS: 'user/favorites/fetch/success',
   FAVORITES_ERROR: 'user/favorites/fetch/error',

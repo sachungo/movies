@@ -126,3 +126,7 @@ export const getAxiosErrorMessage = error => {
 }
 
 export const history = createBrowserHistory();
+
+export const isAuthenticated = () => (!!localStorage.getItem('token'));
+
+export const getUser = () => (JSON.parse(localStorage.getItem('user')))

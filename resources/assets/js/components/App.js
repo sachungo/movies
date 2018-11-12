@@ -28,10 +28,9 @@ import {
 import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
 import getYearsRange from '../actions/years';
-import { isAuthenticated } from '../actions/authentication';
 import { genresSelector, actorsSelector } from '../selectors';
 import Navbar from './movies/authenticate';
-import { history } from '../helpers';
+import { history, isAuthenticated } from '../helpers';
 
 library.add(
   faChevronUp,
