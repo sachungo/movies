@@ -18,7 +18,8 @@ class Favorite extends JsonResource
             'id' => $this->movie_id,
             'favorite_id' => $this->id,
             'title' => $this->title,
-            'poster_path' => $this->poster_path
+            'poster_path' => $this->poster_path,
+            'isFavorite' => true
         ];
     }
 }

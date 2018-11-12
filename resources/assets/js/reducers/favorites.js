@@ -7,7 +7,9 @@ const initialState = {
 }
 
 const deleteFromStore = (favorites, payload) => (
-  favorites.filter(favorite => favorite.id !== payload.id)
+  favorites.filter(
+    favorite => favorite.favorite_id !== +payload.favorite_id
+  )
 );
 
 export default (state = initialState, action) => {

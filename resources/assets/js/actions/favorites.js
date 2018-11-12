@@ -59,14 +59,16 @@ export const deleteFavorite = (id) => {
     return setErrors('Invalid movie id! It must be a whole number.');
   }
 
-  return axios.delete(`/api/favorites/${id}`)
-    .then(response => {
-      console.log('Delete response: ', response);
-      dispatch(successAction(response.data, 'DELETE_FAVORITE'));
-    })
-    .catch(error => {
-      console.log('Delete Error: ', error);
-      const errorMessage = getAxiosErrorMessage(error);
-      dispatch(setErrors(errorMessage));
-    });
+  return dispatch => {
+    return axios.delete(`/api/favorites/${id}`)
+      .then(response => {
+        console.log('Delete response: ', response);
+        dispatch(successAction(response.data, 'DELETE_FAVORITE'));
+      })
+      .catch(error => {
+        console.log('Delete Error: ', error);
+        const errorMessage = getAxiosErrorMessage(error);
+        dispatch(setErrors(errorMessage));
+      });
+  }
 };

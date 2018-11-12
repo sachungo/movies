@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem, ellipsis } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
@@ -97,6 +97,15 @@ const HeartContainer = styled.div`
       fill: ${colors.primaryActive};
     }
   }
+
+  ${({ isFavorite }) => isFavorite && css`
+    svg {
+      stroke: ${colors.white};
+    }
+    svg path {
+      fill: ${colors.primary};
+    }
+  `}
 `;
 
 const Title = styled.p`
@@ -129,7 +138,17 @@ export default class Card extends PureComponent {
     event.preventDefault();
     event.nativeEvent.stopImmediatePropagation();
 
-    const { id, title, poster_path } = this.props.movie;
+    const {
+      id,
+      title,
+      poster_path,
+      isFavorite = false,
+      favorite_id = null
+    } = this.props.movie;
+    if (isFavorite) {
+      return this.props.deleteFavorite(favorite_id);
+    }
+
     return this.props.addFavorite({
       movie_id: id,
       title: title,
@@ -139,14 +158,15 @@ export default class Card extends PureComponent {
 
   render() {
     const { movie, placeholder } = this.props;
+    const { isFavorite = false } = movie;
     return (
       <Movie
         to={{
           pathname: `/movies/${movie.id}`,
-          state: { data: movie }
+          state: isFavorite? {} : { data: movie }
         }}
       >
-        <HeartContainer onClick={this.handleClick}>
+        <HeartContainer onClick={this.handleClick} isFavorite={isFavorite}>
           <FontAwesomeIcon icon="heart" />
         </HeartContainer>
 

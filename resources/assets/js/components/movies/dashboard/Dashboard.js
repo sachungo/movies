@@ -3,27 +3,55 @@ import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
-import { StatusMessage, colors } from '../../shared';
+import { StatusMessage, colors, media } from '../../shared';
+import MovieCard from '../lists/Card';
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: ${rem('15px')} 0;
+
+  ${media.medium`
+    justify-content: flex-start;
+  `}
+`;
 
 export default class Dashboard extends Component {
   static propTypes = {
     favorites: PropTypes.arrayOf(PropTypes.object),
-    hasFavorites: PropTypes.bool
+    hasFavorites: PropTypes.bool,
+    error: PropTypes.string
   };
 
+  componentDidMount() {
+    this.props.fetchFavorites();
+  }
+
   render() {
-    const { hasFavorites } = this.props;
+    const { hasFavorites, favorites, error, deleteFavorite } = this.props;
     return (
       <Container>
         {!hasFavorites && (
           <StatusMessage
-            type="empty"
-            description="You have no favorite movies. Visit the homepage and click the heart icon to update the favorite list"
+            type={error ? 'error' : 'empty'}
+            description={error
+              ? error
+              : 'You have no favorite movies. Visit the homepage and click the heart icon to update the favorite list'
+            }
             data-test="favorites-empty-state"
           />
         )}
+
+        {favorites.map(favorite => (
+          <MovieCard
+            key={favorite.id}
+            movie={favorite}
+            placeholder={`${favorite.title} poster`}
+            deleteFavorite={deleteFavorite}
+            data-test="single-movie"
+          />
+        ))}
       </Container>
     )
   }
