@@ -24,3 +24,9 @@ Route::fallback(function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/login', function () {
+    return view('welcome', ['title' => 'Login']);
+});
+Route::get('/register', function () {
+    return view('welcome', ['title' => 'Register']);
+});

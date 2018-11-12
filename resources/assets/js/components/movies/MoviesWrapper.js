@@ -8,6 +8,7 @@ import { Loader, styles, colors, StatusMessage, media } from '../shared';
 import Filter from './filters';
 import Tags from './tags';
 import Search from './search';
+import Navbar from './authenticate/Navbar';
 
 const ContainerApp = styled.div`
   width: 100vw;
@@ -146,6 +147,7 @@ export default class MoviesWrapper extends Component {
 
     return (
       <ContainerApp>
+        <Navbar />
         <Wrapper>
           <SearchWrapper>
             <Search />

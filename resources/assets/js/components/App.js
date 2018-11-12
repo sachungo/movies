@@ -17,7 +17,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from '../reducers';
-import { Home, MovieInfo, Dashboard } from './movies';
+import {
+  Home,
+  MovieInfo,
+  Dashboard,
+  Login,
+  Register
+} from './movies';
 import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
 import getYearsRange from '../actions/years';
@@ -65,8 +71,8 @@ class MoviesApp extends Component {
 				<Switch>
           <Route exact path="/" component={Home} />
           <Route path="/home" component={Dashboard} />
-          <Route path="/register" component={() => null} />
-          <Route path="/login" component={() => null} />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
 					<Route path="/movies/:id" component={MovieInfo} />
 					<Redirect from='*' to='/' />
 				</Switch>
