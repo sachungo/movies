@@ -80,8 +80,10 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        $user->createToken('User_personal_access_token');
+        $token = $user->createToken('User_personal_access_token')->accessToken;
 
-        return response()->json(['data' => $user->toArray()], 201);
+        $user['access_token'] = $token;
+
+        return response()->json(['results' => $user->toArray()], 201);
     }
 }
