@@ -2,6 +2,7 @@ import axios from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import actionTypes from '../moviesConstants';
 import { getAxiosErrorMessage, history } from '../helpers';
+import setAuthorizationHeader from '../helpers/axios';
 
 const setUser = (payload = {}) => ({
   type: actionTypes.USER_SUCCESS,
@@ -36,6 +37,8 @@ const handleResponse = (response, dispatch) => {
     localStorage.setItem('token', results.access_token);
     localStorage.setItem('user', JSON.stringify(user));
   }
+
+  setAuthorizationHeader();
   dispatch(loggedIn(true));
   history.push('/home');
 }
