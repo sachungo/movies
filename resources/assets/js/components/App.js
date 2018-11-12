@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Switch,
   Redirect
@@ -30,6 +30,7 @@ import getYearsRange from '../actions/years';
 import { isAuthenticated } from '../actions/authentication';
 import { genresSelector, actorsSelector } from '../selectors';
 import Navbar from './movies/authenticate';
+import { history } from '../helpers';
 
 library.add(
   faChevronUp,
@@ -80,7 +81,7 @@ class MoviesApp extends Component {
 
   render() {
 		return (
-      <Router>
+      <Router history={history}>
         <div>
           <Navbar />
           <Switch>

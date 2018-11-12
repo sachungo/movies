@@ -2,6 +2,7 @@ import _ from 'lodash';
 import getYear from 'date-fns/get_year';
 import subYears from 'date-fns/sub_years';
 import addYears from 'date-fns/add_years';
+import createBrowserHistory from "history/createBrowserHistory";
 
 const LIMIT = 10;
 
@@ -123,3 +124,5 @@ export const getAxiosErrorMessage = error => {
 
   return 'Unknown error occurred. Please try again after a few minutes';
 }
+
+export const history = createBrowserHistory();
