@@ -13,7 +13,8 @@ import {
   faChevronDown,
   faSearch,
   faChevronLeft,
-  faTimesCircle
+  faTimesCircle,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from '../reducers';
@@ -37,7 +38,8 @@ library.add(
   faChevronDown,
   faSearch,
   faChevronLeft,
-  faTimesCircle
+  faTimesCircle,
+  faHeart
 );
 
 const DashboardRoute = ({ component: Component, ...rest }) => (

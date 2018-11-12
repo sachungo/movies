@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rem, ellipsis } from 'polished';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { media, colors } from '../../shared';
 
 const MoviesContainer = styled.div`
@@ -33,6 +35,7 @@ const Movie = styled(Link)`
   justify-content: flex-start;
   padding-top: ${rem('10px')};
   transition: box-shadow 0.2s ease-in-out;
+  position: relative;
 
   &:hover {
     box-shadow: 0 ${rem('4px')} ${rem('10px')} 0 rgba(99, 107, 111, 0.5);
@@ -107,6 +110,33 @@ const NoImage = ImageHolder.extend`
   font-weight: 400;
 `;
 
+const HeartContainer = styled.div`
+  cursor: pointer;
+  height: ${rem('30px')};
+  width: ${rem('30px')};
+  position: absolute;
+  left: 13%;
+  top: 6%;
+
+  svg {
+    font-size: ${rem('28px')};
+    stroke: ${colors.primary};
+    stroke-width: ${rem('25px')};
+  }
+
+  svg path {
+    fill: ${colors.white};
+
+    &:hover {
+      fill: ${colors.primaryHover};
+    }
+
+    &:active {
+      fill: ${colors.primaryActive};
+    }
+  }
+`;
+
 const MoviesList = ({ movies }) => (
   <MoviesContainer>
     {movies.map(movie => {
@@ -120,10 +150,15 @@ const MoviesList = ({ movies }) => (
             state: { data: movie }
           }}
         >
+          <HeartContainer>
+            <FontAwesomeIcon icon="heart" />
+          </HeartContainer>
+
           {movie.poster_path
             ? <Image src={`https://image.tmdb.org/t/p/w154${movie.poster_path}`} alt={placeholder} />
             : <NoImage aria-label={placeholder}>{placeholder}</NoImage>
           }
+
           <Title>{movie.title}</Title>
         </Movie>
       )
