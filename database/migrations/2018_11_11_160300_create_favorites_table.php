@@ -15,7 +15,7 @@ class CreateFavoritesTable extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('movie_id')->unique();
+            $table->integer('movie_id');
             $table->string('title');
             $table->string('poster_path')->nullable();
             $table->unsignedInteger('user_id');

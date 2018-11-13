@@ -10,13 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-    private $user_id;
-
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->user_id = Auth::guard('api')->id();
-        $this->user = Auth::guard('api')->user();
     }
 
     /**
@@ -26,7 +22,8 @@ class FavoriteController extends Controller
      */
     public function index()
     {
-        $favorites = Favorite::where('user_id', $this->user_id)->get();
+        $favorites = Favorite::where('user_id', Auth::guard('api')->id())
+                               ->get();
         return AlbumResource::collection($favorites);
     }
 
@@ -39,7 +36,12 @@ class FavoriteController extends Controller
      */
     public function store(FavoriteRequest $request)
     {
-        $favorite = $this->user
+        // return response()->json([
+        //     'user' => Auth::guard('api')->user(),
+        //     'id' => Auth::guard('api')->id()
+        // ]);
+        $favorite = Auth::guard('api')
+                         ->user()
                          ->favorites()
                          ->create($request->all());
 
