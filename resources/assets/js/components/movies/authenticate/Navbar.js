@@ -7,6 +7,23 @@ export default class Navbar extends Component {
     this.props.logout();
   }
 
+  componentDidMount() {
+    const { isLoggedIn, hasFavorites, fetchFavorites } = this.props;
+    if(!hasFavorites && isLoggedIn) {
+      fetchFavorites();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      (this.props.isLoggedIn !== prevProps.isLoggedIn) &&
+      this.props.isLoggedIn &&
+      !this.props.hasFavorites
+    ) {
+      this.props.fetchFavorites();
+    }
+  }
+
   render() {
     const { isLoggedIn, loading, user } = this.props;
     return (
