@@ -87,7 +87,7 @@ class MoviesApp extends Component {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
-            <DashboardRoute path="/home" component={Dashboard} />
+            <DashboardRoute path="/dashboard" component={Dashboard} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/movies/:id" component={MovieInfo} />

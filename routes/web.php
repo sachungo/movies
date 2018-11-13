@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome', ['title' => 'Movies List']);
-});
+})->name('homepage');
 
 Route::get('/movies/{id}', function () {
     return view('welcome', ['title' => 'Movie Information']);
@@ -23,7 +23,7 @@ Route::fallback(function () {
     return redirect('/');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('home');
 
 Route::get('/login', function () {
     return view('welcome', ['title' => 'Login']);

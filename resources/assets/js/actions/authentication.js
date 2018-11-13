@@ -44,7 +44,7 @@ const handleResponse = (response, dispatch) => {
 
   setAuthorizationHeader();
   dispatch(loggedIn(true));
-  history.push('/home');
+  history.push('/dashboard');
 }
 
 export const login = (payload = {}) => {
