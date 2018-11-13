@@ -11,7 +11,8 @@ import {
 const mapStateToProps = ({ favorites }) => ({
   favorites: favorites.favorites,
   hasFavorites: !isEmpty(favorites.favorites),
-  error: favorites.error
+  error: favorites.error,
+  loading: favorites.loading
 });
 
 export default connect(mapStateToProps, {

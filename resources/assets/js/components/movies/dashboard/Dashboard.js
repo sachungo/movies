@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { rem } from 'polished';
 import PropTypes from 'prop-types';
 
-import { StatusMessage, colors, media } from '../../shared';
+import { StatusMessage, colors, media, Loader, styles } from '../../shared';
 import MovieCard from '../lists/Card';
 
 const Container = styled.div`
@@ -29,7 +29,20 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { hasFavorites, favorites, error, deleteByFavoriteId } = this.props;
+    const { hasFavorites, favorites, error, deleteByFavoriteId, loading } = this.props;
+    if (loading) {
+      return (
+        <styles.LoaderWrapper>
+          <Loader
+            primaryColor={colors.primary}
+            secondaryColor={colors.translucent}
+            height={70}
+            width={70}
+          />
+        </styles.LoaderWrapper>
+      );
+    }
+
     return (
       <Container>
         {!hasFavorites && (
