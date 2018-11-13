@@ -29,25 +29,26 @@ class FavoritesTest extends TestCase
              ->assertStatus(200);
     }
 
-    /**
-     * TODO: Expected status code 201 but received 403.
-     * Failed asserting that false is true.
-     */
     public function testStore()
     {
-        // $user = factory(User::class)->create();
-        // Passport::actingAs($user);
+        $user = factory(User::class)->create();
+        Passport::actingAs($user, ['create-servers']);
 
-        // $data = [
-        //     'movie_id' => 1256,
-        //     'title' => 'Post favorite',
-        //     'poster_path' => '/testing.jpg',
-        //     'user_id' => $user->id
-        // ];
-        // $this->post('/api/favorites', $data)
-        //      ->assertStatus(201)
-        //      ->assertDatabaseHas('favorites', $data);
-        $this->assertTrue(true);
+        $data = [
+            'movie_id' => 1256,
+            'title' => 'Post favorite',
+            'poster_path' => '/testing.jpg',
+            'user_id' => $user->id
+        ];
+        $this->post('/api/favorites', $data)
+             ->assertStatus(201)
+             ->assertJsonStructure([
+                 'favorite_id',
+                  'id',
+                  'isFavorite',
+                  'poster_path',
+                  'title'
+             ]);
     }
 
     public function testDestroy()
@@ -58,6 +59,17 @@ class FavoritesTest extends TestCase
         ]);
         Passport::actingAs($user);
         $this->delete("/api/favorites/{$favorite->id}")
+             ->assertStatus(200);
+    }
+
+    public function testDestroyByMovieid()
+    {
+        $user = factory(User::class)->create();
+        $favorite = factory(Favorite::class)->create([
+            'user_id' => $user->id
+        ]);
+        Passport::actingAs($user);
+        $this->delete("/api/favorites/movie/{$favorite->movie_id}")
              ->assertStatus(200);
     }
 }
