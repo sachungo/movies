@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import Dashboard from './Dashboard';
 
 import {
-  fetchFavorites,
   deleteByFavoriteId
 } from '../../../actions/favorites';
 
@@ -16,6 +15,5 @@ const mapStateToProps = ({ favorites }) => ({
 });
 
 export default connect(mapStateToProps, {
-  fetchFavorites,
   deleteByFavoriteId
 })(Dashboard);

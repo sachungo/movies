@@ -16,7 +16,7 @@ const User = ({ user, onLogout }) => (
       {user.name}
     </a>
     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-      <Link className="dropdown-item" to="/home">Dashboard</Link>
+      <Link className="dropdown-item" to="/dashboard">Dashboard</Link>
       <Link
         className="dropdown-item"
         to="#"

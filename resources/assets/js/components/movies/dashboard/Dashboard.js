@@ -24,10 +24,6 @@ export default class Dashboard extends Component {
     error: PropTypes.string
   };
 
-  componentDidMount() {
-    this.props.fetchFavorites();
-  }
-
   render() {
     const { hasFavorites, favorites, error, deleteByFavoriteId, loading } = this.props;
     if (loading) {
