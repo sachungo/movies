@@ -146,7 +146,11 @@ export default class Card extends PureComponent {
       favorite_id = null
     } = this.props.movie;
     if (isFavorite) {
-      return this.props.deleteFavorite(favorite_id);
+      return this.props.deleteByFavoriteId(favorite_id);
+    }
+
+    if (this.props.isAlreadyLiked) {
+      return this.props.deleteByMovieId(id);
     }
 
     return this.props.addFavorite({
@@ -157,7 +161,7 @@ export default class Card extends PureComponent {
   }
 
   render() {
-    const { movie, placeholder } = this.props;
+    const { movie, placeholder,  isAlreadyLiked = false} = this.props;
     const { isFavorite = false } = movie;
     return (
       <Movie
@@ -166,7 +170,7 @@ export default class Card extends PureComponent {
           state: isFavorite? {} : { data: movie }
         }}
       >
-        <HeartContainer onClick={this.handleClick} isFavorite={isFavorite}>
+        <HeartContainer onClick={this.handleClick} isFavorite={isFavorite || isAlreadyLiked}>
           <FontAwesomeIcon icon="heart" />
         </HeartContainer>
 

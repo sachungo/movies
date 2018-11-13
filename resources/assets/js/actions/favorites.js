@@ -54,9 +54,9 @@ export const addFavorite = (data = {}) => {
   }
 };
 
-export const deleteFavorite = (id) => {
+export const deleteByFavoriteId = (id) => {
   if (!id) {
-    return setErrors('Invalid movie id! It must be a whole number.');
+    return setErrors('Invalid favorite id! It must be a whole number.');
   }
 
   return dispatch => {
@@ -72,3 +72,22 @@ export const deleteFavorite = (id) => {
       });
   }
 };
+
+export const deleteByMovieId = id => {
+  if (!id) {
+    return setErrors('Invalid movie id! It must be a whole number.');
+  }
+
+  return dispatch => {
+    return axios.delete(`/api/favorites/movie/${id}`)
+      .then(response => {
+        console.log('Delete by movie id response: ', response);
+        dispatch(successAction(response.data, 'DELETE_FAVORITE_MOVIE_ID'));
+      })
+      .catch(error => {
+        console.log('Delete by movie id Error: ', error);
+        const errorMessage = getAxiosErrorMessage(error);
+        dispatch(setErrors(errorMessage));
+      });
+  }
+}

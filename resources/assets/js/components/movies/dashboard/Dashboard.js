@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
   }
 
   render() {
-    const { hasFavorites, favorites, error, deleteFavorite } = this.props;
+    const { hasFavorites, favorites, error, deleteByFavoriteId } = this.props;
     return (
       <Container>
         {!hasFavorites && (
@@ -48,7 +48,7 @@ export default class Dashboard extends Component {
             key={favorite.id}
             movie={favorite}
             placeholder={`${favorite.title} poster`}
-            deleteFavorite={deleteFavorite}
+            deleteByFavoriteId={deleteByFavoriteId}
             data-test="single-movie"
           />
         ))}

@@ -48,7 +48,7 @@ class FavoriteController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage by favorite id.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -59,6 +59,21 @@ class FavoriteController extends Controller
         return response()->json([
             'deleted' => $favorite,
             'favorite_id' => $id
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage by movie id.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyByMovieId($id)
+    {
+        $favorite = Favorite::where('movie_id', $id)->first()->delete();
+        return response()->json([
+            'deleted' => $favorite,
+            'id' => $id
         ]);
     }
 }

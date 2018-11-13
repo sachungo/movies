@@ -5,7 +5,7 @@ import Dashboard from './Dashboard';
 
 import {
   fetchFavorites,
-  deleteFavorite
+  deleteByFavoriteId
 } from '../../../actions/favorites';
 
 const mapStateToProps = ({ favorites }) => ({
@@ -16,5 +16,5 @@ const mapStateToProps = ({ favorites }) => ({
 
 export default connect(mapStateToProps, {
   fetchFavorites,
-  deleteFavorite
+  deleteByFavoriteId
 })(Dashboard);

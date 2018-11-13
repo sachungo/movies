@@ -4,11 +4,17 @@ const initialState = {
   favorites: [],
   loading: false,
   error: ''
-}
+};
 
-const deleteFromStore = (favorites, payload) => (
+const deleteByFavoriteId = (favorites, payload) => (
   favorites.filter(
     favorite => favorite.favorite_id !== +payload.favorite_id
+  )
+);
+
+const deleteByMovieId = (favorites, payload) => (
+  favorites.filter(
+    favorite => favorite.id !== +payload.id
   )
 );
 
@@ -41,7 +47,12 @@ export default (state = initialState, action) => {
     case actionTypes.DELETE_FAVORITE:
       return {
         ...state,
-        favorites: deleteFromStore(state.favorites, action.payload)
+        favorites: deleteByFavoriteId(state.favorites, action.payload)
+      };
+    case actionTypes.DELETE_FAVORITE_MOVIE_ID:
+      return {
+        ...state,
+        favorites: deleteByMovieId(state.favorites, action.payload)
       };
     default:
       return state;

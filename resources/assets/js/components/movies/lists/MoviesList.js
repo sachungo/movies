@@ -7,6 +7,7 @@ import { rem, ellipsis } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { media, colors } from '../../shared';
+import { checkIfObjectExistInArray } from '../../../helpers';
 import MovieCard from './Card';
 
 const MoviesContainer = styled.div`
@@ -20,16 +21,24 @@ const MoviesContainer = styled.div`
   `}
 `;
 
-const MoviesList = ({ movies, addFavorite }) => (
+const MoviesList = ({
+  movies,
+  addFavorite,
+  favorites,
+  deleteByMovieId
+}) => (
   <MoviesContainer>
     {movies.map(movie => {
       const placeholder = `${movie.title} poster`;
+      const isTracked = checkIfObjectExistInArray(movie, favorites);
       return (
         <MovieCard
           key={movie.id}
           movie={movie}
           placeholder={placeholder}
           addFavorite={addFavorite}
+          isAlreadyLiked={isTracked}
+          deleteByMovieId={deleteByMovieId}
           data-test="single-movie"
         />
       )
