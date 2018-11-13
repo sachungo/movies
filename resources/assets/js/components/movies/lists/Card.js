@@ -2,9 +2,10 @@ import React, { PureComponent } from 'react';
 import styled, { css } from 'styled-components';
 import { rem, ellipsis } from 'polished';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { media, colors } from '../../shared';
+import { isAuthenticated } from '../../../helpers';
 
 const Movie = styled(Link)`
   text-decoration: none;
@@ -133,24 +134,40 @@ const Title = styled.p`
   `}
 `;
 
-export default class Card extends PureComponent {
-  handleClick = (event) => {
-    event.preventDefault();
-    event.nativeEvent.stopImmediatePropagation();
-
+class Card extends PureComponent {
+  handleDelete = () => {
     const {
       id,
-      title,
-      poster_path,
       isFavorite = false,
       favorite_id = null
     } = this.props.movie;
+
     if (isFavorite) {
       return this.props.deleteByFavoriteId(favorite_id);
     }
 
     if (this.props.isAlreadyLiked) {
       return this.props.deleteByMovieId(id);
+    }
+  }
+
+  handleClick = (event) => {
+    event.preventDefault();
+    event.nativeEvent.stopImmediatePropagation();
+
+    if (!isAuthenticated()) {
+      return this.props.history.push('/login');
+    }
+
+    const {
+      id,
+      title,
+      poster_path,
+      isFavorite = false
+    } = this.props.movie;
+
+    if (isFavorite || this.props.isAlreadyLiked) {
+      return this.handleDelete();
     }
 
     return this.props.addFavorite({
@@ -184,3 +201,5 @@ export default class Card extends PureComponent {
     );
   }
 }
+
+export default withRouter(Card);
