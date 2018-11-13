@@ -19,6 +19,10 @@ const loggedIn = isLoggedIn => ({
   isLoggedIn
 });
 
+const resetFavorite = () => ({
+  type: actionTypes.RESET_FAVORITES
+});
+
 const handleResponse = (response, dispatch) => {
   console.log('Response: ', response);
   if (response.status !== 200) {
@@ -78,6 +82,7 @@ export const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         dispatch(loggedIn(false));
+        dispatch(resetFavorite());
         history.push('/');
       })
       .catch((error) => {

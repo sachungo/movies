@@ -54,6 +54,11 @@ export default (state = initialState, action) => {
         ...state,
         favorites: deleteByMovieId(state.favorites, action.payload)
       };
+    case actionTypes.RESET_FAVORITES:
+      return {
+        ...state,
+        favorites: []
+      };
     default:
       return state;
   }

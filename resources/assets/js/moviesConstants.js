@@ -35,5 +35,6 @@ export default {
   FAVORITES_ERROR: 'user/favorites/fetch/error',
   ADD_FAVORITE: 'user/favorites/add/success',
   DELETE_FAVORITE: 'user/favorites/delete/success',
-  DELETE_FAVORITE_MOVIE_ID: 'user/favorites/delete/movie/id/success'
+  DELETE_FAVORITE_MOVIE_ID: 'user/favorites/delete/movie/id/success',
+  RESET_FAVORITES: 'user/favorites/reset'
 }
