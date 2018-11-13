@@ -30,6 +30,8 @@ export default {
   USER_SUCCESS: 'user/log/in/success',
   USER_LOADING: 'user/log/in/loading',
   USER_LOGGEDIN: 'user/logged/in/check',
+  USER_ERROR: 'user/log/in/failure',
+  USER_ERROR_RESET: 'user/error/reset',
   FAVORITES_LOADING: 'user/favorites/loading',
   FAVORITES_SUCCESS: 'user/favorites/fetch/success',
   FAVORITES_ERROR: 'user/favorites/fetch/error',

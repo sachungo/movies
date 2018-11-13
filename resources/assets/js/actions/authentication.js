@@ -23,8 +23,16 @@ const resetFavorite = () => ({
   type: actionTypes.RESET_FAVORITES
 });
 
+const setError = error => ({
+  type: actionTypes.USER_ERROR,
+  error
+})
+
+export const resetError = () => ({
+  type: actionTypes.USER_ERROR_RESET
+})
+
 const handleResponse = (response, dispatch) => {
-  console.log('Response: ', response);
   if (response.status !== 200) {
     logout();
   }
@@ -54,8 +62,8 @@ export const login = (payload = {}) => {
       .then(response => handleResponse(response, dispatch))
       .catch((error) => {
         dispatch(loadingUser(false));
-        console.log('error =>', error);
-        // TODO: handle login error
+        const message = getAxiosErrorMessage(error);
+        dispatch(setError(message));
       });
   }
 }
@@ -68,8 +76,8 @@ export const register = (payload = {}) => {
       .then(response => handleResponse(response, dispatch))
       .catch((error) => {
         dispatch(loadingUser(false));
-        console.log('error =>', error);
-        // TODO: handle register error
+        const message = getAxiosErrorMessage(error);
+        dispatch(setError(message));
       });
   }
 }
@@ -85,8 +93,7 @@ export const logout = () => {
         dispatch(resetFavorite());
         history.push('/');
       })
-      .catch((error) => {
-        console.log('error =>', error);
+      .catch(() => {
         // TODO: handle logout error
       });
   }

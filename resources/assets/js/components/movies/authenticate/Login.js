@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { StatusMessage, colors } from '../../shared';
-
-import { login } from '../../../actions/authentication';
+import { login, resetError } from '../../../actions/authentication';
+import Alert from './Alert';
 
 class Login extends Component {
   static propTypes = {};
@@ -15,6 +15,10 @@ class Login extends Component {
       email: '',
       password: ''
     };
+  }
+
+  componentWillUnmount() {
+    this.props.resetError();
   }
 
   handleChange = (event) => {
@@ -35,8 +39,12 @@ class Login extends Component {
   }
 
   render() {
+    const { error } = this.props;
     return (
       <div className="container">
+        {error && (
+          <Alert error={error} />
+        )}
         <form onSubmit={this.handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email address</label>
@@ -71,4 +79,11 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { login })(Login);
+const mapStateToProps = ({ user }) => ({
+  error: user.error
+});
+
+export default connect(mapStateToProps, {
+  login,
+  resetError
+})(Login);

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { StatusMessage, colors } from '../../shared';
-import { register } from '../../../actions/authentication';
+import { register, resetError } from '../../../actions/authentication';
+import Alert from './Alert';
 
 class Register extends Component {
   static propTypes = {};
@@ -16,6 +17,10 @@ class Register extends Component {
       password: '',
       password_confirmation: ''
     };
+  }
+
+  componentWillUnmount() {
+    this.props.resetError();
   }
 
   handleChange = (event) => {
@@ -37,8 +42,12 @@ class Register extends Component {
   }
 
   render() {
+    const { error } = this.props;
     return (
       <div className="container">
+        {error && (
+          <Alert error={error} />
+        )}
         <form onSubmit={this.handleRegister}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
@@ -96,4 +105,11 @@ class Register extends Component {
   }
 }
 
-export default connect(null, { register })(Register);
+const mapStateToProps = ({ user }) => ({
+  error: user.error
+});
+
+export default connect(mapStateToProps, {
+  register,
+  resetError
+})(Register);
