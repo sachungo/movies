@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import MovieInfo from './MovieInfo';
+import MovieInfo from './Info';
 import { getMovieInfo, isSameId as movieIdSame } from '../../../helpers';
 import { getGenresSelector } from '../../../selectors';
 import { addMovieInfo, fetchMovie } from '../../../actions/movie';
