@@ -26,13 +26,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/movies/temp
-      # should I remove docker-php-ext-install?
-      - run:
-          name: Install zip package for PHP
-          command: sudo docker-php-ext-install zip
-      # - run:
-      #     name: Install xdebug for generating coverage report and docker enable it
-      #     command: sudo pecl install xdebug-2.6.0 && sudo docker-php-ext-enable xdebug
       - run:
           name: Update composer to the latest version
           command: sudo composer self-update
@@ -91,7 +84,6 @@ jobs:
   upload-coverage:
     <<: *defaults
     environment:
-      # Test if this will work when added to circleCI envs
       - CC_TEST_REPORTER_ID: e84681658435180a6c1606056a39e1984310a3c17a8235fda18e38abcd57d78e
     steps:
       - attach_workspace:
