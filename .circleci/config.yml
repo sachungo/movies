@@ -57,7 +57,7 @@ jobs:
           name: Run PHPUnit tests
           command: |
             vendor/bin/phpunit --coverage-clover temp/clover.xml
-            ./temp/cc-test-reporter format-coverage -t clover -o temp/clover.xml
+            ./temp/cc-test-reporter format-coverage -t clover -o temp/clover.xml temp/clover.xml
       - persist_to_workspace:
           root: temp
           paths:
@@ -83,7 +83,7 @@ jobs:
           name: Run Jest tests
           command: |
             yarn test:coverage
-            ./temp/cc-test-reporter format-coverage -t lcov -o temp/frontend.codeclimate.json coverage/frontend/lcov.info
+            ./temp/cc-test-reporter format-coverage -t lcov -o temp/frontend.codeclimate.json temp/lcov.info
       - persist_to_workspace:
           root: temp
           paths:
