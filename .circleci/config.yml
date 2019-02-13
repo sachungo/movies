@@ -3,14 +3,13 @@ defaults: &defaults
   working_directory: ~/movies
   docker:
     - image: circleci/php:7.2-node-browsers
-install_common_dependencies: &install_common_dependencies
-  run:
-    name: Install zlib1g-dev and libpng-dev
-    command: sudo apt install -y zlib1g-dev libpng-dev
 jobs:
   build:
     <<: *defaults
     steps:
+      - run:
+          name: Install zlib1g-dev and libpng-dev
+          command: sudo apt install -y zlib1g-dev libpng-dev
       - run:
           name: Download cc-test-reporter
           command: |
@@ -27,14 +26,13 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/movies/temp
-      - *install_common_dependencies
       # should I remove docker-php-ext-install?
       - run:
           name: Install zip package for PHP
           command: sudo docker-php-ext-install zip
-      - run:
-          name: Install xdebug for generating coverage report and docker enable it
-          command: sudo pecl install xdebug-2.6.0 && sudo docker-php-ext-enable xdebug
+      # - run:
+      #     name: Install xdebug for generating coverage report and docker enable it
+      #     command: sudo pecl install xdebug-2.6.0 && sudo docker-php-ext-enable xdebug
       - run:
           name: Update composer to the latest version
           command: sudo composer self-update
@@ -70,7 +68,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/movies/temp
-      - *install_common_dependencies
       - restore_cache:
           keys:
             - node-v1-{{ checksum "package.json" }}
@@ -86,11 +83,11 @@ jobs:
           name: Run Jest tests
           command: |
             yarn test:coverage
-            ./temp/cc-test-reporter format-coverage -t lcov -o temp/lcov.info
+            ./temp/cc-test-reporter format-coverage -t lcov -o temp/frontend.codeclimate.json coverage/frontend/lcov.info
       - persist_to_workspace:
           root: temp
           paths:
-            - lcov.info
+            - frontend.codeclimate.json
   upload-coverage:
     <<: *defaults
     environment:
@@ -102,7 +99,7 @@ jobs:
       - run:
           name: Upload coverage to code climate
           command: |
-            ./temp/cc-test-reporter sum-coverage temp/lcov.info temp/clover.xml -p 2 -o temp/codeclimate.combined.json
+            ./temp/cc-test-reporter sum-coverage temp/frontend.codeclimate.json temp/clover.xml -p 2 -o temp/codeclimate.combined.json
             ./temp/cc-test-reporter upload-coverage -i temp/codeclimate.combined.json
 
 workflows:
