@@ -3,6 +3,10 @@ defaults: &defaults
   working_directory: ~/movies
   docker:
     - image: circleci/php:7.2-node-browsers
+install_common_dependencies: &install_common_dependencies
+  run:
+    name: Install zlib1g-dev and libpng-dev
+    command: sudo apt install -y zlib1g-dev libpng-dev
 jobs:
   build:
     <<: *defaults
@@ -23,11 +27,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/movies/temp
-      # should I remove this?
-      - run:
-          name: Install zlib1g-dev and libpng-dev
-          command: sudo apt install -y zlib1g-dev libpng-dev
-      # should I remove this?
+      - *install_common_dependencies
+      # should I remove docker-php-ext-install?
       - run:
           name: Install zip package for PHP
           command: sudo docker-php-ext-install zip
@@ -69,6 +70,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/movies/temp
+      - *install_common_dependencies
       - restore_cache:
           keys:
             - node-v1-{{ checksum "package.json" }}
