@@ -14,3 +14,6 @@ yarn-error.log
 /storage/*
 /public/mix-manifest.json
 .DS_Store
+
+# temp is the directory that stores jest and phpunit's coverage reports
+temp/

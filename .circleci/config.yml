@@ -1,17 +1,39 @@
 version: 2
+defaults: &defaults
+  working_directory: ~/movies
+  docker:
+    - image: circleci/php:7.2-node-browsers
 jobs:
   build:
-    docker:
-      - image: circleci/php:7.2-node-browsers
-    working_directory: ~/laravel
+    <<: *defaults
+    steps:
+      - run:
+          name: Download cc-test-reporter
+          command: |
+            mkdir -p temp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./temp/cc-test-reporter
+            chmod +x ./temp/cc-test-reporter
+      - persist_to_workspace:
+          root: temp
+          paths:
+            - cc-test-reporter
+  backend-php-tests:
+    <<: *defaults
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/movies/temp
+      # should I remove this?
       - run:
           name: Install zlib1g-dev and libpng-dev
           command: sudo apt install -y zlib1g-dev libpng-dev
+      # should I remove this?
       - run:
           name: Install zip package for PHP
           command: sudo docker-php-ext-install zip
+      - run:
+          name: Install xdebug for generating coverage report and docker enable it
+          command: sudo pecl install xdebug-2.6.0 && sudo docker-php-ext-enable xdebug
       - run:
           name: Update composer to the latest version
           command: sudo composer self-update
@@ -32,6 +54,21 @@ jobs:
       - run:
           name: Generate the application key
           command: php artisan key:generate
+      - run:
+          name: Run PHPUnit tests
+          command: |
+            vendor/bin/phpunit --coverage-clover temp/clover.xml
+            ./temp/cc-test-reporter format-coverage -t clover -o temp/clover.xml
+      - persist_to_workspace:
+          root: temp
+          paths:
+            - clover.xml
+  frontend-react-tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/movies/temp
       - restore_cache:
           keys:
             - node-v1-{{ checksum "package.json" }}
@@ -44,13 +81,41 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Run PHPUnit tests
-          command: vendor/bin/phpunit
-      - run:
           name: Run Jest tests
-          command: yarn test
-      - store_artifacts:
-          path: tests/_output
-          destination: movie
-      - store_test_results:
-          path: tests/_output
+          command: |
+            yarn test:coverage
+            ./temp/cc-test-reporter format-coverage -t lcov -o temp/lcov.info
+      - persist_to_workspace:
+          root: temp
+          paths:
+            - lcov.info
+  upload-coverage:
+    <<: *defaults
+    environment:
+      # Test if this will work when added to circleCI envs
+      - CC_TEST_REPORTER_ID: e84681658435180a6c1606056a39e1984310a3c17a8235fda18e38abcd57d78e
+    steps:
+      - attach_workspace:
+          at: ~/movies/temp
+      - run:
+          name: Upload coverage to code climate
+          command: |
+            ./temp/cc-test-reporter sum-coverage temp/lcov.info temp/clover.xml -p 2 -o temp/codeclimate.combined.json
+            ./temp/cc-test-reporter upload-coverage -i temp/codeclimate.combined.json
+
+workflows:
+  version: 2
+
+  commit:
+    jobs:
+      - build
+      - backend-php-tests:
+          requires:
+            - build
+      - frontend-react-tests:
+          requires:
+            - build
+      - upload-coverage:
+          requires:
+            - backend-php-tests
+            - frontend-react-tests
