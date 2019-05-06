@@ -24,3 +24,10 @@ Note that the commands run by `yarn` can also be executed using `npm`.
 ## Running tests
 1. Run PHP tests by executing `./vendor/bin/phpunit`
 2. The JavaScript tests can be run by `yarn test`
+
+# Improvements for Version 2
+- Overhaul the design to include accessibility from the get go
+- Add new features e.g. favorite album
+- Incorporate more secure features
+- Integrate Elastic to facilitate the search operation
+- Improve the general app performance
