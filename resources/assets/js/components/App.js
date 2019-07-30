@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Switch,
   Redirect
@@ -13,22 +13,43 @@ import {
   faChevronDown,
   faSearch,
   faChevronLeft,
-  faTimesCircle
+  faTimesCircle,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons';
 
 import store from '../reducers';
-import { Home, MovieInfo } from './movies';
+import {
+  Home,
+  MovieInfo,
+  Dashboard,
+  Login,
+  Register
+} from './movies';
 import { fetchGenres } from '../actions/genres';
 import { fetchActors } from '../actions/actors';
 import getYearsRange from '../actions/years';
 import { genresSelector, actorsSelector } from '../selectors';
+import Navbar from './movies/authenticate';
+import { history, isAuthenticated } from '../helpers';
 
 library.add(
   faChevronUp,
   faChevronDown,
   faSearch,
   faChevronLeft,
-  faTimesCircle
+  faTimesCircle,
+  faHeart
+);
+
+const DashboardRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props => (
+      isAuthenticated()
+        ? <Component {...props} />
+        : <Redirect to="/login" />
+    )}
+  />
 );
 
 class MoviesApp extends Component {
@@ -61,13 +82,19 @@ class MoviesApp extends Component {
 
   render() {
 		return (
-			<Router>
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route path="/movies/:id" component={MovieInfo} />
-					<Redirect from='*' to='/' />
-				</Switch>
-			</Router>
+      <Router history={history}>
+        <div>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <DashboardRoute path="/dashboard" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/movies/:id" component={MovieInfo} />
+            <Redirect from='*' to='/' />
+          </Switch>
+        </div>
+      </Router>
 		);
 	}
 }

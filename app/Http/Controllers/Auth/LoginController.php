@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,5 +36,31 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+        $this->clearLoginAttempts($request);
+        $user = $this->guard()->user();
+        $token = $user->createToken('User_personal_access_token')->accessToken;
+
+        $user['access_token'] = $token;
+
+        return response()->json([
+            'results' => $user->toArray()
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user('api')->token()->revoke();
+        $this->guard()->logout();
+        return response()->json(['message' => 'User logged out!'], 200);
     }
 }

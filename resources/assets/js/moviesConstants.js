@@ -26,5 +26,17 @@ export default {
   SEARCH_VALUE_CHANGED: 'search/value/change',
   GET_YEARS_RANGE: 'years/range/generate',
   EMPTY_RESPONSE: 'movies/all/empty',
-  RESET_MOVIES: 'movies/reset/all'
+  RESET_MOVIES: 'movies/reset/all',
+  USER_SUCCESS: 'user/log/in/success',
+  USER_LOADING: 'user/log/in/loading',
+  USER_LOGGEDIN: 'user/logged/in/check',
+  USER_ERROR: 'user/log/in/failure',
+  USER_ERROR_RESET: 'user/error/reset',
+  FAVORITES_LOADING: 'user/favorites/loading',
+  FAVORITES_SUCCESS: 'user/favorites/fetch/success',
+  FAVORITES_ERROR: 'user/favorites/fetch/error',
+  ADD_FAVORITE: 'user/favorites/add/success',
+  DELETE_FAVORITE: 'user/favorites/delete/success',
+  DELETE_FAVORITE_MOVIE_ID: 'user/favorites/delete/movie/id/success',
+  RESET_FAVORITES: 'user/favorites/reset'
 }

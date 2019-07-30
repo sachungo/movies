@@ -23,3 +23,13 @@ Route::get('/movie/{movie_id}', 'MoviesController@getMovieInfo');
 Route::get('/movie/{movie_id}/cast', 'MoviesController@getMovieCast');
 Route::get('/actors', 'MoviesController@getActors');
 Route::get('/search', 'MoviesController@searchByName');
+
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'Auth\LoginController@login');
+Route::get('logout', 'Auth\LoginController@logout');
+
+Route::resource('favorites', 'FavoriteController')->only([
+    'index', 'store', 'destroy'
+]);
+
+Route::delete('favorites/movie/{id}', 'FavoriteController@destroyByMovieId');

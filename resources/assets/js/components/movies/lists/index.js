@@ -1,9 +1,14 @@
 import { connect } from 'react-redux';
 
 import MoviesList from './MoviesList';
+import { addFavorite, deleteByMovieId } from '../../../actions/favorites';
 
-const mapStateToProps = ({ allMovies }, { page }) => ({
-  movies: allMovies.movies[`page_${page}`] || []
+const mapStateToProps = ({ allMovies, favorites }, { page }) => ({
+  movies: allMovies.movies[`page_${page}`] || [],
+  favorites: favorites.favorites
 });
 
-export default connect(mapStateToProps)(MoviesList);
+export default connect(mapStateToProps, {
+  addFavorite,
+  deleteByMovieId
+})(MoviesList);

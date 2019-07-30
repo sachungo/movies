@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome', ['title' => 'Movies List']);
-});
+})->name('homepage');
 
 Route::get('/movies/{id}', function () {
     return view('welcome', ['title' => 'Movie Information']);
@@ -21,4 +21,13 @@ Route::get('/movies/{id}', function () {
 
 Route::fallback(function () {
     return redirect('/');
+});
+
+Route::get('/dashboard', 'HomeController@index')->name('home');
+
+Route::get('/login', function () {
+    return view('welcome', ['title' => 'Login']);
+});
+Route::get('/register', function () {
+    return view('welcome', ['title' => 'Register']);
 });

@@ -9,7 +9,7 @@ class Movie extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -23,22 +23,25 @@ class Movie extends JsonResource
             'overview' => $this->resource->get('overview'),
             'genres' => $this->resource->get('genres'),
             'credits' => [
-                'cast' => $this->getCastInfo(
+                'cast' => $this->_getCastInfo(
                     $this->resource->get('credits')['cast']
                 )
             ]
         ];
     }
 
-    private function getCastInfo($cast)
+    private function _getCastInfo($cast)
     {
-        return array_map(function ($person) {
-            return [
-                'id' => $person['id'],
-                'name' => $person['name'],
-                'profile_path' => $person['profile_path'],
-                'character' => $person['character']
-            ];
-        }, $cast);
+        return array_map(
+            function ($person) {
+                return [
+                    'id' => $person['id'],
+                    'name' => $person['name'],
+                    'profile_path' => $person['profile_path'],
+                    'character' => $person['character']
+                ];
+            },
+            $cast
+        );
     }
 }
